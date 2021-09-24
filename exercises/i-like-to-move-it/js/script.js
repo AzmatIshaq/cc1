@@ -13,7 +13,6 @@ author, and this description to match your project!
 Description of preload
 */
 function preload() {
-
 }
 
 
