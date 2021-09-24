@@ -1,5 +1,5 @@
 /**
-Alien DSrawing
+Alien Drawing
 Azmat Ishaq
 
 Alien drawn made in Javascript.
@@ -35,25 +35,26 @@ function setup() {
 
   noStroke();
   fill(200);
-  ellipse(320, 250, 100, 180)
+  ellipse(320, 250, 100, 180);
 
 // Eyes of alien
 
   fill(0,0,0);
-  ellipse(300, 230, 20, 10)
-  ellipse(340, 230, 20, 10)
+  ellipse(300, 230, 20, 10);
+  ellipse(340, 230, 20, 10);
 
 // Nostrils of Alien
 
-  ellipse(315, 240, 5, 5)
-  ellipse(325, 240, 5, 5)
+  ellipse(315, 240, 5, 5);
+  ellipse(325, 240, 5, 5);
 
 // Mouth of alien
 
   stroke(200, 0, 0);
-  strokeWeight(10);
+  strokeWeight(5);
   rectMode(CENTER);
-  rect(320,280,20,20);
+  rect(320,280,20,10);
+
 
 
 
