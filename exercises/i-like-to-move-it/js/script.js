@@ -45,13 +45,14 @@ let circle2 = {
 
 let triangle1 = {
 
-  x1: 20,
-  y1: 30,
-  x2: 30,
-  y2: 40,
-  x3: 250,
+  x1: 0,
+  y1: 250,
+  x2: 250,
+  y2: 0,
+  x3: 500,
   y3: 250,
-  growthRate: 0
+
+  growthRate: 1
 
 
 
@@ -59,22 +60,8 @@ let triangle1 = {
 
 
 
-let clockRectangle1 = {
 
-  x: 250,
-  y: 0,
-  width: 10,
-  height: 40,
-  size: 10,
-  growthRate: 4,
-  speed: 1,
-  fill: 255,
-  alpha: 200
-
-
-
-};
-
+let angle1 = 0;
 
 
 /**
@@ -91,6 +78,7 @@ Description of setup
 */
 function setup() {
   createCanvas(500,500);
+  angleMode(DEGREES);
   noStroke();
 
 
@@ -128,8 +116,14 @@ circle1.size =  circle1.size + 0.25;
 
 // Triangle 1
 
-    triangle1.x1 = triangle1.x1 + triangle1.growthRate;
+
+    triangle1.y2 = triangle1.y2 + triangle1.growthRate;
+    triangle1.y2 = constrain(triangle1.y2, 0, 500)
     triangle(triangle1.x1, triangle1.y1, triangle1.x2, triangle1.y2, triangle1.x3, triangle1.y3);
+
+
+// linke triangle 1 to mouse x and mouse y?
+
 
 
 // Rectangle 1S
@@ -139,9 +133,15 @@ circle1.size =  circle1.size + 0.25;
 
 // Testing rotate function
 
-  translate(width / 2, height / 2);
-  rotate(PI /3.0 + 4);
-  rect(-26, -26, 52, 52);
+
+ translate(250, 250);
+ rotate(angle1);
+ stroke(255);
+ line(0,0, 50 , 50);
+ fill (0,0,0);
+
+
+ angle1 = angle1 + 1;
 
 
 }
