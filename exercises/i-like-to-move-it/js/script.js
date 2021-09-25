@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+I like to move it
+Azmat Ishaq
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Shapes associated to variables moving around on a canvas.
 */
 
 "use strict";
@@ -36,6 +35,39 @@ let circle2 = {
   size: 50,
   sizeRatio: 0.5,
   speed: -1,
+  fill: 255,
+  alpha: 200
+
+
+};
+
+
+
+let triangle1 = {
+
+  x1: 20,
+  y1: 30,
+  x2: 30,
+  y2: 40,
+  x3: 250,
+  y3: 250,
+  growthRate: 0
+
+
+
+};
+
+
+
+let clockRectangle1 = {
+
+  x: 250,
+  y: 0,
+  width: 10,
+  height: 40,
+  size: 10,
+  growthRate: 4,
+  speed: 1,
   fill: 255,
   alpha: 200
 
@@ -94,9 +126,22 @@ circle1.size =  circle1.size + 0.25;
     fill(circle2.fill,circle2.alpha);
     ellipse(circle2.x,circle2.y,circle2.size,circle2.size);
 
+// Triangle 1
 
-// ellipse(100, 200, 50, 50);
+    triangle1.x1 = triangle1.x1 + triangle1.growthRate;
+    triangle(triangle1.x1, triangle1.y1, triangle1.x2, triangle1.y2, triangle1.x3, triangle1.y3);
 
+
+// Rectangle 1S
+
+//    rect(clockRectangle1.x,clockRectangle1.y,clockRectangle1.width,clockRectangle1.height);
+
+
+// Testing rotate function
+
+  translate(width / 2, height / 2);
+  rotate(PI /3.0 + 4);
+  rect(-26, -26, 52, 52);
 
 
 }
