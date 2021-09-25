@@ -22,7 +22,7 @@ let circle1 = {
   x: 0,
   y: 250,
   size: 100,
-  growthRate: 1,
+  growthRate: 4,
   speed: 1,
   fill: 255,
   alpha: 200
@@ -38,14 +38,6 @@ let circle2 = {
   speed: -1,
   fill: 255,
   alpha: 200
-
-
-
-
-
-
-  };
-
 
 
 
