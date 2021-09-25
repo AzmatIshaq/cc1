@@ -69,10 +69,31 @@ let angle1 = 0;
 
 let rectangleTop ={
 
-  x: 0,
-  y: 250,
-  width: 100,
-  lengt: 200,
+  x: 250,
+  y: 0,
+  width: 10,
+  lengt: 30,
+  growthRate: 4,
+  speed: 1,
+  fill: 255,
+  alpha: 200,
+  bStroke: 255,
+
+  red: 0,
+  green: 0,
+  blue: 0
+
+};
+
+
+// Variable for rectangle at top
+
+let rectangleBot ={
+
+  x: 250,
+  y: 0,
+  width: 10,
+  lengt: 30,
   growthRate: 4,
   speed: 1,
   fill: 255,
@@ -82,6 +103,16 @@ let rectangleTop ={
 };
 
 
+
+// Colour change for mouse movement
+
+let mouseColor = {
+
+  red: 255,
+  green: 204,
+  blue: 0
+
+};
 
 
 
@@ -100,7 +131,7 @@ function preload() {
 
 
 /**
-Description of setup
+Set anglemode to degrees in order to make line rotate
 */
 function setup() {
   createCanvas(500,500);
@@ -125,7 +156,7 @@ function draw() {
 
 
 // Circle 1
-    noStroke()
+    noStroke();
 
     circle1.size =  circle1.size + 0.25;
 
@@ -137,7 +168,7 @@ function draw() {
     ellipse(circle1.x,circle1.y,circle1.size,circle1.size);
 
 // Circle 2
-    noStroke()
+    noStroke();
     circle2.x = circle2.x + circle2.speed; //getting circle2 to move
     circle2.x = constrain(circle2.x,width/2,width); //constrain the circle
     circle2.size = circle1.size * circle2.sizeRatio;
@@ -146,7 +177,8 @@ function draw() {
 
 // Triangle 1
 
-    noStroke()
+    noStroke();
+    fill(0,255,0);
     triangle1.y2 = triangle1.y2 + triangle1.growthRate;
     triangle1.y2 = constrain(triangle1.y2, 0, 500)
     triangle(triangle1.x1, triangle1.y1, triangle1.x2, triangle1.y2, triangle1.x3, triangle1.y3);
@@ -157,20 +189,35 @@ function draw() {
 
 // Testing mouseX and mouseY function
 
-  noStroke();
-  rectMode(CENTER);
-  rect(mouseX,mouseY,100,100);
+    noStroke(255);
+    fill (mouseColor.red,mouseColor.green,mouseX);
+    rectMode(CENTER);
+
+    rect(mouseX,mouseY,100,100);
 
 
 
   // Rectangle at top
 
-
+    rectangleTop.green = map(triangle1.y2,100,width,0,255)
+    rectangleTop.y = rectangleTop.y + rectangleTop.speed;
+    rectangleTop.y = constrain(rectangleTop.y,0,40);
     stroke(0, 0, rectangleTop.bStroke);
+    strokeWeight(5);
+    fill (rectangleTop.green,0,255)
+    rectMode(CENTER);
+    rect(rectangleTop.x,rectangleTop.y,10,30);
+
+
+  // Rectangle at bottom
+
+    rectangleBot.y = rectangleBot.y + rectangleBot.speed;
+    rectangleBot.y = constrain(rectangleBot.y,0,450);
+    stroke(0, 0, rectangleBot.bStroke);
     strokeWeight(5);
     fill (0,0,255)
     rectMode(CENTER);
-    rect(250,50,10,30);
+    rect(rectangleBot.x,rectangleBot.y,10,30);
 
 
 
@@ -178,16 +225,16 @@ function draw() {
 
 // Rectangle 1S
 
-//    rect(clockRectangle1.x,clockRectangle1.y,clockRectangle1.width,clockRectangle1.height);
+// rect(clockRectangle1.x,clockRectangle1.y,clockRectangle1.width,clockRectangle1.height);
 
 
 // Testing rotate function
 
-  fill(0,0,0);
-  translate(250, 250);
-  rotate(angle1);
-  stroke(255);
-  line(0,0,50 ,50);
+    fill(0,0,0);
+    translate(250, 250);
+    rotate(angle1);
+    stroke(255,0,0);
+    line(0,0,50 ,50);
 
 
 
