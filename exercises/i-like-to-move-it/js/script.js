@@ -3,7 +3,7 @@ I like to move it project.
 Azmat Ishaq
 
 Using functions, shapes, variables, and properties
-in order to make them move around interestingly on a canvas.
+in order to make things move around interestingly on a canvas.
 */
 
 "use strict";
