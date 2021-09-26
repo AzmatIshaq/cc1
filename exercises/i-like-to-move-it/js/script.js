@@ -8,7 +8,7 @@ in order to make things move around interestingly on a canvas.
 
 "use strict";
 
-// Varibale to change background colour
+// Variable to change background colour
 
 let bg = {
   red: 0,
