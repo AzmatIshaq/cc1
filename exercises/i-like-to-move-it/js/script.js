@@ -129,7 +129,7 @@ let rectangleRight = {
   blue: 0,
 };
 
-//Variable for adjusting properties of the Mouse controlled rectangle
+// Variable for adjusting properties of the Mouse controlled rectangle
 
 let mouseRect = {
   size: 10,
