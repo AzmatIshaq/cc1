@@ -8,8 +8,27 @@ in Javascript.
 
 "use strict";
 
+let covid19 = {
+
+  x: 0,
+  y: 250,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  speed: 5,
+  fill: rgb.r, rgb.g, rgb.b,
+  
+
+}
+
+  let rgb = {
+
+    r: 0,
+    g: 0,
+    b: 0,
 
 
+  }
 
 
 /**
