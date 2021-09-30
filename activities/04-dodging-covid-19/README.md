@@ -1,3 +1,12 @@
 # Template p5 project
+CART253 Activity 4
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Student:
+
+Azmat Ishaq
+
+Project:
+
+Javascript activity for educational purposes. Exploring the use of more functions.
+
+May add more detail to the README as the activity progresses.
