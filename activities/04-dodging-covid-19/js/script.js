@@ -1,12 +1,15 @@
 /**
-Title of Project
-Author Name
+CART253 - Activity 04
+Azmat Ishaq
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is an education project to practice the use of functions and variables
+in Javascript.
 */
 
 "use strict";
+
+
+
 
 
 /**
