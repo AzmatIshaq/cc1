@@ -99,7 +99,7 @@ function draw() {
 
 // Using dist function to check for catching covid19
   let dst =  dist(user.x, user.y, covid19.x, covid19.y);
-  if (d < covid19.size/2 + user.size/2) {
+  if (dst < covid19.size/2 + user.size/2) {
     noLoop()
   }
 
