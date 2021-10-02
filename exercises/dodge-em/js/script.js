@@ -56,7 +56,7 @@ function setup() {
   covid19.y = random(0, height);
   covid19.vx = covid19.speed;
 
-  noCursor();
+//  noCursor();
 }
 
 /**
@@ -100,9 +100,10 @@ function draw() {
     covid19.y = random(0, height);
   }
 
-  // user movement
-  user.x = mouseX;
-  user.y = mouseY;
+
+  // old user movement
+  // user.x = mouseX;
+  // user.y = mouseY;
 
   // Display user
   fill(user.fill);
@@ -116,7 +117,7 @@ function draw() {
      ellipse(x,user.y,user.segmentSize);
      x = x + 40;
 
-      }
+   }
 
   // Top-left corner of the img is at (0, 0)
   // Width and height are the img's original width and height
@@ -144,4 +145,12 @@ function draw() {
   }
 
 
+}
+
+
+  // new user movement
+function mousePressed() {
+  // When the mouse button is pressed, move the circle to the mouse position
+  user.x = mouseX;
+  user.y = mouseY;
 }
