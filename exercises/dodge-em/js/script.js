@@ -37,7 +37,7 @@ Used preload to load image
 */
 function preload() {
 
-covdImg = loadImage('assets/images/covid_img.png');
+covdImg = loadImage('\\192.168.50.34\SharedSchl\Computation_Barr\Repository_CART253\cc1\exercises\dodge-em\assets\images\covid_img.png');
 
 }
 
