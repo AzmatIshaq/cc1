@@ -37,7 +37,7 @@ Used preload to load image
 */
 function preload() {
 
-covdImg = loadImage('assets/covid_img.png');
+covdImg = loadImage('assets/images/covid_img.png');
 
 }
 
