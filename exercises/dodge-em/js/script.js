@@ -10,8 +10,8 @@ in Javascript.
 
 let covid19 = {
   x: 0,
-  y: 250,
-  size: 160,
+  y:250,
+  size: 155,
   vx: 0,
   vy: 0,
   speed: 5,
@@ -26,9 +26,13 @@ let user = {
   y: 250,
   size: 100,
   fill: 255,
+  segmentSize: 50
+
+
 };
 
 let covdImg;
+let gameoverImg;
 
 
 /**
@@ -37,6 +41,7 @@ Used preload to load image
 function preload() {
 
 covdImg = loadImage('assets/images/covid_img.png');
+gameoverImg = loadImage('assets/images/gameover_img.png');
 
 }
 
@@ -67,7 +72,7 @@ function draw() {
   // it then is told to increase by 1 increment consistently
   // using the i++ code.
 
-  for (let i = 0; i < 2000; i++) {
+  for (let i = 0; i < 1000; i++) {
     //Set static to 2000 so it is more visible
     let x = random(0, width);
     let y = random(0, width);
@@ -75,6 +80,16 @@ function draw() {
     point(x, y);
   }
 
+
+    // randomizing Covid movement on screen
+
+    for (let i = 0; i < 1; i++) {
+      //Set so it is more visible
+      let x = random(0, width);
+      let y = random(0, width);
+      stroke(255);
+      ellipse(x, y, 50);
+    }
 
   // covid19 movement
   covid19.x = covid19.x + covid19.vx;
@@ -93,6 +108,16 @@ function draw() {
   fill(user.fill);
   ellipse(user.x, user.y, user.size);
 
+   let x = user.x;
+   let numSegment = 3;
+
+
+   for (let i = 0; i < numSegment; i++){
+     ellipse(x,user.y,user.segmentSize);
+     x = x + 40;
+
+      }
+
   // Top-left corner of the img is at (0, 0)
   // Width and height are the img's original width and height
   // Image obtained from Coronavirus Disease 2019 (COVID-19) | Disease or
@@ -110,11 +135,13 @@ function draw() {
 
 
 
-
-
   // Using dist function to check for catching covid19
   let dst = dist(user.x, user.y, covid19.x, covid19.y);
   if (dst < covid19.size / 2 + user.size / 2) {
     noLoop();
+    image(gameoverImg,250,250,200,200); // game over image appears on contact
+
   }
+
+
 }
