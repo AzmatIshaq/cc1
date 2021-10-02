@@ -37,7 +37,8 @@ Used preload to load image
 */
 function preload() {
 
-// covdImg = loadImage('assets/covid_img.png');
+covdImg = loadImage('assets/covid_img.png');
+
 }
 
 
@@ -100,7 +101,7 @@ function draw() {
   // https://www.cdc.gov/dotw/covid-19/index.html
 
   // Displaying covid19 as an image
-  // image(covdImg,covid19.x,covid19.y,30,30);
+  image(covdImg,covid19.x,covid19.y,30,30);
 
   // Display covid19
   fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
