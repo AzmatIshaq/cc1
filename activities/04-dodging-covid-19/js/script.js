@@ -56,6 +56,7 @@ function setup() {
   covid19.vx = covid19.speed;
 
 
+  noCursor()
 
 
 }
