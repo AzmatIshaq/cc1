@@ -81,7 +81,9 @@ function draw() {
   }
 
 
-    // randomizing Covid movement on screen
+    // randomizing mini covids movement on screen
+
+    fill(0,255,0);
 
     for (let i = 0; i < 1; i++) {
       //Set so it is more visible
@@ -144,6 +146,15 @@ function draw() {
 
   }
 
+    // Covid grows in size based on player movement
+  if (user.x > 250) {
+
+      covid19.size = covid19.size + 2;
+    }
+
+    if (user.y > 250) {
+        covid19.size = covid19.size -1;
+      }
 
 }
 
