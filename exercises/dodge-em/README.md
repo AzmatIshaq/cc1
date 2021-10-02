@@ -1,3 +1,6 @@
-# Template p5 project
+Exercise 2 - dodge-em
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+By Azmat Ishaq
+
+This is a game made in Javascript for class CART 253 with professor Pippin
+Barr and TA Madeline Zaytsoff.

@@ -11,7 +11,7 @@ in Javascript.
 let covid19 = {
   x: 0,
   y: 250,
-  size: 100,
+  size: 160,
   vx: 0,
   vy: 0,
   speed: 5,
@@ -19,9 +19,8 @@ let covid19 = {
     r: 255,
     g: 0,
     b: 0,
-  },
-};
-
+      }
+    };
 let user = {
   x: 250,
   y: 250,
@@ -37,7 +36,7 @@ Used preload to load image
 */
 function preload() {
 
-covdImg = loadImage('\\192.168.50.34\SharedSchl\Computation_Barr\Repository_CART253\cc1\exercises\dodge-em\assets\images\covid_img.png');
+covdImg = loadImage('assets/images/covid_img.png');
 
 }
 
@@ -100,12 +99,14 @@ function draw() {
   // Condition of the Week | CDC
   // https://www.cdc.gov/dotw/covid-19/index.html
 
-  // Displaying covid19 as an image
-  image(covdImg,covid19.x,covid19.y,30,30);
 
   // Display covid19
-  fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-  ellipse(covid19.x, covid19.y, covid19.size);
+ fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
+ ellipse(covid19.x, covid19.y, covid19.size);
+
+ // Displaying covid19 as an image
+ imageMode(CENTER)
+ image(covdImg,covid19.x,covid19.y,200,200);
 
 
 
