@@ -67,6 +67,21 @@ Description of draw()
 function draw() {
   background(0);
 
+// Display static
+// this is a classic counting for loop
+// i starts at 0, it then is told it can't
+// be larger than 1000
+// it then is told to increase by 1 increment consistently
+// using the i++ code.
+
+
+for (let i = 0; i < 2000; i++) { //Set static to 2000 so it is more visible
+  let x = random(0,width);
+  let y = random(0,width);
+  stroke(255);
+  point(x,y);
+ }
+
 // covid19 movement
   covid19.x = covid19.x + covid19.vx;
   covid19.x = covid19.x + covid19.vy;
