@@ -81,21 +81,25 @@ function draw() {
   }
 
 
-    // randomizing mini covids movement on screen
+    // strobe light show with lines
 
-    fill(0,255,0);
+
 
     for (let i = 0; i < 1; i++) {
       //Set so it is more visible
-      let x = random(0, width);
-      let y = random(0, width);
-      stroke(255);
-      ellipse(x, y, 50);
+      let x1 = random(0, width);
+      let y1 = random(0, width);
+      let x2 = random(0, width);
+      let y2 = random(0, width);
+      stroke(0,255,0);
+      line(x1,y1,x2,y2)
     }
 
   // covid19 movement
-  covid19.x = covid19.x + covid19.vx;
-  covid19.x = covid19.x + covid19.vy;
+
+
+  // covid19.x = covid19.x + covid19.vx;
+  // covid19.x = covid19.x + covid19.vy;
 
   if (covid19.x > width) {
     covid19.x = 0;
@@ -103,11 +107,57 @@ function draw() {
   }
 
 
+
+  // covid19 following player movement
+
+  // If the mouse x position is GREATER than the covid19 x position, it must be to the RIGHT of the covid19
+  if (mouseX > covid19.x) {
+    // So set the covid19's x velocity to a POSITIVE number to move it to the RIGHT
+    covid19.vx = 1;
+  }
+  // Or if the mouse x position is LESS than the covid19 x position, it must be to the LEFT of the covid19
+  else if (mouseX < covid19.x) {
+    // So set the covid19's x velocity to a NEGATIVE number to move it to the LEFT
+    covid19.vx = -1;
+  }
+
+  // If the mouse position is GREATER than the covid19 y position, it must be BELOW the covid19
+  if (mouseY > covid19.y) {
+    // So set the covid19's x velocity to a POSITIVE number to move it DOWN
+    covid19.vy = 1;
+  }
+  // Or if the mouse y position is LESS than the covid19 y position, it must be ABOVE the covid19
+  else if (mouseY < covid19.y) {
+    // So set the covid19's x velocity to a NEGATIVE number to move it UP
+    covid19.vy = -1;
+  }
+
+  // Then we actually APPLY these changes to `vx` and `vy` to the covid19's position
+  covid19.x = covid19.x + covid19.vx;
+  covid19.y = covid19.y + covid19.vy;
+
+  // And draw the ellipse at its new position
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // old user movement
   // user.x = mouseX;
   // user.y = mouseY;
 
   // Display user
+  noStroke()
   fill(user.fill);
   ellipse(user.x, user.y, user.size);
 
@@ -146,7 +196,7 @@ function draw() {
 
   }
 
-    // Covid grows in size based on player movement
+    // Covid grows and shrinks in size based on player movement
   if (user.x > 250) {
 
       covid19.size = covid19.size + 2;
