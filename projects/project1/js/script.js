@@ -63,4 +63,14 @@ Description of draw()
 function draw() {
     background(0);
 
+  rect(squareGaben.x, squareGaben.y, 100, 100);
+  rectMode(CENTER);
+  rect(squareFan.x, squareFan.y, 40, 40);
+
+  ellipseMode(CENTER);
+  ellipse(circleH3.x, circleH3.y, 10);
+
+
+
+
 }
