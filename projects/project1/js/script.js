@@ -105,6 +105,19 @@ imageMode(CENTER);
 image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
 
 
+// Light show to add ambiance
+push()
+  for (let i = 0; i < 1; i++) {
+  let x1 = random(0, width);
+  let y1 = random(0, width);
+  let x2 = random(0, width);
+  let y2 = random(0, width);
+  stroke(0, 255, 0);
+  line(x1, y1, x2, y2);
+}
+pop()
+
+
 
 
 
