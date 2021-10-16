@@ -19,6 +19,11 @@ Description of preload
 */
 function preload() {
 
+h3IconImg = loadImage(`assets/images/half_life_logo_pixelated.png`);
+gabbenImg = loadImage(`assets/images/Gabe_pixelated.jpg`);
+
+barkSFX = loadSound(`assets/sounds/bark.wav`);
+
 }
 
 
