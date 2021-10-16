@@ -63,12 +63,47 @@ Description of draw()
 function draw() {
     background(0);
 
+ // Basic starting objects
+
   rect(squareGaben.x, squareGaben.y, 100, 100);
   rectMode(CENTER);
   rect(squareFan.x, squareFan.y, 40, 40);
 
   ellipseMode(CENTER);
   ellipse(circleH3.x, circleH3.y, 10);
+
+
+// Movement for objects
+
+
+  if (1 === 1) {
+    circleH3.y = circleH3.y + 3;
+    circleH3.x = circleH3.x + random(-10,10);
+  }
+
+  if (circleH3.y === 499) {
+
+    circleH3.y = squareFan.y;
+    circleH3.x = squareFan.x;
+
+  }
+
+  if (keyIsDown(LEFT_ARROW)){
+      squareGaben.x = squareGaben.x - 2;
+    }
+  if (keyIsDown(RIGHT_ARROW)){
+      squareGaben.x = squareGaben.x + 2;
+    }
+
+
+// Adding images to the objects
+
+imageMode(CENTER);
+image(gabbenImg, squareGaben.x, squareGaben.y, 100, 100);
+
+imageMode(CENTER);
+image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
+
 
 
 
