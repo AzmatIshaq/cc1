@@ -14,6 +14,27 @@ Use the arrow keys to move your character. Use the space bar to launch objects i
 "use strict";
 
 
+let squareGaben = {
+  x: 250,
+  y: 450,
+};
+let squareFan = {
+  x: 250,
+  y: 25,
+};
+
+
+// Image variables
+
+let barkSFX = undefined;
+
+let h3IconImg = undefined;
+
+// Sound variables
+
+let gabbenImg = undefined;
+
+
 /**
 Description of preload
 */
