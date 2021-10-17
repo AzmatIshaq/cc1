@@ -36,6 +36,12 @@ let h3IconImg = undefined;
 
 let barkSFX = undefined;
 
+// Title State
+
+let state = `title`;
+
+
+
 /**
 Description of preload
 */
@@ -51,6 +57,11 @@ Description of setup
 */
 function setup() {
   createCanvas(500, 500);
+
+  // Formatting for state text
+  textSize(32);
+  textAlign(CENTER,CENTER);
+
 }
 
 /**
@@ -59,54 +70,102 @@ Description of draw()
 function draw() {
   background(0);
 
-  // Basic starting objects
+// States code
 
-  rect(squareGaben.x, squareGaben.y, 100, 100);
-  rectMode(CENTER);
-  rect(squareFan.x, squareFan.y, 40, 40);
+if (state === `title`) {
 
-  ellipseMode(CENTER);
-  ellipse(circleH3.x, circleH3.y, 10);
+  // Title (using text)
+  fill(255);
+  text(`DEFEAT GABEN`,width/2,height/2);
+}
 
-  // Light show to add ambiance
-  push();
-  for (let i = 0; i < 1; i++) {
-    let x1 = random(0, width);
-    let y1 = random(0, width);
-    let x2 = random(0, width);
-    let y2 = random(0, width);
-    stroke(0, 255, 0);
-    line(x1, y1, x2, y2);
+else if (state === `animation`) {
+
+    // Basic starting objects
+
+    rect(squareGaben.x, squareGaben.y, 100, 100);
+    rectMode(CENTER);
+    rect(squareFan.x, squareFan.y, 40, 40);
+
+    ellipseMode(CENTER);
+    ellipse(circleH3.x, circleH3.y, 10);
+
+    // Light show to add ambiance
+    push();
+    for (let i = 0; i < 1; i++) {
+      let x1 = random(0, width);
+      let y1 = random(0, width);
+      let x2 = random(0, width);
+      let y2 = random(0, width);
+      stroke(0, 255, 0);
+      line(x1, y1, x2, y2);
+    }
+
+    pop();
+
+    // Movement for objects
+
+    if (state === `animation`) {
+      circleH3.y = circleH3.y + 3;
+      circleH3.x = circleH3.x + random(-10, 10);
+    }
+
+    if (circleH3.y === 499) {
+      circleH3.y = squareFan.y;
+      circleH3.x = squareFan.x;
+    }
+
+    if (keyIsDown(LEFT_ARROW)) {
+      squareGaben.x = squareGaben.x - 2;
+    }
+
+    if (keyIsDown(RIGHT_ARROW)) {
+      squareGaben.x = squareGaben.x + 2;
+    }
+
+    // Adding images to the objects
+
+    imageMode(CENTER);
+    image(gabbenImg, squareGaben.x, squareGaben.y, 100, 100);
+
+    imageMode(CENTER);
+    image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
+
+
   }
 
-  pop();
+if (state === `ending`) {
+  //Ending
+  fill(255);
+  text(`GAME OVER`,width/2,height/2);
 
-  // Movement for objects
-
-  if (1 === 1) {
-    circleH3.y = circleH3.y + 3;
-    circleH3.x = circleH3.x + random(-10, 10);
   }
 
-  if (circleH3.y === 499) {
-    circleH3.y = squareFan.y;
-    circleH3.x = squareFan.x;
-  }
 
-  if (keyIsDown(LEFT_ARROW)) {
-    squareGaben.x = squareGaben.x - 2;
-  }
+// This function states that if the ENTER
+// key is pressed, then the title state should
+// go to the animation state.
 
-  if (keyIsDown(RIGHT_ARROW)) {
-    squareGaben.x = squareGaben.x + 2;
-  }
+function keyPressed() {
+  if(keyCode == 13) {
+    let state = `animation`;
+    }
+}
 
-  // Adding images to the objects
 
-  imageMode(CENTER);
-  image(gabbenImg, squareGaben.x, squareGaben.y, 100, 100);
+}
 
-  imageMode(CENTER);
-  image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
+function title() {
+
+
+}
+
+function animation() {
+
+
+}
+
+function ending () {
+
 
 }
