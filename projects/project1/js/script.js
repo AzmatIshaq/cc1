@@ -138,6 +138,19 @@ else if (state === `animation`) {
     image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
 
 
+
+    // Convince meter code
+
+    textSize(12);
+    text('Convince Meter', 400, 30);
+
+    push();
+    stroke(255);
+    fill(0);
+    rectMode(CENTER);
+    rect(400, 55, 140, 20);
+    pop();
+
   }
 
 if (state === `ending`) {
