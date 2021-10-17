@@ -64,6 +64,12 @@ function setup() {
 
 }
 
+function keyPressed() {
+  if (state === `title`) {
+    state = `animation`;
+  }
+}
+
 /**
 Description of draw()
 */
@@ -146,11 +152,7 @@ if (state === `ending`) {
 // key is pressed, then the title state should
 // go to the animation state.
 
-function keyPressed() {
-  if(keyCode == 13) {
-    let state = `animation`;
-    }
-}
+
 
 
 }
