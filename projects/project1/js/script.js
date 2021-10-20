@@ -13,19 +13,42 @@ Use the arrow keys to move your character. Use the space bar to launch objects i
 
 "use strict";
 
-let squareGaben = {
+let circleGaben = {
   x: 250,
   y: 450,
+  size: 100,
 };
+
 let squareFan = {
   x: 250,
   y: 25,
+
 };
 
 let circleH3 = {
   x: squareFan.x,
   y: squareFan.y,
+  size: 40,
 };
+
+
+let convinceSquare = {
+  x: 10,
+  y: 10,
+  size: 10,
+  fill: 255,
+
+}
+
+
+let health = {
+  x: 139,
+  y: 19,
+  size: 10,
+  fill: 255,
+}
+
+
 
 // Image variables
 
@@ -60,7 +83,7 @@ function setup() {
 
   // Formatting for state text
   textSize(32);
-  textAlign(CENTER,CENTER);
+  textAlign(CENTER, CENTER);
 
 }
 
@@ -80,21 +103,49 @@ function draw() {
 
 if (state === `title`) {
 
-  // Title (using text)
+  // Title text
   fill(255);
-  text(`DEFEAT GABEN`,width/2,height/2);
+  text(`Half Life 3 vs GABEN`,width/2,height/2);
+
+  push();
+
+  textSize(16);
+  textAlign(CENTER,CENTER);
+  fill(255);
+  text(`Press Any Key to Start`,width/2,height/1.5);
+
+  pop();
 }
 
 else if (state === `animation`) {
 
     // Basic starting objects
 
-    rect(squareGaben.x, squareGaben.y, 100, 100);
-    rectMode(CENTER);
+    // Gaben's ellipse for distance detection
+    push();
+
+    stroke(0, 255, 238);
+    ellipseMode(CENTER);
+    ellipse(circleGaben.x, circleGaben.y, circleGaben.size);
+
+    pop();
+
     rect(squareFan.x, squareFan.y, 40, 40);
 
+
     ellipseMode(CENTER);
-    ellipse(circleH3.x, circleH3.y, 10);
+    ellipse(circleH3.x, circleH3.y, circleH3.size);
+
+
+    // // Squares for damage accumulation
+    //
+    // rect();
+    // rect();
+    // rect();
+    // rect();
+
+
+
 
     // Light show to add ambiance
     push();
@@ -122,24 +173,24 @@ else if (state === `animation`) {
     }
 
     if (keyIsDown(LEFT_ARROW)) {
-      squareGaben.x = squareGaben.x - 2;
+      circleGaben.x = circleGaben.x - 2;
     }
 
     if (keyIsDown(RIGHT_ARROW)) {
-      squareGaben.x = squareGaben.x + 2;
+      circleGaben.x = circleGaben.x + 2;
     }
 
     // Adding images to the objects
 
     imageMode(CENTER);
-    image(gabbenImg, squareGaben.x, squareGaben.y, 100, 100);
+    image(gabbenImg, circleGaben.x, circleGaben.y, 100, 100);
 
     imageMode(CENTER);
     image(h3IconImg, circleH3.x, circleH3.y, 50, 50);
 
 
 
-    // Convince meter code
+    // Convince meter outline and text
 
     textSize(12);
     text('Convince Meter', 400, 30);
@@ -151,7 +202,36 @@ else if (state === `animation`) {
     rect(400, 55, 140, 20);
     pop();
 
+
+    // Convince meter heatlh bar
+    push();
+    noStroke();
+    fill(255, 161, 0);
+    rectMode(CENTER);
+    rect(400, 55, health.x, health.y);
+    pop();
+
+
+    // Distance between Gaben and half life logo
+    // If the objects touch then health bar
+    // decreases.
+
+    let d = dist(circleH3.x, circleH3.y, circleGaben.x, circleGaben.y);
+    if (d < circleGaben.size/2 + circleH3.size/2) {
+      health.x = health.x -1
+
+    }
+
+    if (health.x === 0) {
+        state = `ending`
+
+    }
+
   }
+
+
+
+
 
 if (state === `ending`) {
   //Ending
