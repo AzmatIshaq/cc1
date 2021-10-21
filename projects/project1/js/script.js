@@ -57,6 +57,7 @@ let timer = {
 
 let gabbenImg = undefined;
 let h3IconImg = undefined;
+let gabbenWinImg = undefined;
 
 // Sound variables
 
@@ -72,7 +73,7 @@ Preload contains images and sound.
 function preload() {
   h3IconImg = loadImage(`assets/images/half_life_logo_pixelated.png`);
   gabbenImg = loadImage(`assets/images/gaben_pixelated2.png`);
-
+  gabbenWinImg = loadImage(`assets/images/510px-Gabe_Newell_-_2002.jpg`);
   barkSFX = loadSound(`assets/sounds/bark.wav`);
 }
 
@@ -89,13 +90,7 @@ function setup() {
 
 }
 
-// Function to allow user to switch from Title to Animation
 
-function keyPressed() {
-  if (state === `title`) {
-    state = `animation`;
-  }
-}
 
 /**
 Draw contains how the variables look, animate, and interact.
@@ -116,9 +111,11 @@ function draw() {
     textSize(16);
     textAlign(CENTER,CENTER);
     fill(255);
-    text(`Play as Gabe Newell and Avoid the Half Life 3 requests`, width / 2, height / 2.7);
+    text(`Play as Gabe Newell and avoid the Half Life 3 requests`, width / 2, height / 2.7);
     text(`Use the Left and Right Arrows Keys to move`, width / 2, height / 2.4);
     text(`Press Any Key to Start`, width / 2, height / 1.5);
+    text(`Watch your Convince Meter`, width / 2, height / 2.1);
+    text(`If it fills up, you lose the game!`, width / 2, height / 1.9);
     pop();
   }
 
@@ -145,7 +142,7 @@ function draw() {
     // Can move off the screen and never get hit
 
     if (health.width < 120) {
-        circleGaben.x = constrain(circleGaben.x, 0, width)
+        circleGaben.x = constrain(circleGaben.x, circleGaben.size / 2, width - circleGaben.size / 2)
     }
 
     else if (health.width > 120) {
@@ -270,9 +267,9 @@ function draw() {
       health.width = health.width + 1;
     }
 
-    if (health.width === 139) {
-      state = `ending`
-    }
+    if (health.width > 139) {
+      state = `endingLose`;
+      }
 
     // Timer
 
@@ -305,22 +302,56 @@ function draw() {
       }
 
     if (timer.width > 139.5) {
-      state = `ending`;
+      state = `endingWin`;
       }
   }
 
+  // Win state
+
+  if (state === `endingWin`) {
+    fill(255);
+    stroke(255);
+    strokeWeight(2);
+
+    textSize(16);
+    textAlign(CENTER,CENTER);
+    text(`CONGRATULATIONS YOU WIN!`, width / 2, height / 10);
+    imageMode(CENTER);
+    image(gabbenWinImg, width / 2, height / 2, width / 1.5, height / 1.5);
+  }
 
 
   // Ending state
 
-  if (state === `ending`) {
+  if (state === `endingLose`) {
     //Ending
     fill(255);
+    textSize(16);
+    textAlign(CENTER,CENTER)
     text(`GAME OVER`, width / 2, height / 2);
-
+    text(`Press Any Key to Continue`, width / 2, height / 1.5);
   }
 
 }
+
+
+// Function to allow user to switch from Title to Animation
+
+function keyPressed() {
+  if (state === `title`) {
+    state = `animation`;
+  }
+
+  if (state === `endingWin`) {
+    state = `animation`;
+  }
+
+  if (state === `endingLose`) {
+    state = `animation`;
+  }
+}
+
+
 
 function title() {
 
