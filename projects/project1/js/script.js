@@ -110,13 +110,15 @@ function draw() {
 
     // Title text
     fill(255);
-    text(`Half Life 3 vs GABEN`,width/2,height/2);
+    text(`Half Life 3 vs GABEN`,width/2,height/4);
 
     push();
     textSize(16);
     textAlign(CENTER,CENTER);
     fill(255);
-    text(`Press Any Key to Start`,width/2,height/1.5);
+    text(`Play as Gabe Newell and Avoid the Half Life 3 requests`, width / 2, height / 2.7);
+    text(`Use the Left and Right Arrows Keys to move`, width / 2, height / 2.4);
+    text(`Press Any Key to Start`, width / 2, height / 1.5);
     pop();
   }
 
@@ -127,12 +129,32 @@ function draw() {
     // Basic starting objects
 
     // Gaben's ellipse
+
     push();
     stroke(0, 255, 238);
+    strokeWeight(2)
     ellipseMode(CENTER);
     ellipse(circleGaben.x, circleGaben.y, circleGaben.size);
-    constrain(circleGaben.x, 0, width);
+    // circleGaben.x = constrain(circleGaben.x, 0, width);
     pop();
+
+
+    // Easter Egg: Gaben can never be convinced
+    // This changes the constrain so that if Gaben
+    // Has more than 130 convince damage, then he
+    // Can move off the screen and never get hit
+
+    if (health.width < 120) {
+        circleGaben.x = constrain(circleGaben.x, 0, width)
+    }
+
+    else if (health.width > 120) {
+        circleGaben.x = constrain(circleGaben.x, 0, 548)
+    }
+
+
+
+
 
     // Fan
 
@@ -146,6 +168,7 @@ function draw() {
     push();
     fill(0);
     stroke(243, 0, 43);
+    strokeWeight(2)
     ellipseMode(CENTER);
     ellipse(circleH3.x, circleH3.y, circleH3.size);
     pop();
@@ -273,6 +296,7 @@ function draw() {
     rectMode();
     rect(30.5, 18.5, timer.width, 19);
     pop();
+
 
 
     if (state === `animation`) {
