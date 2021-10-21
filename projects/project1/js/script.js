@@ -32,22 +32,12 @@ let circleH3 = {
 };
 
 
-let convinceSquare = {
-  x: 10,
-  y: 10,
-  size: 10,
-  fill: 255,
-
-}
-
-
 let health = {
-  x: 139,
-  y: 19,
+  width: 0,
+  y: 0,
   size: 10,
   fill: 255,
 }
-
 
 
 // Image variables
@@ -70,7 +60,7 @@ Description of preload
 */
 function preload() {
   h3IconImg = loadImage(`assets/images/half_life_logo_pixelated.png`);
-  gabbenImg = loadImage(`assets/images/Gabe_pixelated.jpg`);
+  gabbenImg = loadImage(`assets/images/gaben_pixelated2.png`);
 
   barkSFX = loadSound(`assets/sounds/bark.wav`);
 }
@@ -133,18 +123,12 @@ else if (state === `animation`) {
     rect(squareFan.x, squareFan.y, 40, 40);
 
 
+    push();
     ellipseMode(CENTER);
+    fill(0);
+    stroke(243, 0, 43);
     ellipse(circleH3.x, circleH3.y, circleH3.size);
-
-
-    // // Squares for damage accumulation
-    //
-    // rect();
-    // rect();
-    // rect();
-    // rect();
-
-
+    pop();
 
 
     // Light show to add ambiance
@@ -202,13 +186,12 @@ else if (state === `animation`) {
     rect(400, 55, 140, 20);
     pop();
 
-
     // Convince meter heatlh bar
     push();
     noStroke();
     fill(255, 161, 0);
     rectMode(CENTER);
-    rect(400, 55, health.x, health.y);
+    rect(400, 55, health.width, 19);
     pop();
 
 
@@ -218,11 +201,11 @@ else if (state === `animation`) {
 
     let d = dist(circleH3.x, circleH3.y, circleGaben.x, circleGaben.y);
     if (d < circleGaben.size/2 + circleH3.size/2) {
-      health.x = health.x -1
+      health.width = health.width + 1
 
     }
 
-    if (health.x === 0) {
+    if (health.width === 139) {
         state = `ending`
 
     }
