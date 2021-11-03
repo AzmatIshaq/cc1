@@ -11,7 +11,7 @@ class Ball {
       this.maxSpeed = 10;
       this.size = 40;
       this.active = true;
-      this.constrainX = constrain(this.x, 100, 500);
+
   }
 
   gravity(force) {
@@ -31,6 +31,8 @@ class Ball {
 
       this.x = this.x + this.vx;
       this.y = this.y + this.vy;
+
+      this.x = constrain(this.x, 0, width);
 
       if (this.y - this.size / 2 > height){
         this.active = false;
