@@ -1,21 +1,37 @@
-// Paddle Class
+// Ai Paddle Class
 
-class Paddle {
+class AiPaddle {
   constructor(w, h) {
     this.width = w;
     this.height = h;
-    this.x = 0;
-    this.y = height - this.height / 2;
+    this.x = windowWidth/2;
+    this.y = this.height;
   }
 
   move() {
-    this.x = mouseX;
+
+  // Random movement for Ai Paddle
+
+  if(frameCount % 99 == 0) {
+    let change = random(0,1);
+
+    if (change < 0.5) {
+      this.x = this.x - 30
+    }
+    if (change > 0.5) {
+      this.x = this.x + 30
+      }
+
+  }
+
+
+
   }
 
   display() {
     push();
     noStroke();
-    fill(140,140,255);
+    fill(255);
     rectMode(CENTER);
     rect(this.x, this.y, this.width, this.height);
     pop();

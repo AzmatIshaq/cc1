@@ -11,7 +11,7 @@ class Ball {
       this.maxSpeed = 10;
       this.size = 40;
       this.active = true;
-
+      this.constrainX = constrain(this.x, 100, 500);
   }
 
   gravity(force) {
@@ -20,6 +20,9 @@ class Ball {
   }
 
   move() {
+
+
+
       this.vx = this.vx + this.ax;
       this.vy = this.vy + this.ay;
 
@@ -45,6 +48,23 @@ class Ball {
       // Bounce
       let dx = this.x - paddle.x;
       this.vx = this.vx + map(dx, -paddle.width / 2, paddle.width / 2, -2, 2);
+
+      this.vy = -this.vy;
+      this.ay = 0;
+    }
+  }
+
+  bounceAi(aiPaddle) {
+    // Play around with this for more interesting interactions
+    // Think you can remove the this.y - this.size / 2 < aiPaddle.y + aiPaddle.height / 2 line. Not sure if it is necessary since
+    // already doing that with the first statement
+    if (this.x > aiPaddle.x - aiPaddle.width / 2 &&
+        this.x < aiPaddle.x + aiPaddle.width / 2 &&
+        this.y + this.size / 2 > aiPaddle.y - aiPaddle.height / 2 &&
+        this.y - this.size / 2 < aiPaddle.y + aiPaddle.height / 2) {
+      // Bounce
+      let dx = this.x - aiPaddle.x;
+      this.vx = this.vx + map(dx, -aiPaddle.width / 2, aiPaddle.width / 2, -2, 2);
 
       this.vy = -this.vy;
       this.ay = 0;
