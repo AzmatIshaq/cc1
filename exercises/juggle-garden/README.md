@@ -1,3 +1,7 @@
-# Template p5 project
+# Juggling Game
+by Azmat Ishaq
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+This is a JavaScript game made for the CART253 class at Concordia University.
+
+The gameplay is simple: Try to juggle 60 balls within 30 seconds in order to win.
+
