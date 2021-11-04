@@ -17,7 +17,7 @@ let scoreKeeper = 0;
 // A timer to count the number of frames in the game state (Pippins code)
 let gameOverTimer = 0;
 // A variable to store how long our game is (in frames) (Pippins code)
-let gameLength = 60 * 10; // 10 seconds
+let gameLength = 60 * 30; // 30 seconds
 
 
 let progBar = {
@@ -85,8 +85,6 @@ function draw() {
     }
 
 
-
-
     // Lose state
 
     if (state === `endingLose`) {
@@ -113,8 +111,6 @@ function keyPressed() {
 
   }
 }
-
-
 
 function endingWin() {
 
@@ -179,6 +175,7 @@ function title() {
   text(`Press Any Key to Start`, width / 2, height / 1.5);
   text(`Return any ball 60 times to win!`, width / 2, height / 2.1);
   text(`If you run out of balls, mouse click to make more!`, width / 2, height / 1.9);
+  text(`You have 30 seconds before it's GAME OVER`, width / 2, height / 1.7);
   pop();
 }
 
@@ -227,7 +224,7 @@ pop();
 push();
 fill(255);
 textSize(44)
-text(gameOverTimer, 200, 65);
+text(gameOverTimer, width -120, 50);
 textAlign(CENTER, CENTER)
 pop();
 
