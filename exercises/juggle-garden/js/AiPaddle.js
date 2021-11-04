@@ -5,7 +5,7 @@ class AiPaddle {
     this.width = w;
     this.height = h;
     this.x = windowWidth/2;
-    this.y = this.height;
+    this.y = 40;
   }
 
   move() {

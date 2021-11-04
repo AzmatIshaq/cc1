@@ -12,9 +12,21 @@ let numBalls = 5;
 let paddle;
 let aiPaddle;
 let balls = [];
-let ballTouchPaddle;
-let timer = [];
 let time;
+let scoreKeeper = 0;
+// A timer to count the number of frames in the game state (Pippins code)
+let gameOverTimer = 0;
+// A variable to store how long our game is (in frames) (Pippins code)
+let gameLength = 60 * 10; // 10 seconds
+
+
+let progBar = {
+  width: 0,
+  height: 20,
+  x:100,
+  y: 40,
+  fill: 255,
+};
 
 // Title State to start the simulation
 
@@ -27,41 +39,25 @@ function preload() {
 
 }
 
-//  for loop to count how many times user returned a ball
-
-      for (let i = 0; i < arr.length; i++) {
-
-       console.log(i);
-        // state = `endingWin`
-      }
-
 /**
-Description of setup
+The setup function contains the code in order to introduce the Paddle, AiPaddle, and balls to the game
 */
 
 function setup() {
    createCanvas(windowWidth, windowHeight / 1.2);
 
+// Generating new in game objects
+
    paddle = new Paddle(200, 20);
 
    aiPaddle = new AiPaddle(150, 20);
 
-   for(let i = 0; i < numBalls; i++) {
-     let x = random(0,width);
-     let y = random(-400, -100);
-     let ball = new Ball(x,y);
-     balls.push(ball);
-
-      console.log(i);
-   }
-
-
-
+   ballSetup();
 
 }
 
 /**
-Description of draw()
+The draw function contains the background colour as well as the states for the game
 */
 function draw() {
     background(0);
@@ -70,33 +66,36 @@ function draw() {
 
     if (state === `title`) {
       title();
+      scoreKeeper = 0;
     }
 
     // Animation State
 
     if (state === `animation`) {
       animation();
+       setTimeout(gameOverTimer, gameLength);
 
     }
 
     // Win state
 
     if (state === `endingWin`) {
-      // endingWin();
+      endingWin();
+
     }
+
+
+
 
     // Lose state
 
     if (state === `endingLose`) {
-
       endingLose();
+
     }
 
 
-
 }
-
-
 
 // Function to allow user to switch from Title to Animation
 
@@ -105,9 +104,9 @@ function keyPressed() {
     state = `animation`;
   }
 
-  // if (state === `endingWin`) {
-  //   gameReset();
-  // }
+  if (state === `endingWin`) {
+     gameReset();
+   }
 
   if (state === `endingLose`) {
     gameReset();
@@ -134,9 +133,12 @@ function endingWin() {
   strokeWeight(2);
   textSize(16);
   textAlign(CENTER, CENTER);
-  text(`Press Any Key to Continue`, width / 2, height / 7.5);
+  text(`Press Any Key to Continue`, width / 2, height / 2);
   pop();
 }
+
+
+
 
 function endingLose() {
 
@@ -152,8 +154,9 @@ function endingLose() {
 
 function gameReset() {
   state = `title`;
-
-
+  gameOverTimer = 0;
+  scoreKeeper = 0;
+  balls = [];
 }
 
 // States function
@@ -172,40 +175,61 @@ function title() {
   textAlign(CENTER, CENTER);
   fill(255);
   text(`Welcome to Paddle Ball!`, width / 2, height / 2.7);
-  text(`Use the mouse move`, width / 2, height / 2.4);
+  text(`Use the mouse to move`, width / 2, height / 2.4);
   text(`Press Any Key to Start`, width / 2, height / 1.5);
-  text(`Return a ball 10 times to the AI Paddle to win!`, width / 2, height / 2.1);
+  text(`Return any ball 60 times to win!`, width / 2, height / 2.1);
   text(`If you run out of balls, mouse click to make more!`, width / 2, height / 1.9);
   pop();
 }
 
 function animation() {
 
-// Timer starts
+  if (scoreKeeper >= 60) {
+        state = `endingWin`;
+      }
 
 
-// for (let i = 0; i < 10000; i++) {
-//   let time = timer[i];
-//
-// }
+ // Increase the timer's count by one frame (Pippin's code)
+ gameOverTimer++;
+ //  Check if we have reached the end of our timer (Pippin's code)
+ if (gameOverTimer >= gameLength) {
+ // The game is over! So we should check the win/lose state (Pippin's code)
+   state = `endingLose`;
+ }
 
-// let time = 7000
-//
-// if (time > millis()) {
-//   state = `endingLose`;
-// }
-//
-// // Use a for loop to go through each element in the circle's trail array in order
-// for (let i = 0; i < time.trail.length; i++) {
-//   // Get the element at the index indicated by i (0, then 1, then 2, etc.)
-//   let element = circle.trail[i];
-//   // Draw an ellipse the same size as the circle at that position
-//   ellipse(element.x, element.y, circle.size);
-// }
+// Progress outline and text
 
+push();
+fill(255);
+textAlign(CENTER, CENTER);
+textSize(25);
+text(`Returns`, 50, 12);
+pop();
 
+// Progress Bar Outline
 
-// console.log(millis())
+push();
+stroke(255);
+noFill();
+rectMode(CENTER);
+rect(53, 50, 60, 40);
+pop();
+
+push();
+fill(255);
+textSize(44)
+text(scoreKeeper, 30, 65);
+textAlign(CENTER, CENTER)
+pop();
+
+// Game over Timer
+
+push();
+fill(255);
+textSize(44)
+text(gameOverTimer, 200, 65);
+textAlign(CENTER, CENTER)
+pop();
 
   // Code for the animation state of the game
 
@@ -228,12 +252,16 @@ function animation() {
         ball.display();
         }
 
-
       }
+
+
+
 
   // User can animate more balls with mousepress
 
   if (mouseIsPressed)  {
+
+    // Spawning balls
 
     for(let i = 0; i < numBalls; i++) {
       let x = random(0,width);
@@ -244,11 +272,22 @@ function animation() {
     }
   }
 
-  if (ballTouchPaddle >= 50) {
-  state = `endingWin`;
+  // If statement so that when a player reaches 60 returned balls the
+  // state switches to the winning animation text.
+
 }
 
 
+function ballSetup() {
+  // Balls setup
 
+     for(let i = 0; i < numBalls; i++) {
+       let x = random(0,width);
+       let y = random(-400, -100);
+       let ball = new Ball(x,y);
+       balls.push(ball);
+
+        console.log(i);
+     }
 
 }

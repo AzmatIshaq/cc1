@@ -32,7 +32,7 @@ class Ball {
       this.x = this.x + this.vx;
       this.y = this.y + this.vy;
 
-      this.x = constrain(this.x, 0, width);
+      this.x = constrain(this.x, 0 + this.size / 2, width - this.size / 2);
 
       if (this.y - this.size / 2 > height){
         this.active = false;
@@ -53,6 +53,7 @@ class Ball {
 
       this.vy = -this.vy;
       this.ay = 0;
+      scoreKeeper++;
     }
   }
 
