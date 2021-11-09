@@ -32,14 +32,3 @@ function draw() {
   background(0)
 
 }
-
-// Keypress code
-
-
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    value = 255;
-  } else if (keyCode === RIGHT_ARROW) {
-    value = 0;
-  }
-}
