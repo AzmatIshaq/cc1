@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+Project 2 Prototype
+Azmat
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is a prototype of Project 2 for the CART 253 Class at Concordia University.
 */
 
 "use strict";
@@ -21,6 +20,7 @@ function preload() {
 Description of setup
 */
 function setup() {
+  createCanvas(500, 500);
 
 }
 
@@ -29,5 +29,6 @@ function setup() {
 Description of draw()
 */
 function draw() {
+  background(0)
 
 }
