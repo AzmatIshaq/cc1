@@ -1,15 +1,15 @@
 // Paddle Class
 
-class Paddle {
+class Checkpoint {
   constructor(w, h) {
     this.width = w;
     this.height = h;
-    this.x = 250;
-    this.y = 250;
+    this.x = 200;
+    this.y = 300;
   }
 
   move() {
-    this.x = mouseX;
+    // this.x =
   }
 
   display() {
