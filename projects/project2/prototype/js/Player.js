@@ -16,6 +16,10 @@ class Player {
     this.c = 0;
     this.currentcol = startcol;
     this.currentrow = startrow;
+    this.x = this.currentcol * 25;
+    this.y = this.currentrow * 25;
+        console.log(this.x);
+        console.log(this.y);
   }
 
   move() {
@@ -123,6 +127,8 @@ class Player {
       this.y = this.y + this.speed;
     }
 
+        console.log(this.x);
+        console.log(this.y);
     console.log(this.currentrow);
     console.log(this.currentcol);
     console.log(grid[this.currentcol][this.currentrow].name)

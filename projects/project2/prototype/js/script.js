@@ -34,33 +34,32 @@ function preload() {}
 Description of setup
 */
 function setup() {
-  createCanvas(rows * unit, cols * unit);
-  player = new Player(10, 10,unit,0,5);
-//  checkpoint = new Checkpoint(40, 40);
+  createCanvas(cols * unit, rows * unit);
+  player = new Player(10, 10, unit, 0, 5);
+  //  checkpoint = new Checkpoint(40, 40);
   // wall = new Wall(10, 10)
 
-  // Go through the grid's rows
-  for (let r = 0; r < rows; r++) {
+  // Go through all the columns in this row
+  for (let c = 0; c < cols; c++) {
     // For each row add an empty array to represent the row
     grid.push([]);
-    // Go through all the columns in this row
-    for (let c = 0; c < cols; c++) {
+    // Go through the grid's rows
+    for (let r = 0; r < rows; r++) {
       // Choose a random item to add at this position
       // (A W, c, or nothing)
-     let item = random(items);
+      let item = random(items);
       // Add it to the row
-    //  grid[r].push(item);
+      //  grid[r].push(item);
       // Add a checkpoint to the show
       //let checkpoints = checkpoint.display()
-      if(item ==="C"){
-      grid[r].push(new Checkpoint(20,20,unit*r,unit*c));
-    }
-    else {
-grid[r].push(new PathCell(20,20,unit*r,unit*c));
-    }
+      if (item === "C") {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+      } else {
+        grid[c].push(new PathCell(20, 20, unit * c, unit * r));
+      }
       // Add user to a row
       //let playerDisplay = player.display()
-    //  grid[r].push(playerDisplay);
+      //  grid[r].push(playerDisplay);
     }
     //console.log(grid[0]);
   }
@@ -81,11 +80,11 @@ function draw() {
 
 
   //checkpoint.display();
-  for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
-    let row = grid[r];
-    for(let c = 0; c<grid[r].length; c++){
-      row[c].display();
+    let col = grid[c];
+    for (let r = 0; r < col.length; r++) {
+      col[r].display();
     }
     // For each row add an empty array to represent the row
     // Go through all the columns in this row
@@ -94,9 +93,9 @@ function draw() {
     // }
   }
 
-for (let i = 0; i < walls.length; i++) {
-  walls[i].display();
-}
+  for (let i = 0; i < walls.length; i++) {
+    walls[i].display();
+  }
 
   // Player
   player.move();
@@ -104,7 +103,6 @@ for (let i = 0; i < walls.length; i++) {
 
 }
 
-function keyPressed()
-{
+function keyPressed() {
   player.keypressed();
 }
