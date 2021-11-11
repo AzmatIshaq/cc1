@@ -1,5 +1,5 @@
 class Player {
-  constructor(w, h) {
+  constructor(w, h,u,startcol,startrow) {
     this.x = 0;
     this.y = 250;
     this.vx = 0;
@@ -7,13 +7,15 @@ class Player {
     this.ax = 0;
     this.ay = 0;
     this.maxSpeed = 10;
-    this.size = 40;
-    this.speed = 1;
+    this.size = 20;
+    this.speed = u;
     this.active = true;
     this.width = w;
     this.height = h;
     this.r = 0;
     this.c = 0;
+    this.currentcol = startcol;
+    this.currentrow = startrow;
   }
 
   move() {
@@ -54,20 +56,20 @@ class Player {
     //   player.c = newC;
     // }
 
-    if (keyIsDown(LEFT_ARROW)) {
-      this.x = this.x - this.speed;
-    }
-    if (keyIsDown(RIGHT_ARROW)) {
-      this.x = this.x + this.speed;
-    }
-
-    if (keyIsDown(UP_ARROW)) {
-      this.y = this.y - this.speed;
-    }
-
-    if (keyIsDown(DOWN_ARROW)) {
-      this.y = this.y + this.speed;
-    }
+    // if (keyIsDown(LEFT_ARROW)) {
+    //   this.x = this.x - this.speed;
+    // }
+    // if (keyIsDown(RIGHT_ARROW)) {
+    //   this.x = this.x + this.speed;
+    // }
+    //
+    // if (keyIsDown(UP_ARROW)) {
+    //   this.y = this.y - this.speed;
+    // }
+    //
+    // if (keyIsDown(DOWN_ARROW)) {
+    //   this.y = this.y + this.speed;
+    // }
   }
 
   display() {
@@ -82,9 +84,47 @@ class Player {
 
 
     noStroke();
-    fill(140, 140, 255);
-    rectMode(CENTER);
-    rect(this.x, this.y, this.width, this.height);
-    
+    fill(0, 320, 255);
+    rectMode(CORNER);
+    rect(this.x+this.width/2, this.y+this.height/2, this.width, this.height);
+
+  }
+  keypressed(){
+    console.log(key);
+    if (key==='ArrowLeft') {
+      //if we are not on left boundary to remain in grid
+      if(this.currentcol-1>=0){
+
+        this.currentcol = this.currentcol - 1;
+
+        if(grid[this.currentcol][this.currentrow].name ==="Checkpoint"){
+          console.log("no go");
+          //reset change
+          this.currentcol = this.currentcol + 1;
+        }
+        else{
+            console.log("go ahead");
+            this.x = this.x - this.speed;
+          }
+  }
+    }
+    if (key==='ArrowRight') {
+      this.currentcol = this.currentcol + 1;
+      this.x = this.x + this.speed;
+    }
+
+    if (key==='ArrowUp') {
+      this.currentrow = this.currentrow - 1;
+      this.y = this.y - this.speed;
+    }
+
+    if (key==='ArrowDown') {
+      this.currentrow = this.currentrow + 1;
+      this.y = this.y + this.speed;
+    }
+
+    console.log(this.currentrow);
+    console.log(this.currentcol);
+    console.log(grid[this.currentcol][this.currentrow].name)
   }
 }

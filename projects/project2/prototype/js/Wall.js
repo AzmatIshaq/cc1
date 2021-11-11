@@ -1,11 +1,12 @@
 // Paddle Class
 
 class Wall {
-  constructor(w, h) {
+  constructor(w, h, gridcol, gridrow, u) {
     this.width = w;
     this.height = h;
-    this.x = 250;
-    this.y = 250;
+    this.x = gridcol*u;
+    this.y = gridrow*u;
+
   }
 
   move() {
@@ -13,6 +14,10 @@ class Wall {
   }
 
   display() {
+    push();
+    fill(255);
+    rect(this.x, this.y, this.width, this.height);
+    pop();
 
   }
 
