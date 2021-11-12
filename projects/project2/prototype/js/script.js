@@ -16,8 +16,8 @@ let checkpoint;
 // Grid array in order to make game map
 let grid = [];
 // Rows and columns in the grid
-let rows = 20;
-let cols = 20;
+let rows = 25;
+let cols = 30;
 // The unit size (how big a square for each tile)
 let unit = 25;
 // Random items to populate the game map
@@ -58,7 +58,7 @@ function setup() {
       // Add a checkpoint to the columns
 
       if (item === "C") {
-        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+        grid[c].push(new Maze(20, 20, unit * c, unit * r));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }

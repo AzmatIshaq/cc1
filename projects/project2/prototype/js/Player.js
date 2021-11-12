@@ -22,11 +22,9 @@ class Player {
     console.log(this.y);
   }
 
-  move() {
-  }
+  move() {}
 
   display() {
-
     push();
     noStroke();
     fill(0, 320, 255);
@@ -35,12 +33,12 @@ class Player {
       this.x + this.width / 2,
       this.y + this.height / 2,
       this.width,
-      this.height,
+      this.height
     );
-      pop();
+    pop();
   }
 
-// Player keypress movement and grid checking
+  // Player keypress movement and grid checking
 
   keypressed() {
     console.log(key);
@@ -49,7 +47,7 @@ class Player {
       if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
         // So that we cannot go over this grid
-        if (grid[this.currentcol][this.currentrow].name === `Checkpoint`) {
+        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
           //reset change
           this.currentcol = this.currentcol + 1;
@@ -62,32 +60,51 @@ class Player {
 
     if (key === "ArrowRight") {
       // if we are not on left boundary, adjust to remain in grid.
-      // if (this.currentcol + 1 >= 19) {
-      //   this.currentcol = this.currentcol - 1;
+      if (this.currentcol + 1 <= cols - 1) {
+        this.currentcol = this.currentcol + 1;
         // So that we cannot go over this grid
-        // if (grid[this.currentcol][this.currentrow].name === "Checkpoint") {
-        //   console.log("no go");
-        //   //reset change
-        //   this.currentcol = this.currentcol + 1;
-        // } else {
-        //   console.log("go ahead");
-        //   this.x = this.x + this.speed;
-        // }
-      //}
-      this.currentcol = this.currentcol + 1;
-      this.x = this.x + this.speed;
+        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+          console.log("no go");
+          //   //reset change
+          this.currentcol = this.currentcol - 1;
+        } else {
+          console.log("go ahead");
+          this.x = this.x + this.speed;
+        }
+      }
     }
-
 
 
     if (key === "ArrowUp") {
-      this.currentrow = this.currentrow - 1;
-      this.y = this.y - this.speed;
+      // if we are not on left boundary, adjust to remain in grid.
+      if (this.currentrow - 1 >= 0) {
+        this.currentrow = this.currentrow - 1;
+        // So that we cannot go over this grid
+        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+          console.log("no go");
+          //reset change
+          this.currentrow = this.currentrow + 1;
+        } else {
+          console.log("go ahead");
+          this.y = this.y - this.speed;
+        }
+      }
     }
 
     if (key === "ArrowDown") {
-      this.currentrow = this.currentrow + 1;
-      this.y = this.y + this.speed;
+      // if we are not on left boundary, adjust to remain in grid.
+      if (this.currentrow + 1 <= rows - 1) {
+        this.currentrow = this.currentrow + 1;
+        // So that we cannot go over this grid
+        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+          console.log("no go");
+          //reset change
+          this.currentrow = this.currentrow - 1;
+        } else {
+          console.log("go ahead");
+          this.y = this.y + this.speed;
+        }
+      }
     }
 
     console.log(this.x);

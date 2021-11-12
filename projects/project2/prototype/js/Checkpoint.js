@@ -1,12 +1,12 @@
 // Paddle Class
 
-class Checkpoint {
+class Maze {
   constructor(w, h,x,y) {
     this.width = w;
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = `Checkpoint`;
+    this.name = `Maze`;
   }
 
   move() {
