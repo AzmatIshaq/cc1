@@ -33,11 +33,10 @@ let state = `title`;
 let maze = {
   width: 20,
   height: 20,
-}
+};
 
 let wallWidth = 10;
 let wallHeight = 30;
-
 
 /**
 Description of preload
@@ -65,23 +64,18 @@ function setup() {
       // (W, c, or nothing)
       let item = random(items);
 
-
       // Add a Maze and paths to the columns
 
       if (item === `C`) {
-        grid[c].push(new Maze(maze.width , maze.height, unit * c, unit * r));
+        grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
+      }
+      // Add checkpoints to columns
+      // Not yet functional
+      else if (item === `W`) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
-
-
-
-      // Add checkpoints to columns
-      // Not yet functional
-      // if (item === `W`) {
-      //   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
-      // }
-
     }
   }
 
@@ -89,7 +83,6 @@ function setup() {
 
   walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
   walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
-
 }
 
 /**
@@ -99,37 +92,32 @@ Display states
 function draw() {
   background(0);
   if (state === `title`) {
-  title();
+    title();
   }
   if (state === `animation`) {
-  animation();
-
+    animation();
   }
 
-  if ( state === `end`) {
+  if (state === `end`) {
     wallWidth = 20;
     wallHeight = 20;
     //Ending
-  push();
-  fill(255);
-  textSize(16);
-  textAlign(CENTER, CENTER);
-  text(`GAME OVER`, width / 2, height / 2);
-  text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
-  pop();
-
+    push();
+    fill(255);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text(`GAME OVER`, width / 2, height / 2);
+    text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
+    pop();
   }
 }
 function animation() {
-
-
-
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
     let col = grid[c];
 
-  for (let r = 0; r < col.length; r++) {
+    for (let r = 0; r < col.length; r++) {
       col[r].display();
     }
     // For each row add an empty array to represent the row
@@ -144,9 +132,7 @@ function animation() {
   // Player
   player.move();
   player.display();
-
-
-
+  player.checkWallCollision();
 }
 
 function keyPressed() {
@@ -154,7 +140,11 @@ function keyPressed() {
     state = `animation`;
   }
 
-    player.keypressed();
+  player.keypressed();
+}
+
+function mousePressed(){
+  //player.mousepress();
 }
 
 function title() {
