@@ -1,5 +1,5 @@
 class Player {
-  constructor(w, h,u,startcol,startrow) {
+  constructor(w, h, unit, startcol, startrow) {
     this.x = 0;
     this.y = 250;
     this.vx = 0;
@@ -8,7 +8,7 @@ class Player {
     this.ay = 0;
     this.maxSpeed = 10;
     this.size = 20;
-    this.speed = u;
+    this.speed = unit;
     this.active = true;
     this.width = w;
     this.height = h;
@@ -18,119 +18,82 @@ class Player {
     this.currentrow = startrow;
     this.x = this.currentcol * 25;
     this.y = this.currentrow * 25;
-        console.log(this.x);
-        console.log(this.y);
+    console.log(this.x);
+    console.log(this.y);
   }
 
   move() {
-    // First of all create new variables for the player's position
-    // This will enable us to check what's there without actually
-    // moving the player
-    // let newR = player.r;
-    // let newC = player.c;
-    //
-    // // Adjust the row and column position based on the arrow key
-    // if (keyCode === LEFT_ARROW) {
-    //   newR -= 1;
-    // } else if (keyCode === RIGHT_ARROW) {
-    //   newR += 1;
-    // } else if (keyCode === UP_ARROW) {
-    //   newC -= 1;
-    // } else if (keyCode === DOWN_ARROW) {
-    //   newC += 1;
-    // }
-    //
-    // // Constrain so the player can't walk off the edges
-    // newR = constrain(newR, 0, rows - 1);
-    // newC = constrain(newC, 0, cols - 1);
-    //
-    // // Now check what is at the position the player tried to move to
-    // if (grid[newR][newC] === ``) {
-    //   // If nothing, they can just move there
-    //   player.r = newR;
-    //   player.c = newC;
-    // } else if (grid[newR][newC] === `c`) {
-    //   // If it's a collectible then empty that spot
-    //   grid[newR][newC] = ``;
-    //   // Make the player grow (but constrain to the unit size)
-    //   player.size += unit / 10;
-    //   player.size = constrain(player.size, 0, unit);
-    //   // And let them move to that space
-    //   player.r = newR;
-    //   player.c = newC;
-    // }
-
-    // if (keyIsDown(LEFT_ARROW)) {
-    //   this.x = this.x - this.speed;
-    // }
-    // if (keyIsDown(RIGHT_ARROW)) {
-    //   this.x = this.x + this.speed;
-    // }
-    //
-    // if (keyIsDown(UP_ARROW)) {
-    //   this.y = this.y - this.speed;
-    // }
-    //
-    // if (keyIsDown(DOWN_ARROW)) {
-    //   this.y = this.y + this.speed;
-    // }
   }
 
   display() {
 
-    // // Display the player
-    // push();
-    // fill(255,0,0);
-    // noStroke();
-    // rectMode(CENTER);
-    // rect(this.r * unit + unit/2, this.c * unit + unit/2, this.size, this.size);
-    // pop();
-
-
+    push();
     noStroke();
     fill(0, 320, 255);
     rectMode(CORNER);
-    rect(this.x+this.width/2, this.y+this.height/2, this.width, this.height);
-
+    rect(
+      this.x + this.width / 2,
+      this.y + this.height / 2,
+      this.width,
+      this.height,
+    );
+      pop();
   }
-  keypressed(){
+
+// Player keypress movement and grid checking
+
+  keypressed() {
     console.log(key);
-    if (key==='ArrowLeft') {
-      //if we are not on left boundary to remain in grid
-      if(this.currentcol-1>=0){
-
+    if (key === "ArrowLeft") {
+      // if we are not on left boundary, adjust to remain in grid.
+      if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
-
-        if(grid[this.currentcol][this.currentrow].name ==="Checkpoint"){
+        // So that we cannot go over this grid
+        if (grid[this.currentcol][this.currentrow].name === `Checkpoint`) {
           console.log("no go");
           //reset change
           this.currentcol = this.currentcol + 1;
+        } else {
+          console.log("go ahead");
+          this.x = this.x - this.speed;
         }
-        else{
-            console.log("go ahead");
-            this.x = this.x - this.speed;
-          }
-  }
+      }
     }
-    if (key==='ArrowRight') {
+
+    if (key === "ArrowRight") {
+      // if we are not on left boundary, adjust to remain in grid.
+      // if (this.currentcol + 1 >= 19) {
+      //   this.currentcol = this.currentcol - 1;
+        // So that we cannot go over this grid
+        // if (grid[this.currentcol][this.currentrow].name === "Checkpoint") {
+        //   console.log("no go");
+        //   //reset change
+        //   this.currentcol = this.currentcol + 1;
+        // } else {
+        //   console.log("go ahead");
+        //   this.x = this.x + this.speed;
+        // }
+      //}
       this.currentcol = this.currentcol + 1;
       this.x = this.x + this.speed;
     }
 
-    if (key==='ArrowUp') {
+
+
+    if (key === "ArrowUp") {
       this.currentrow = this.currentrow - 1;
       this.y = this.y - this.speed;
     }
 
-    if (key==='ArrowDown') {
+    if (key === "ArrowDown") {
       this.currentrow = this.currentrow + 1;
       this.y = this.y + this.speed;
     }
 
-        console.log(this.x);
-        console.log(this.y);
+    console.log(this.x);
+    console.log(this.y);
     console.log(this.currentrow);
     console.log(this.currentcol);
-    console.log(grid[this.currentcol][this.currentrow].name)
+    console.log(grid[this.currentcol][this.currentrow].name);
   }
 }

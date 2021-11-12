@@ -1,7 +1,7 @@
 // Paddle Class
 
 class PathCell {
-  constructor(w, h,x,y) {
+  constructor(w, h, x, y) {
     this.width = w;
     this.height = h;
     this.x = x;

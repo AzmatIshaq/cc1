@@ -22,8 +22,11 @@ let cols = 20;
 let unit = 25;
 // Random items to populate the game map
 let items = [`W`, `C`, ``];
-
 let walls = [];
+// Starting row
+let startRow = 8;
+// Starting column
+let startCol = 8;
 
 /**
 Description of preload
@@ -31,59 +34,57 @@ Description of preload
 function preload() {}
 
 /**
-Description of setup
+Setup:
+Create a canvas out of the rows, columns.
+Player class is initiated
 */
 function setup() {
   createCanvas(cols * unit, rows * unit);
-  player = new Player(10, 10, unit, 0, 5);
-  //  checkpoint = new Checkpoint(40, 40);
-  // wall = new Wall(10, 10)
 
-  // Go through all the columns in this row
+  // Initialized player class
+  player = new Player(10, 10, unit, startCol, startRow);
+
+  // For loop for the grid
   for (let c = 0; c < cols; c++) {
     // For each row add an empty array to represent the row
     grid.push([]);
     // Go through the grid's rows
     for (let r = 0; r < rows; r++) {
       // Choose a random item to add at this position
-      // (A W, c, or nothing)
+      // (W, c, or nothing)
       let item = random(items);
-      // Add it to the row
-      //  grid[r].push(item);
-      // Add a checkpoint to the show
-      //let checkpoints = checkpoint.display()
+
+
+      // Add a checkpoint to the columns
+
       if (item === "C") {
         grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
-      // Add user to a row
-      //let playerDisplay = player.display()
-      //  grid[r].push(playerDisplay);
     }
-    //console.log(grid[0]);
   }
-  // Make the position the player starts at empty!
-  //grid[player.r][player.c] = ``;
-  //done building grid
-  // add some walls
+
+  // Added a couple of test walls
+
   walls.push(new Wall(10, 50, 1, 1, unit));
   walls.push(new Wall(10, 30, 1, 2, unit));
 
 }
 
 /**
-Description of draw()
+Draw:
+Display player, checkpoints,
 */
 function draw() {
   background(0);
 
-
-  //checkpoint.display();
+  // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
     let col = grid[c];
-    for (let r = 0; r < col.length; r++) {
+
+  for (let r = 0; r < col.length; r++) {
       col[r].display();
     }
     // For each row add an empty array to represent the row

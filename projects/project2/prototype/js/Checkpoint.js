@@ -6,7 +6,7 @@ class Checkpoint {
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = "Checkpoint";
+    this.name = `Checkpoint`;
   }
 
   move() {

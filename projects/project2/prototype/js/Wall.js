@@ -6,11 +6,11 @@ class Wall {
     this.height = h;
     this.x = gridcol*u;
     this.y = gridrow*u;
-
+    this.name = `wall`;
   }
 
   move() {
-    // this.x =
+
   }
 
   display() {
