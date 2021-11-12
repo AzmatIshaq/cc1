@@ -1,3 +1,5 @@
+// Player Class
+
 class Player {
   constructor(w, h, unit, startcol, startrow) {
     this.x = 0;

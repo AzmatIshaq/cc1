@@ -1,4 +1,4 @@
-// Paddle Class
+// Wall Class
 
 class Wall {
   constructor(w, h, gridcol, gridrow, u) {

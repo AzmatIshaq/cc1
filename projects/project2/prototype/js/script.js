@@ -16,8 +16,8 @@ let checkpoint;
 // Grid array in order to make game map
 let grid = [];
 // Rows and columns in the grid
-let rows = 25;
-let cols = 30;
+let rows = 20;
+let cols = 25;
 // The unit size (how big a square for each tile)
 let unit = 25;
 // Random items to populate the game map
@@ -27,6 +27,9 @@ let walls = [];
 let startRow = 8;
 // Starting column
 let startCol = 8;
+// Title State
+let state = `title`;
+
 
 /**
 Description of preload
@@ -55,13 +58,21 @@ function setup() {
       let item = random(items);
 
 
-      // Add a checkpoint to the columns
+      // Add a Maze and paths to the columns
 
-      if (item === "C") {
+      if (item === `C`) {
         grid[c].push(new Maze(20, 20, unit * c, unit * r));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
+
+      // Add checkpoints to columns
+      // Not yet functional
+
+      // if (item === `W`) {
+      //   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+      // }
+
     }
   }
 
@@ -78,7 +89,15 @@ Display player, checkpoints,
 */
 function draw() {
   background(0);
+  if (state === `title`) {
+  title();
+  }
+  if (state === `animation`) {
+  animation();
+  }
+}
 
+function animation() {
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
@@ -93,17 +112,29 @@ function draw() {
     //     grid[r][c].display();
     // }
   }
-
   for (let i = 0; i < walls.length; i++) {
     walls[i].display();
   }
-
   // Player
   player.move();
   player.display();
-
 }
 
 function keyPressed() {
-  player.keypressed();
+  if (state === `title`) {
+    state = `animation`;
+  }
+    player.keypressed();
+}
+
+function title() {
+  // Opening text and instructions
+  push();
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text(`Explore the Maze`, width / 2, height / 2.7);
+  text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  text(`Press Any Key to Start`, width / 2, height / 1.5);
+  pop();
 }

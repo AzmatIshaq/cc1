@@ -1,4 +1,4 @@
-// Paddle Class
+// PatheCell Class
 
 class PathCell {
   constructor(w, h, x, y) {

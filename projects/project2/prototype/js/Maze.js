@@ -1,13 +1,12 @@
-// Checkpoint Class
+// Maze Class
 
-class Checkpoint {
+class Maze {
   constructor(w, h, x, y) {
     this.width = w;
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = "checkPoint";
-    this.active = true;
+    this.name = `Maze`;
   }
 
   move() {
@@ -17,7 +16,7 @@ class Checkpoint {
   display() {
     push();
     noStroke();
-    fill(200,30,25);
+    fill(140,140,255);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();
