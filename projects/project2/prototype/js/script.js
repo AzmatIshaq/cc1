@@ -30,6 +30,14 @@ let startCol = 8;
 // Title State
 let state = `title`;
 
+let maze = {
+  width: 20,
+  height: 20,
+}
+
+let wallWidth = 10;
+let wallHeight = 30;
+
 
 /**
 Description of preload
@@ -61,14 +69,17 @@ function setup() {
       // Add a Maze and paths to the columns
 
       if (item === `C`) {
-        grid[c].push(new Maze(20, 20, unit * c, unit * r));
+        grid[c].push(new Maze(maze.width , maze.height, unit * c, unit * r));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
 
+      if (state === animation) {
+        maze.width = maze.width + 1;
+      }
+
       // Add checkpoints to columns
       // Not yet functional
-
       // if (item === `W`) {
       //   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
       // }
@@ -78,14 +89,14 @@ function setup() {
 
   // Added a couple of test walls
 
-  walls.push(new Wall(10, 50, 1, 1, unit));
-  walls.push(new Wall(10, 30, 1, 2, unit));
+  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
+  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
 
 }
 
 /**
 Draw:
-Display player, checkpoints,
+Display states
 */
 function draw() {
   background(0);
@@ -94,10 +105,16 @@ function draw() {
   }
   if (state === `animation`) {
   animation();
+
   }
+
+
 }
 
 function animation() {
+
+
+
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
@@ -118,6 +135,9 @@ function animation() {
   // Player
   player.move();
   player.display();
+
+
+
 }
 
 function keyPressed() {
