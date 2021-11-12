@@ -20,13 +20,17 @@ class Maze {
     fill(140,140,255);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
-    this.width = this.width + 0.05;
-    this.height = this.height + 0.05;
-
-    if (this.width === 40) {
-      state === end;
-    }
+    // Maze Growth
+    this.width = this.width + 0.02;
+    this.height = this.height + 0.02;
     pop();
+    // Game goes to end state if wall width reaches a certain number
+    if (this.width > 60) {
+      state = `end`;
+      this.width = 20;
+      this.height = 20;
+    }
+
 
   }
 

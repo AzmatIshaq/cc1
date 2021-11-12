@@ -74,9 +74,7 @@ function setup() {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
 
-      if (state === animation) {
-        maze.width = maze.width + 1;
-      }
+
 
       // Add checkpoints to columns
       // Not yet functional
@@ -108,9 +106,20 @@ function draw() {
 
   }
 
+  if ( state === `end`) {
+    wallWidth = 20;
+    wallHeight = 20;
+    //Ending
+  push();
+  fill(255);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  text(`GAME OVER`, width / 2, height / 2);
+  text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
+  pop();
 
+  }
 }
-
 function animation() {
 
 
@@ -144,6 +153,7 @@ function keyPressed() {
   if (state === `title`) {
     state = `animation`;
   }
+
     player.keypressed();
 }
 
