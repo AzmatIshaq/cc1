@@ -27,6 +27,8 @@ let walls = [];
 let startRow = 8;
 // Starting column
 let startCol = 8;
+// Synth p5 effect variable
+let synth;
 // Title State
 let state = `title`;
 
@@ -49,6 +51,11 @@ Create a canvas out of the rows, columns.
 Player class is initiated
 */
 function setup() {
+
+  userStartAudio();
+
+    synth = new p5.PolySynth();
+
   createCanvas(cols * unit, rows * unit);
 
   // Initialized player class
@@ -138,6 +145,7 @@ function animation() {
 function keyPressed() {
   if (state === `title`) {
     state = `animation`;
+     
   }
 
   player.keypressed();

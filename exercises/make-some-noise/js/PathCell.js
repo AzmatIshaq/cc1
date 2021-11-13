@@ -16,7 +16,7 @@ class PathCell {
   display() {
     push();
     noStroke();
-    fill(0,30,255);
+    fill(20,53,200);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();

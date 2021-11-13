@@ -85,7 +85,8 @@ class Player {
       // this.noise.amp(0.1, 0.2);
       let testValue = grid[minWallCol][minWallRow].width-minDist;
 
-      grid[minWallCol][minWallRow].fillColor = color(255);
+      // Can change the colour to see distance between player and maze more clearly
+      grid[minWallCol][minWallRow].fillColor = color(140,140,255);
 
       if(this.timePassed>this.interval){
         console.log("start sound");
@@ -94,7 +95,7 @@ class Player {
     //    if (testValue > 5 ){
 
           //this.noise.amp(0.1, testValue/100);
-           this.playWallOscillator(testValue*100);
+           this.playWallOscillator(testValue*10);
       //  }
       }
 
@@ -123,20 +124,17 @@ class Player {
         else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
         //  console.log(grid[this.currentcol][this.currentrow].name);
           //reset change
-          grid[this.currentcol][this.currentrow].active = false;
+          // grid[this.currentcol][this.currentrow].active = false;
         //  console.log(grid[this.currentcol][this.currentrow].active);
           this.x = this.x - this.speed;
           this.playOscillator();
 
 
         }
-
-
-
         else {
           console.log("go ahead");
           this.x = this.x - this.speed;
-
+            synth.play(`C4`, 1, 0, 1);
 
         }
       }
@@ -151,9 +149,19 @@ class Player {
           console.log("no go");
           //   //reset change
           this.currentcol = this.currentcol - 1;
-        } else {
+        }   else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+          //  console.log(grid[this.currentcol][this.currentrow].name);
+            //reset change
+            // grid[this.currentcol][this.currentrow].active = false;
+          //  console.log(grid[this.currentcol][this.currentrow].active);
+            this.x = this.x + this.speed;
+            this.playOscillator();
+          }
+
+        else {
           console.log("go ahead");
           this.x = this.x + this.speed;
+          synth.play(`D4`, 1, 0, 1);
         }
       }
     }
@@ -168,7 +176,16 @@ class Player {
           console.log("no go");
           //reset change
           this.currentrow = this.currentrow + 1;
-        } else {
+        } else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+          //  console.log(grid[this.currentcol][this.currentrow].name);
+            //reset change
+            // grid[this.currentcol][this.currentrow].active = false;
+          //  console.log(grid[this.currentcol][this.currentrow].active);
+            this.y = this.y - this.speed;
+            this.playOscillator();
+          }
+
+        else {
           console.log("go ahead");
           this.y = this.y - this.speed;
         }
@@ -184,7 +201,16 @@ class Player {
           console.log("no go");
           //reset change
           this.currentrow = this.currentrow - 1;
-        } else {
+        }
+        else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+          //  console.log(grid[this.currentcol][this.currentrow].name);
+            //reset change
+            // grid[this.currentcol][this.currentrow].active = false;
+          //  console.log(grid[this.currentcol][this.currentrow].active);
+            this.y = this.y + this.speed;
+            this.playOscillator();
+          }
+        else {
           console.log("go ahead");
           this.y = this.y + this.speed;
         }
@@ -214,7 +240,7 @@ class Player {
     this.osc2.amp(0, 0.1, 0.7);
  }
 
-//for movement
+//for checkpoint
    playOscillator() {
   this.osc.start();
   this.osc.amp(0.5);
