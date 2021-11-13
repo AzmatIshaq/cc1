@@ -10,19 +10,19 @@ class Checkpoint {
     this.active = true;
   }
 
-  move() {
-    // this.x =
-  }
+  // move() {
+  //
+  // }
 
+  // To display the checkpoints
   display() {
-      if (this.active === true) {
-    push();
-    noStroke();
-    fill(200,30,25);
-    rectMode(CORNER);
-    rect(this.x, this.y, this.width, this.height);
-    pop();
+    if (this.active === true) {
+      push();
+      noStroke();
+      fill(200, 30, 25);
+      rectMode(CORNER);
+      rect(this.x, this.y, this.width, this.height);
+      pop();
+    }
   }
-  }
-
 }

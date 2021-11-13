@@ -22,17 +22,18 @@ class Player {
     this.y = this.currentrow * 25;
     console.log(this.x);
     console.log(this.y);
-    // For movement
+    // For sound with movement
     this.osc = new p5.Oscillator(300);
-    // Wall distance
+    // For distance from maze
     this.osc2 = new p5.Oscillator(300);
-    this.timePassed =0;
-    this.interval =1500;
-    this.startTime =millis();
+    this.timePassed = 0;
+    this.interval = 1500;
+    this.startTime = millis();
   }
 
-  move() {}
+  // move() {}
 
+  // Display player as a square
   display() {
     push();
     noStroke();
@@ -47,9 +48,12 @@ class Player {
     pop();
   }
 
+  // Method for collision detection
+
   checkWallCollision() {
+    // To get time increment value
     this.timePassed = millis() - this.startTime;
-  //  console.log(this.timePassed)
+    //  console.log(this.timePassed)
 
     let minDist = 10000;
     let minWallCol = 0;
@@ -60,44 +64,42 @@ class Player {
       let col = grid[c];
 
       for (let r = 0; r < col.length; r++) {
-          if (col[r].name === `Maze`){
-        //    console.log(col[r])
-        // Establish distance between player and maze
-        let d = dist(this.x, this.y, col[r].x, col[r].y);
-        if (d < minDist) {
-          minDist = d;
-          minWallCol = c;
-          minWallRow = r;
+        if (col[r].name === `Maze`) {
+          //    console.log(col[r])
+          // Establish distance between player and maze
+          let d = dist(this.x, this.y, col[r].x, col[r].y);
+          if (d < minDist) {
+            minDist = d;
+            minWallCol = c;
+            minWallRow = r;
+          }
         }
       }
-
-
-      }
-
     }
 
     // Variable to get distance between maze and player
-      let testValue = grid[minWallCol][minWallRow].width-minDist;
+    let testValue = grid[minWallCol][minWallRow].width - minDist;
 
-      // Can change the colour to see distance between player and maze more clearly
-      grid[minWallCol][minWallRow].fillColor = color(140,140,255);
+    // Can change the colour to see distance between player and maze more clearly
+    grid[minWallCol][minWallRow].fillColor = color(140, 140, 255);
 
+    // Time interval to prevent sound from overlapping.
+    if (this.timePassed > this.interval) {
+      console.log("start sound");
+      this.startTime = millis();
+      this.timePassed = 0;
 
-      // Time interval to prevent sound from overlapping.
-      if(this.timePassed>this.interval){
-        console.log("start sound");
-        this.startTime = millis();
-        this.timePassed = 0;
-
-          // To adjust oscillator sound value
-           this.playWallOscillator(testValue*900);
-
-      }
-
+      // To adjust oscillator sound value
+      this.playWallOscillator(testValue * 900);
+    }
   }
+
+  // Keypress movements for player
 
   keypressed() {
     console.log(key);
+
+    // Left Arrow Key Code
     if (key === "ArrowLeft") {
       // if player is near left boundary, adjust to remain in grid.
       if (this.currentcol - 1 >= 0) {
@@ -109,31 +111,28 @@ class Player {
           synth.play(`E5`, 1, 0, 1);
           //reset change
           this.currentcol = this.currentcol + 1;
-
-        }
-        else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
-        //  console.log(grid[this.currentcol][this.currentrow].name);
+        } else if (
+          grid[this.currentcol][this.currentrow].name === `checkpoint`
+        ) {
+          //  console.log(grid[this.currentcol][this.currentrow].name);
           //reset change
           // grid[this.currentcol][this.currentrow].active = false;
-        //  console.log(grid[this.currentcol][this.currentrow].active);
+          //  console.log(grid[this.currentcol][this.currentrow].active);
           // Movement
           this.x = this.x - this.speed;
           // Play Oscillator sound
           this.playOscillator();
-
-
-        }
-        else {
+        } else {
           console.log("go ahead");
-            // Movement
+          // Movement
           this.x = this.x - this.speed;
           // Play synth music
-            synth.play(`F4`, 1, 0, 1);
-
+          synth.play(`F4`, 1, 0, 1);
         }
       }
     }
 
+    // Right Arrow Key Code
     if (key === "ArrowRight") {
       // if player is near right boundary, adjust to remain in grid.
       if (this.currentcol + 1 <= cols - 1) {
@@ -145,18 +144,18 @@ class Player {
           synth.play(`F5`, 1, 0, 1);
           // Reset change
           this.currentcol = this.currentcol - 1;
-        }   else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+        } else if (
+          grid[this.currentcol][this.currentrow].name === `checkpoint`
+        ) {
           //  console.log(grid[this.currentcol][this.currentrow].name);
-            //reset change
-            // grid[this.currentcol][this.currentrow].active = false;
+          //reset change
+          // grid[this.currentcol][this.currentrow].active = false;
           //  console.log(grid[this.currentcol][this.currentrow].active);
-            // Movement
-            this.x = this.x + this.speed;
-            // Play oscillation sound
-            this.playOscillator();
-          }
-
-        else {
+          // Movement
+          this.x = this.x + this.speed;
+          // Play oscillation sound
+          this.playOscillator();
+        } else {
           console.log("go ahead");
           // Movement
           this.x = this.x + this.speed;
@@ -166,7 +165,7 @@ class Player {
       }
     }
 
-
+    // Up Arrow Key Code
     if (key === "ArrowUp") {
       // if player is near top, adjust to remain in grid.
       if (this.currentrow - 1 >= 0) {
@@ -178,17 +177,17 @@ class Player {
           synth.play(`G5`, 1, 0, 1);
           //reset change
           this.currentrow = this.currentrow + 1;
-        } else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+        } else if (
+          grid[this.currentcol][this.currentrow].name === `checkpoint`
+        ) {
           //  console.log(grid[this.currentcol][this.currentrow].name);
-            //reset change
-            // grid[this.currentcol][this.currentrow].active = false;
+          //reset change
+          // grid[this.currentcol][this.currentrow].active = false;
           //  console.log(grid[this.currentcol][this.currentrow].active);
-            this.y = this.y - this.speed;
-            // Play oscillator sound
-            this.playOscillator();
-          }
-
-        else {
+          this.y = this.y - this.speed;
+          // Play oscillator sound
+          this.playOscillator();
+        } else {
           console.log("go ahead");
           // Play synth music
           synth.play(`Ab4`, 1, 0, 1);
@@ -197,6 +196,7 @@ class Player {
       }
     }
 
+    // Down Arrow Key Code
     if (key === "ArrowDown") {
       // If player is near bottom, adjust to remain in grid.
       if (this.currentrow + 1 <= rows - 1) {
@@ -204,20 +204,20 @@ class Player {
         // So that player cannot go over the grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
-          // Synth plays when player tries to move towards it
+          // Synth plays when player tries to move towards Maze
           synth.play(`A5`, 1, 0, 1);
           // Reset change
           this.currentrow = this.currentrow - 1;
-        }
-        else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
+        } else if (
+          grid[this.currentcol][this.currentrow].name === `checkpoint`
+        ) {
           //  console.log(grid[this.currentcol][this.currentrow].name);
-            //reset change
-            // grid[this.currentcol][this.currentrow].active = false;
+          //reset change
+          // grid[this.currentcol][this.currentrow].active = false;
           //  console.log(grid[this.currentcol][this.currentrow].active);
-            this.y = this.y + this.speed;
-            this.playOscillator();
-          }
-        else {
+          this.y = this.y + this.speed;
+          this.playOscillator();
+        } else {
           console.log("go ahead");
           synth.play(`Bb4`, 1, 0, 1);
           this.y = this.y + this.speed;
@@ -232,33 +232,36 @@ class Player {
     // console.log(grid[this.currentcol][this.currentrow].name);
   }
 
-// Sound for distance from maze and player
+  // Sound for distance from maze and player
 
- startOscillator(){
-   this.osc2.start();
-   this.osc2.amp(0.1);
-   // start at 700Hz
-   this.osc2.freq(700);
-
- }
+  startOscillator() {
+    this.osc2.start();
+    this.osc2.amp(0.1);
+    // Starts at 700Hz
+    this.osc2.freq(700);
+  }
   playWallOscillator(freqPar) {
     this.osc2.start();
     this.osc2.amp(0.5);
-    // start at 700Hz
+
+    // Starts at 700Hz
     this.osc2.freq(700);
-    // ramp to 60Hz over 0.7 seconds
+
+    // Ramps to 60Hz over 0.7 seconds
     this.osc2.freq(freqPar, 0.7);
     this.osc2.amp(0, 0.1, 0.7);
- }
+  }
 
-// Sound for checkpoint interaction
-   playOscillator() {
-  this.osc.start();
-  this.osc.amp(0.5);
-  // start at 700Hz
-  this.osc.freq(700);
-  // ramp to 60Hz over 0.7 seconds
-  this.osc.freq(60, 0.7);
-  this.osc.amp(0, 0.1, 0.7);
-}
+  // Sound for checkpoint interaction
+  playOscillator() {
+    this.osc.start();
+    this.osc.amp(0.5);
+
+    // Starts at 700Hz
+    this.osc.freq(700);
+
+    // Ramps to 60Hz over 0.7 seconds
+    this.osc.freq(60, 0.7);
+    this.osc.amp(0, 0.1, 0.7);
+  }
 }

@@ -9,17 +9,17 @@ class PathCell {
     this.name = "pathcell";
   }
 
-  move() {
-    // this.x =
-  }
+  // move() {
+  //
+  // }
 
+  // To display the pathcell
   display() {
     push();
     noStroke();
-    fill(20,53,200);
+    fill(20, 53, 200);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();
   }
-
 }

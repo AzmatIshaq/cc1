@@ -49,9 +49,10 @@ Classes are introduced and initiated
 */
 function setup() {
 
+  // Initialize audio
   userStartAudio();
-
-    synth = new p5.PolySynth();
+  
+  synth = new p5.PolySynth();
 
   createCanvas(cols * unit, rows * unit);
 
@@ -82,7 +83,6 @@ function setup() {
       }
     }
   }
-
 }
 
 /**
@@ -100,6 +100,8 @@ function draw() {
     animation();
   }
 }
+
+// Animation containing the code for animating the simulation
 function animation() {
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
@@ -113,23 +115,22 @@ function animation() {
   for (let i = 0; i < walls.length; i++) {
     walls[i].display();
   }
-  // Player
-  player.move();
+
+  // Player methods
+
+  // player.move();
   player.display();
   player.checkWallCollision();
 }
 
+// Keypress and states
+
 function keyPressed() {
   if (state === `title`) {
     state = `animation`;
-
   }
 
   player.keypressed();
-}
-
-function mousePressed(){
-  //player.mousepress();
 }
 
 function title() {
@@ -138,10 +139,27 @@ function title() {
   textSize(16);
   textAlign(CENTER, CENTER);
   fill(255);
-  text(`Explore the Maze and Trigger Sounds along the way`, width / 2, height / 2.7);
-  text(`Use the Arrow Keys to Move, Try Going In Every Direction on the Blue Tiles`, width / 2, height / 2.3);
-  text(`You Cannot Go on Purple Squares, But Listen to What Happens If You Try!`, width / 2, height / 2.1);
-  text(`Also See What Happens When are Further or Closer to Them`, width / 2, height / 1.8);
+  text(`Sound Maze!`, width / 2, height / 3.9);
+  text(
+    `Explore the Maze and Trigger Sounds along the way`,
+    width / 2,
+    height / 2.7
+  );
+  text(
+    `Use the Arrow Keys to Move, Try Going In Every Direction on the Blue Tiles`,
+    width / 2,
+    height / 2.4
+  );
+  text(
+    `You Cannot Go on Purple Squares, But Listen to What Happens If You Try!`,
+    width / 2,
+    height / 2
+  );
+  text(
+    `Also Hear What Happens When You Are Further or Closer to Them`,
+    width / 2,
+    height / 1.8
+  );
   text(`Press Any Key to Start`, width / 2, height / 1.5);
   pop();
 }
