@@ -73,40 +73,27 @@ class Player {
 
       }
 
-      // For each row add an empty array to represent the row
-      // Go through all the columns in this row
-      // for (let c = 0; c < cols; c++) {
-      //     grid[r][c].display();
-      // }
     }
-      // this.noise.start();
-      // console.log(grid[minWallCol][minWallRow].width-minDist);
-      // grid[minWallCol][minWallRow].fillColor = color(255);
-      // this.noise.amp(0.1, 0.2);
+
       let testValue = grid[minWallCol][minWallRow].width-minDist;
 
       // Can change the colour to see distance between player and maze more clearly
       grid[minWallCol][minWallRow].fillColor = color(140,140,255);
 
+
+      // Time interval to prevent sound from overlapping.
       if(this.timePassed>this.interval){
         console.log("start sound");
         this.startTime = millis();
-        this.timePassed =0;
-    //    if (testValue > 5 ){
+        this.timePassed = 0;
 
-          //this.noise.amp(0.1, testValue/100);
+          // To adjust oscillator sound value
            this.playWallOscillator(testValue*10);
       //  }
       }
 
 
   }
-
-  // Player keypress movement and grid checking
-  // mousepress(){
-  //   this.noise.start();
-  //    this.noise.amp(0.2, 0.1);
-  // }
 
   keypressed() {
     console.log(key);
@@ -126,15 +113,19 @@ class Player {
           //reset change
           // grid[this.currentcol][this.currentrow].active = false;
         //  console.log(grid[this.currentcol][this.currentrow].active);
+          // Movement
           this.x = this.x - this.speed;
+          // Play Oscillator sound
           this.playOscillator();
 
 
         }
         else {
           console.log("go ahead");
+            // Movement
           this.x = this.x - this.speed;
-            synth.play(`C4`, 1, 0, 1);
+          // Play synth music
+            synth.play(`F4`, 1, 0, 1);
 
         }
       }
@@ -147,21 +138,25 @@ class Player {
         // So that we cannot go over this grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
-          //   //reset change
+          // Reset change
           this.currentcol = this.currentcol - 1;
         }   else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
           //  console.log(grid[this.currentcol][this.currentrow].name);
             //reset change
             // grid[this.currentcol][this.currentrow].active = false;
           //  console.log(grid[this.currentcol][this.currentrow].active);
+            // Movement
             this.x = this.x + this.speed;
+            // Play oscillation sound
             this.playOscillator();
           }
 
         else {
           console.log("go ahead");
+          // Movement
           this.x = this.x + this.speed;
-          synth.play(`D4`, 1, 0, 1);
+          // Play synth music
+          synth.play(`G4`, 1, 0, 1);
         }
       }
     }
@@ -182,11 +177,14 @@ class Player {
             // grid[this.currentcol][this.currentrow].active = false;
           //  console.log(grid[this.currentcol][this.currentrow].active);
             this.y = this.y - this.speed;
+            // Play oscillator sound
             this.playOscillator();
           }
 
         else {
           console.log("go ahead");
+          // Play synth music
+          synth.play(`Ab4`, 1, 0, 1);
           this.y = this.y - this.speed;
         }
       }
@@ -212,6 +210,7 @@ class Player {
           }
         else {
           console.log("go ahead");
+          synth.play(`Bb4`, 1, 0, 1);
           this.y = this.y + this.speed;
         }
       }
