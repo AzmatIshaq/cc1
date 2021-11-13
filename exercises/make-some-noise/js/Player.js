@@ -22,7 +22,7 @@ class Player {
     this.y = this.currentrow * 25;
     console.log(this.x);
     console.log(this.y);
-    //For movement
+    // For movement
     this.osc = new p5.Oscillator(300);
     // Wall distance
     this.osc2 = new p5.Oscillator(300);
@@ -94,18 +94,19 @@ class Player {
 
       }
 
-
   }
 
   keypressed() {
     console.log(key);
     if (key === "ArrowLeft") {
-      // if we are not on left boundary, adjust to remain in grid.
+      // if player is near left boundary, adjust to remain in grid.
       if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
-        // So that we cannot go over this grid
+        // So that player cannot go over this grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
+          // Synth plays when player tries to move towards it
+          synth.play(`E5`, 1, 0, 1);
           //reset change
           this.currentcol = this.currentcol + 1;
 
@@ -134,12 +135,14 @@ class Player {
     }
 
     if (key === "ArrowRight") {
-      // if we are not on left boundary, adjust to remain in grid.
+      // if player is near right boundary, adjust to remain in grid.
       if (this.currentcol + 1 <= cols - 1) {
         this.currentcol = this.currentcol + 1;
-        // So that we cannot go over this grid
+        // So that player cannot go over this grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
+          // Synth plays when player tries to move towards it
+          synth.play(`F5`, 1, 0, 1);
           // Reset change
           this.currentcol = this.currentcol - 1;
         }   else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
@@ -165,12 +168,14 @@ class Player {
 
 
     if (key === "ArrowUp") {
-      // if we are not on left boundary, adjust to remain in grid.
+      // if player is near top, adjust to remain in grid.
       if (this.currentrow - 1 >= 0) {
         this.currentrow = this.currentrow - 1;
-        // So that we cannot go over this grid
+        // So that player cannot go over this grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
+          // Synth plays when player tries to move towards it
+          synth.play(`G5`, 1, 0, 1);
           //reset change
           this.currentrow = this.currentrow + 1;
         } else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
@@ -193,13 +198,15 @@ class Player {
     }
 
     if (key === "ArrowDown") {
-      // if we are not on left boundary, adjust to remain in grid.
+      // If player is near bottom, adjust to remain in grid.
       if (this.currentrow + 1 <= rows - 1) {
         this.currentrow = this.currentrow + 1;
-        // So that we cannot go over this grid
+        // So that player cannot go over the grid
         if (grid[this.currentcol][this.currentrow].name === `Maze`) {
           console.log("no go");
-          //reset change
+          // Synth plays when player tries to move towards it
+          synth.play(`A5`, 1, 0, 1);
+          // Reset change
           this.currentrow = this.currentrow - 1;
         }
         else if (grid[this.currentcol][this.currentrow].name === `checkpoint`) {
@@ -224,6 +231,9 @@ class Player {
     // console.log(this.currentcol);
     // console.log(grid[this.currentcol][this.currentrow].name);
   }
+
+// Sound for distance from maze and player
+
  startOscillator(){
    this.osc2.start();
    this.osc2.amp(0.1);
@@ -241,7 +251,7 @@ class Player {
     this.osc2.amp(0, 0.1, 0.7);
  }
 
-//for checkpoint
+// Sound for checkpoint interaction
    playOscillator() {
   this.osc.start();
   this.osc.amp(0.5);

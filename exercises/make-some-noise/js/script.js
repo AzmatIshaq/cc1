@@ -21,7 +21,8 @@ let cols = 25;
 // The unit size (how big a square for each tile)
 let unit = 25;
 // Random items to populate the game map
-let items = [`W`, `C`, ``];
+let items = [`W`, `C`, ``, ``, ``];
+// Array for walls
 let walls = [];
 // Starting row
 let startRow = 8;
@@ -31,24 +32,20 @@ let startCol = 8;
 let synth;
 // Title State
 let state = `title`;
-
+// Maze variable
 let maze = {
   width: 20,
   height: 20,
 };
 
+// Variables to set height and width of walls
 let wallWidth = 10;
 let wallHeight = 30;
 
 /**
-Description of preload
-*/
-function preload() {}
-
-/**
 Setup:
 Create a canvas out of the rows, columns.
-Player class is initiated
+Classes are introduced and initiated
 */
 function setup() {
 
@@ -86,10 +83,6 @@ function setup() {
     }
   }
 
-  // Added a couple of test walls
-
-  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
-  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
 }
 
 /**
@@ -98,24 +91,13 @@ Display states
 */
 function draw() {
   background(0);
+
+  // If statements to load title and animation state
   if (state === `title`) {
     title();
   }
   if (state === `animation`) {
     animation();
-  }
-
-  if (state === `end`) {
-    wallWidth = 20;
-    wallHeight = 20;
-    //Ending
-    push();
-    fill(255);
-    textSize(16);
-    textAlign(CENTER, CENTER);
-    text(`GAME OVER`, width / 2, height / 2);
-    text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
-    pop();
   }
 }
 function animation() {
@@ -123,15 +105,10 @@ function animation() {
   for (let c = 0; c < grid.length; c++) {
     //console.log(grid[r]);
     let col = grid[c];
-
+    // For loops to display
     for (let r = 0; r < col.length; r++) {
       col[r].display();
     }
-    // For each row add an empty array to represent the row
-    // Go through all the columns in this row
-    // for (let c = 0; c < cols; c++) {
-    //     grid[r][c].display();
-    // }
   }
   for (let i = 0; i < walls.length; i++) {
     walls[i].display();
@@ -162,7 +139,9 @@ function title() {
   textAlign(CENTER, CENTER);
   fill(255);
   text(`Explore the Maze and Trigger Sounds along the way`, width / 2, height / 2.7);
-  text(`Use the Arrow Keys to Move, Try Going In Every Direction on the Blue Tiles`, width / 2, height / 2.4);
+  text(`Use the Arrow Keys to Move, Try Going In Every Direction on the Blue Tiles`, width / 2, height / 2.3);
+  text(`You Cannot Go on Purple Squares, But Listen to What Happens If You Try!`, width / 2, height / 2.1);
+  text(`Also See What Happens When are Further or Closer to Them`, width / 2, height / 1.8);
   text(`Press Any Key to Start`, width / 2, height / 1.5);
   pop();
 }
