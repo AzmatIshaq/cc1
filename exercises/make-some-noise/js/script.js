@@ -145,7 +145,7 @@ function animation() {
 function keyPressed() {
   if (state === `title`) {
     state = `animation`;
-     
+
   }
 
   player.keypressed();
@@ -161,8 +161,8 @@ function title() {
   textSize(16);
   textAlign(CENTER, CENTER);
   fill(255);
-  text(`Explore the Maze`, width / 2, height / 2.7);
-  text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  text(`Explore the Maze and Trigger Sounds along the way`, width / 2, height / 2.7);
+  text(`Use the Arrow Keys to Move, Try Going In Every Direction on the Blue Tiles`, width / 2, height / 2.4);
   text(`Press Any Key to Start`, width / 2, height / 1.5);
   pop();
 }

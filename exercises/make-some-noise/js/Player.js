@@ -62,6 +62,7 @@ class Player {
       for (let r = 0; r < col.length; r++) {
           if (col[r].name === `Maze`){
         //    console.log(col[r])
+        // Establish distance between player and maze
         let d = dist(this.x, this.y, col[r].x, col[r].y);
         if (d < minDist) {
           minDist = d;
@@ -75,6 +76,7 @@ class Player {
 
     }
 
+    // Variable to get distance between maze and player
       let testValue = grid[minWallCol][minWallRow].width-minDist;
 
       // Can change the colour to see distance between player and maze more clearly
@@ -88,8 +90,8 @@ class Player {
         this.timePassed = 0;
 
           // To adjust oscillator sound value
-           this.playWallOscillator(testValue*10);
-      //  }
+           this.playWallOscillator(testValue*900);
+
       }
 
 
