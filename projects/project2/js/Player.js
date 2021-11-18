@@ -40,13 +40,19 @@ class Player {
 
     imageMode(CENTER);
     image(spritePlayer, this.x + this.width, this.y + this.height, this.width * 2, this.height * 2);
-
-
-    imageMode(CENTER);
-    image(fog, this.x + this.width / 1.5, this.y + this.height / 1.5, width * 2, height * 2);
     pop();
 
+    if (fogActive === true)  {
 
+      imageMode(CENTER);
+        image(
+          fog,
+          this.x + this.width / 1.5,
+          this.y + this.height / 1.5,
+          width * 2,
+          height * 2
+        );
+      }
   }
 
   // Player keypress movement and grid checking
@@ -54,6 +60,8 @@ class Player {
   keypressed() {
     console.log(key);
     if (key === "ArrowLeft") {
+      // reset fog
+      fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
@@ -70,6 +78,8 @@ class Player {
     }
 
     if (key === "ArrowRight") {
+      // reset fog
+      fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol + 1 <= cols - 1) {
         this.currentcol = this.currentcol + 1;
@@ -87,6 +97,8 @@ class Player {
 
 
     if (key === "ArrowUp") {
+      // reset fog
+      fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow - 1 >= 0) {
         this.currentrow = this.currentrow - 1;
@@ -103,6 +115,8 @@ class Player {
     }
 
     if (key === "ArrowDown") {
+      // reset fog
+      fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow + 1 <= rows - 1) {
         this.currentrow = this.currentrow + 1;
@@ -123,6 +137,9 @@ class Player {
 
     if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
         grid[this.currentcol][this.currentrow] = new PathCell(20,20,unit*this.currentcol,unit*this.currentrow);
+        fogActive = false;
+
+
 }
     console.log(this.x);
     console.log(this.y);

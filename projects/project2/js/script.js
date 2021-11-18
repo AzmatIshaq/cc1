@@ -45,6 +45,12 @@ let spritePlayer = undefined;
 // Fog
 
 let fog;
+let fogActive = true;
+
+// Map angle
+
+let mapAngle = 0;
+let mapAngleChange = 0.1;
 
 
 /**
@@ -63,6 +69,9 @@ Player class is initiated
 */
 function setup() {
   createCanvas(cols * unit, rows * unit);
+
+  // Initialize audio
+  userStartAudio();
 
   // Initialized player class
   player = new Player(10, 10, unit, startCol, startRow);
@@ -135,7 +144,10 @@ function draw() {
 }
 function animation() {
 
-
+  translate(width / 2, height / 2);
+  rotate(mapAngle);
+  translate(-width / 2, -height / 2);
+  mapAngle += mapAngleChange;
 
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
