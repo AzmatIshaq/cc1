@@ -84,19 +84,13 @@ function setup() {
 
       // Add a Maze and paths to the columns
 
-      if (item === `C`) {
-        grid[c].push(new Maze(maze.width , maze.height, unit * c, unit * r));
-      } else {
-        grid[c].push(new PathCell(20, 20, unit * c, unit * r));
-      }
-
-
-
-      // Add checkpoints to columns
-      // Not yet functional
-      if (item === `W`) {
-        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
-      }
+  if (item === `C`) {
+    grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
+  } else if (item === `W`) {
+    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+  } else {
+    grid[c].push(new PathCell(20, 20, unit * c, unit * r));
+  }
 
     }
   }

@@ -118,6 +118,12 @@ class Player {
       }
     }
 
+    // Checkpoint collection and interaction
+    // Essentially we convert a checkpoint into a pathcell
+
+    if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
+        grid[this.currentcol][this.currentrow] = new PathCell(20,20,unit*this.currentcol,unit*this.currentrow);
+}
     console.log(this.x);
     console.log(this.y);
     console.log(this.currentrow);
