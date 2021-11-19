@@ -39,20 +39,25 @@ class Player {
     );
 
     imageMode(CENTER);
-    image(spritePlayer, this.x + this.width, this.y + this.height, this.width * 2, this.height * 2);
+    image(
+      spritePlayer,
+      this.x + this.width,
+      this.y + this.height,
+      this.width * 2,
+      this.height * 2
+    );
     pop();
 
-    if (fogActive === true)  {
-
+    if (fogActive === true) {
       imageMode(CENTER);
-        image(
-          fog,
-          this.x + this.width / 1.5,
-          this.y + this.height / 1.5,
-          width * 2,
-          height * 2
-        );
-      }
+      image(
+        fog,
+        this.x + this.width / 1.5,
+        this.y + this.height / 1.5,
+        width * 2,
+        height * 2
+      );
+    }
   }
 
   // Player keypress movement and grid checking
@@ -95,7 +100,6 @@ class Player {
       }
     }
 
-
     if (key === "ArrowUp") {
       // reset fog
       fogActive = true;
@@ -136,11 +140,25 @@ class Player {
     // Essentially we convert a checkpoint into a pathcell
 
     if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
-        grid[this.currentcol][this.currentrow] = new PathCell(20,20,unit*this.currentcol,unit*this.currentrow);
-        fogActive = false;
+      grid[this.currentcol][this.currentrow] = new PathCell(
+        20,
+        20,
+        unit * this.currentcol,
+        unit * this.currentrow
+      );
+      // Deactivating fog of war when collecting checkpoint
+      fogActive = false;
+      // Rotating map when collecting checkpoint
+      mapAngleChange = mapAngleChange + 0.001;
+    }
 
+    // Stopping map rotation
 
-}
+    if (mapAngleChange === 0.003) {
+      mapAngle = - 0.003
+      mapAngleChange = mapAngleChange - 0.003;
+    }
+
     console.log(this.x);
     console.log(this.y);
     console.log(this.currentrow);

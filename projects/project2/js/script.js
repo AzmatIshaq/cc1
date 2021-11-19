@@ -11,8 +11,7 @@ This is a prototype of Project 2 for the CART 253 Class at Concordia University.
 let player;
 // Walls represented by the grid
 let wall;
-// Checkpoints for player to reach
-let checkpoint;
+
 // Grid array in order to make game map
 let grid = [];
 // Rows and columns in the grid
@@ -50,7 +49,14 @@ let fogActive = true;
 // Map angle
 
 let mapAngle = 0;
-let mapAngleChange = 0.1;
+let mapAngleChange = 0.00;
+
+// Checkpoint variables
+
+// Checkpoints
+let checkpoint;
+// Tracking checkpoint pickups
+let checkPickup;
 
 
 /**
@@ -75,10 +81,6 @@ function setup() {
 
   // Initialized player class
   player = new Player(10, 10, unit, startCol, startRow);
-
-  // Initialize fog class
-
-
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -138,16 +140,21 @@ function draw() {
   pop();
 
   }
-
-
-
 }
+
 function animation() {
 
   translate(width / 2, height / 2);
   rotate(mapAngle);
   translate(-width / 2, -height / 2);
   mapAngle += mapAngleChange;
+
+// Trying to stop map spinning if reaches a certain speed
+
+  // if (mapAngleChange > 0.003) {
+  // let mapAngle = 0;
+  // let mapAngleChange = 0;
+  // }
 
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
