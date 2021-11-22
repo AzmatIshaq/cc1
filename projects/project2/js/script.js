@@ -44,7 +44,8 @@ let spritePlayer = undefined;
 // Fog
 
 let fog;
-let fogActive = true;
+// set fog to true for effect
+let fogActive;
 
 // Map angle
 
@@ -55,8 +56,19 @@ let mapAngleChange = 0.00;
 
 // Checkpoints
 let checkpoint;
-// Tracking checkpoint pickups
-let checkPickup;
+
+// This is the scoreKeeper variable that we see at the top left of the canvas
+let scoreKeeper = 0;
+
+// Health bar
+
+
+let health = {
+  width: 0,
+  y: 0,
+  size: 10,
+  fill: 255,
+};
 
 
 /**
@@ -74,7 +86,7 @@ Create a canvas out of the rows, columns.
 Player class is initiated
 */
 function setup() {
-  createCanvas(cols * unit, rows * unit);
+  createCanvas(cols * unit, rows * unit + width / 2);
 
   // Initialize audio
   userStartAudio();
@@ -144,6 +156,37 @@ function draw() {
 
 function animation() {
 
+// Player Health
+
+push();
+fill(255);
+textAlign(CENTER, CENTER);
+textSize(18);
+text('Health', width / 10, height / 1.08);
+pop();
+
+// Outline for health bar
+
+push();
+stroke(255);
+noFill();
+rectMode(CENTER);
+rect(width / 10, height / 1.04, 100, 20);
+pop();
+
+// Health bar retangle
+
+push();
+noStroke();
+fill(255, 161, 0);
+rectMode(CENTER);
+rect(400, 28, health.width, 19);
+pop();
+
+
+
+  // Map spin effect
+
   translate(width / 2, height / 2);
   rotate(mapAngle);
   translate(-width / 2, -height / 2);
@@ -177,7 +220,14 @@ function animation() {
   player.move();
   player.display();
 
+  // To display the play score
 
+    push();
+    fill(255);
+    textSize(44);
+    text(scoreKeeper, 30, 65);
+    textAlign(CENTER, CENTER);
+    pop();
 
 }
 

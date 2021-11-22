@@ -26,6 +26,8 @@ class Player {
 
   move() {}
 
+// Display player square
+
   display() {
     push();
     noStroke();
@@ -37,6 +39,8 @@ class Player {
       this.width,
       this.height
     );
+
+// Display player sprite
 
     imageMode(CENTER);
     image(
@@ -66,7 +70,7 @@ class Player {
     console.log(key);
     if (key === "ArrowLeft") {
       // reset fog
-      fogActive = true;
+      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
@@ -84,7 +88,7 @@ class Player {
 
     if (key === "ArrowRight") {
       // reset fog
-      fogActive = true;
+      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol + 1 <= cols - 1) {
         this.currentcol = this.currentcol + 1;
@@ -102,7 +106,7 @@ class Player {
 
     if (key === "ArrowUp") {
       // reset fog
-      fogActive = true;
+      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow - 1 >= 0) {
         this.currentrow = this.currentrow - 1;
@@ -120,7 +124,7 @@ class Player {
 
     if (key === "ArrowDown") {
       // reset fog
-      fogActive = true;
+      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow + 1 <= rows - 1) {
         this.currentrow = this.currentrow + 1;
@@ -140,23 +144,39 @@ class Player {
     // Essentially we convert a checkpoint into a pathcell
 
     if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
-      grid[this.currentcol][this.currentrow] = new PathCell(
+      grid[this.currentcol][this.currentrow] = new ChangedCell(
         20,
         20,
         unit * this.currentcol,
         unit * this.currentrow
       );
-      // Deactivating fog of war when collecting checkpoint
-      fogActive = false;
+      // Activate fog of war
+      fogActive = true;
       // Rotating map when collecting checkpoint
       mapAngleChange = mapAngleChange + 0.001;
+      // Scorekeeper goes up whenever checkpoint is collected
+      scoreKeeper++;
     }
+
+
+    // Resetting a Changed cell to a pathcell
+
+    // if (grid[this.currentcol][this.currentrow].name === `changedCell`) {
+    //   if (fogActive === true) {
+    //     fogActive = false;
+    //     }
+    //   }
 
     // Stopping map rotation
 
     if (mapAngleChange === 0.003) {
       mapAngle = - 0.003
       mapAngleChange = mapAngleChange - 0.003;
+    }
+
+    if (grid[this.currentcol][this.currentrow].name === `pathcell`){
+    // Deactivating fog of war
+    fogActive = false;
     }
 
     console.log(this.x);
