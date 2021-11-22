@@ -18,32 +18,38 @@ class HealthBar {
 
   display() {
 
-  // Player Health text
+    // Player Health text
 
-  push();
-  fill(255);
-  textAlign(CENTER, CENTER);
-  textSize(18);
-  text('Health', width / 10, height / 1.08);
-  pop();
+    push();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(18);
+    text('Health', width / 10, height / 1.08);
+    pop();
 
-  // Outline for health bar
+    // Outline for health bar
 
-  push();
-  stroke(255);
-  noFill();
-  rectMode(CENTER);
-  rect(width / 10, height / 1.04, 100, 20);
-  pop();
+    push();
+    stroke(255);
+    noFill();
+    rectMode(CENTER);
+    rect(width / 10, height / 1.04, 100, 20);
+    pop();
 
-  // Health bar retangle
+    // Health bar retangle
 
-  push();
-  noStroke();
-  fill(25, 161, 0);
-  rectMode(CENTER);
-  rect(width / 10, height / 1.04, this.width, this.height);
-  pop();
+    push();
+    noStroke();
+    fill(25, 161, 0);
+    rectMode();
+    rect(width / 48, height / 1.059, this.width, this.height);
+    pop();
+
+
+    // Health bar affected by spin
+    if (mapAngleChange > 0.05) {
+        this.width = this.width - 0.1
+    }
 
   }
 

@@ -150,10 +150,6 @@ class Player {
         unit * this.currentcol,
         unit * this.currentrow
       );
-      // Activate fog of war
-      fogActive = true;
-      // Rotating map when collecting checkpoint
-      mapAngleChange = mapAngleChange + 0.001;
       // Scorekeeper goes up whenever checkpoint is collected
       scoreKeeper++;
       // Trigger sound
@@ -161,25 +157,51 @@ class Player {
     }
 
 
-    // Resetting a Changed cell to a pathcell
+    // Use for loop to count and set spin?
 
-    // if (grid[this.currentcol][this.currentrow].name === `changedCell`) {
-    //   if (fogActive === true) {
-    //     fogActive = false;
-    //     }
-    //   }
-
-    // Stopping map rotation
-
-    if (mapAngleChange === 0.003) {
-      mapAngle = - 0.003
-      mapAngleChange = mapAngleChange - 0.003;
+    if (scoreKeeper === 0) {
+      // Activate fog of war
+      fogActive = true;
     }
 
-    if (grid[this.currentcol][this.currentrow].name === `pathcell`){
-    // Deactivating fog of war
-    fogActive = false;
+    if (scoreKeeper === 10) {
+        fogActive = false;
     }
+
+    // Trigger map spinning effect
+
+    if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
+    // Rotating map when collecting checkpoint
+    mapAngleChange = mapAngleChange + 0.004;
+      if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+        mapAngleChange = mapAngleChange + 0.001;
+        }
+      }
+
+    if (scoreKeeper > 20) {
+        fogActive = true;
+    }
+
+    if (scoreKeeper > 22) {
+        mapAngleChange = 0;
+        mapAngle = 0;
+    }
+
+
+
+
+
+    // // Stopping map rotation
+    //
+    // if (mapAngleChange === 0.003) {
+    //   mapAngle = - 0.003
+    //   mapAngleChange = mapAngleChange - 0.003;
+    // }
+
+  // Deactivating fog of war
+    // if (grid[this.currentcol][this.currentrow].name === `pathcell`){
+    // fogActive = false;
+    // }
 
     console.log(this.x);
     console.log(this.y);

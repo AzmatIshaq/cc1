@@ -44,7 +44,7 @@ let spritePlayer = undefined;
 // Fog
 
 let fog;
-// set fog to true for effect
+// Variable to set fog to true for fog effect
 let fogActive;
 
 // Map angle
@@ -160,9 +160,6 @@ function draw() {
 
 function animation() {
 
-
-
-
   // Map spin effect
 
   translate(width / 2, height / 2);
@@ -170,12 +167,6 @@ function animation() {
   translate(-width / 2, -height / 2);
   mapAngle += mapAngleChange;
 
-// Trying to stop map spinning if reaches a certain speed
-
-  // if (mapAngleChange > 0.003) {
-  // let mapAngle = 0;
-  // let mapAngleChange = 0;
-  // }
 
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
@@ -209,7 +200,7 @@ function animation() {
     push();
     fill(255);
     textSize(44);
-    text(scoreKeeper, 30, 65);
+    text(scoreKeeper, width / 1.2, height / 1.02);
     textAlign(CENTER, CENTER);
     pop();
 
