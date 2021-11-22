@@ -1,7 +1,7 @@
 // Player Class
 
 class Player {
-  constructor(w, h, unit, startcol, startrow) {
+  constructor(w, h, unit, startColP, startRowP) {
     this.x = 0;
     this.y = 250;
     this.vx = 0;
@@ -16,8 +16,8 @@ class Player {
     this.height = h;
     this.r = 0;
     this.c = 0;
-    this.currentcol = startcol;
-    this.currentrow = startrow;
+    this.currentcol = startColP;
+    this.currentrow = startRowP;
     this.x = this.currentcol * 25;
     this.y = this.currentrow * 25;
     console.log(this.x);
@@ -141,7 +141,7 @@ class Player {
     }
 
     // Checkpoint collection and interaction
-    // Essentially we convert a checkpoint into a pathcell
+    // Convert a checkpoint into a changed cell aka pathcell.
 
     if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
       grid[this.currentcol][this.currentrow] = new ChangedCell(
@@ -152,40 +152,51 @@ class Player {
       );
       // Scorekeeper goes up whenever checkpoint is collected
       scoreKeeper++;
-      // Trigger sound
+      // Trigger sound when checkpoint is collected
       sounds.playOscillator()
     }
 
 
     // Use for loop to count and set spin?
 
-    if (scoreKeeper === 0) {
-      // Activate fog of war
-      fogActive = true;
-    }
+    // if (scoreKeeper === 0) {
+    //   // Activate fog of war
+    //   fogActive = true;
+    // }
+    //
+    // if (scoreKeeper === 10) {
+    //     fogActive = false;
+    // }
+    //
+    // // Trigger map spinning effect
+    //
+    // if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
+    // // Rotating map when collecting checkpoint
+    // mapAngleChange = mapAngleChange + 0.004;
+    //   if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+    //     mapAngleChange = mapAngleChange + 0.001;
+    //     }
+    //   }
+    //
+    // if (scoreKeeper > 20) {
+    //     fogActive = true;
+    // }
+    //
+    // if (scoreKeeper > 22) {
+    //     mapAngleChange = 0;
+    //     mapAngle = 0;
+    // }
+    //
 
-    if (scoreKeeper === 10) {
-        fogActive = false;
-    }
-
-    // Trigger map spinning effect
-
-    if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
-    // Rotating map when collecting checkpoint
-    mapAngleChange = mapAngleChange + 0.004;
-      if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-        mapAngleChange = mapAngleChange + 0.001;
-        }
-      }
-
-    if (scoreKeeper > 20) {
-        fogActive = true;
-    }
-
-    if (scoreKeeper > 22) {
-        mapAngleChange = 0;
-        mapAngle = 0;
-    }
+  // To leave a maze trail behind player
+    // if (scoreKeeper > 2) {
+    //   grid[this.currentcol][this.currentrow] = new Maze(
+    //     20,
+    //     20,
+    //     unit * this.currentcol,
+    //     unit * this.currentrow
+    //   );
+    // }
 
 
 

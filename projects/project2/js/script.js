@@ -34,6 +34,8 @@ let maze = {
   height: 20,
 }
 
+// Wall variables
+
 let wallWidth = 10;
 let wallHeight = 30;
 
@@ -42,8 +44,8 @@ let wallHeight = 30;
 let spritePlayer = undefined;
 
 // Fog
-
 let fog;
+
 // Variable to set fog to true for fog effect
 let fogActive;
 
@@ -107,20 +109,16 @@ function setup() {
       // Choose a random item to add at this position
       // (W, c, or nothing)
       let item = random(items);
-
-
-      // Add a Maze and paths to the columns
-
-  if (item === `C`) {
-    grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
-  } else if (item === `W`) {
-    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
-  } else {
-    grid[c].push(new PathCell(20, 20, unit * c, unit * r));
-  }
-
+        // Add a Maze and paths to the columns
+        if (item === `C`) {
+          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
+        } else if (item === `W`) {
+          grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+        } else {
+          grid[c].push(new PathCell(20, 20, unit * c, unit * r));
+        }
+      }
     }
-  }
 
   // Added a couple of test walls
 
