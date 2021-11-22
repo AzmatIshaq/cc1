@@ -60,16 +60,13 @@ let checkpoint;
 // This is the scoreKeeper variable that we see at the top left of the canvas
 let scoreKeeper = 0;
 
-// Health bar
+// Variable to initiate health bar
 
+let healthBar;
 
-let health = {
-  width: 0,
-  y: 0,
-  size: 10,
-  fill: 255,
-};
+// Variable to initiate sounds
 
+let sounds;
 
 /**
 Description of preload
@@ -91,8 +88,15 @@ function setup() {
   // Initialize audio
   userStartAudio();
 
-  // Initialized player class
+  // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);
+
+  // Initialize health bar class
+  healthBar = new HealthBar();
+
+  // Initialize sounds class
+
+  sounds = new Sounds();
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -156,32 +160,6 @@ function draw() {
 
 function animation() {
 
-// Player Health
-
-push();
-fill(255);
-textAlign(CENTER, CENTER);
-textSize(18);
-text('Health', width / 10, height / 1.08);
-pop();
-
-// Outline for health bar
-
-push();
-stroke(255);
-noFill();
-rectMode(CENTER);
-rect(width / 10, height / 1.04, 100, 20);
-pop();
-
-// Health bar retangle
-
-push();
-noStroke();
-fill(255, 161, 0);
-rectMode(CENTER);
-rect(400, 28, health.width, 19);
-pop();
 
 
 
@@ -216,9 +194,15 @@ pop();
   for (let i = 0; i < walls.length; i++) {
     walls[i].display();
   }
-  // Player
-  player.move();
+
+  // Player animation
+
   player.display();
+
+
+  // Health bar animation
+  healthBar.display();
+
 
   // To display the play score
 

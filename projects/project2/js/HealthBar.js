@@ -1,11 +1,15 @@
 // HealthBar Class
 
 class HealthBar {
-  constructor(w, h, x, y) {
-    this.width = w;
-    this.height = h;
-    this.x = x;
-    this.y = y;
+  constructor() {
+    this.width = 99;
+    this.height = 19;
+    this.outlineWidth = 2;
+    this.outlineHeight = 2;
+    this.x = 0;
+    this.y = 0;
+    this.outlineX = 1;
+    this.outlineY = 1;
     this.name = "healthBar";
   }
 
@@ -36,9 +40,9 @@ class HealthBar {
 
   push();
   noStroke();
-  fill(255, 161, 0);
+  fill(25, 161, 0);
   rectMode(CENTER);
-  rect(400, 28, health.width, 19);
+  rect(width / 10, height / 1.04, this.width, this.height);
   pop();
 
   }

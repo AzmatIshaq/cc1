@@ -156,6 +156,8 @@ class Player {
       mapAngleChange = mapAngleChange + 0.001;
       // Scorekeeper goes up whenever checkpoint is collected
       scoreKeeper++;
+      // Trigger sound
+      sounds.playOscillator()
     }
 
 
