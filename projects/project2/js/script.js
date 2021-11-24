@@ -29,6 +29,8 @@ let startCol = 8;
 // Title State
 let state = `title`;
 
+let wallsStopMoving =false;
+
 let maze = {
   width: 20,
   height: 20,
@@ -110,9 +112,9 @@ function setup() {
       // (W, c, or nothing)
       let item = random(items);
         // Add a Maze and paths to the columns
-        if (item === `C`) {
+        if (item === `C` && (c!==startCol || r!==startRow)) {
           grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
-        } else if (item === `W`) {
+        } else if (item === `W` && (c!==startCol || r!==startRow)) {
           grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
         } else {
           grid[c].push(new PathCell(20, 20, unit * c, unit * r));
@@ -122,9 +124,22 @@ function setup() {
 
   // Added a couple of test walls
 
-  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
-  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
+//  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
+//  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
 
+// For loop for the grid
+for (let c = 0; c < cols; c++) {
+  // For each row add an empty array to represent the row
+  walls.push([]);
+  // Go through the grid's rows
+  for (let r = 0; r < rows; r++) {
+    if (grid[c][r].name === `Maze`) {
+        walls[c].push(new Wall(20, 20, c, r,unit));
+      }
+
+  }
+
+}
 }
 
 /**
@@ -138,7 +153,9 @@ function draw() {
   }
   if (state === `animation`) {
   animation();
-
+  }
+  if (state === `endLose`) {
+  endLose();
   }
 
   if ( state === `end`) {
@@ -157,6 +174,12 @@ function draw() {
 }
 
 function animation() {
+
+  // Collision detection between player character and walls
+  let minWallDist = checkCollisionWithWalls();
+  // HealthBar decrease during collision
+  healthBar.changeStatus(minWallDist);
+
 
   // Map spin effect
 
@@ -180,13 +203,26 @@ function animation() {
     //     grid[r][c].display();
     // }
   }
-  for (let i = 0; i < walls.length; i++) {
-    walls[i].display();
-  }
 
   // Player animation
 
   player.display();
+
+  // for loops to display the columns and rows of walls
+  for (let c = 0; c < walls.length; c++) {
+    //console.log(grid[r]);
+    let col = walls[c];
+
+    for (let r = 0; r < col.length; r++) {
+        col[r].display();
+        //if (wallsStopMoving ===false) {
+        // Dispaly wall growth
+        col[r].move();
+      //  }
+    }
+  }
+
+
 
 
   // Health bar animation
@@ -222,4 +258,50 @@ function title() {
   text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   text(`Press Any Key to Start`, width / 2, height / 1.5);
   pop();
+}
+
+function endLose() {
+  // End text
+  push();
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  text(`GAME OVER`, width / 2, height / 2.7);
+  pop();
+}
+
+/*** COLLISION  BETWEEN WALLS  AND PLAYER**/
+function checkCollisionWithWalls(){
+  let minDist = 500;
+  let minWallCol = 0;
+  let minWallRow = 0;
+  // for loop the columns and rows
+  for (let c = 0; c < walls.length; c++) {
+    //console.log(grid[r]);
+    let col = walls[c];
+
+    for (let r = 0; r < col.length; r++) {
+
+        //    console.log(col[r])
+        // Establish distance between player and maze
+        // Have to add + 10 to player in order to prevent maze distance
+        // Calculation from going back to positive
+        let d = dist(player.x + 12, player.y, col[r].x + col[r].width, col[r].y);
+
+        if (d < minDist) {
+          minDist = d;
+          minWallCol = c;
+          minWallRow = r;
+        }
+        // if(player.x > col[r].x && player.x > col[r].x+col[r].width ){
+        //     if(player.y > col[r].x && player.x > col[r].x+col[r].width )
+        // }
+
+      }
+
+  }
+   console.log(minDist);
+   return minDist;
+
+
 }

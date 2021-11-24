@@ -144,6 +144,7 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
+      wallsStopMoving = true;
       grid[this.currentcol][this.currentrow] = new ChangedCell(
         20,
         20,
@@ -159,34 +160,34 @@ class Player {
 
     // Use for loop to count and set spin?
 
-    // if (scoreKeeper === 0) {
-    //   // Activate fog of war
-    //   fogActive = true;
-    // }
-    //
-    // if (scoreKeeper === 10) {
-    //     fogActive = false;
-    // }
-    //
-    // // Trigger map spinning effect
-    //
-    // if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
-    // // Rotating map when collecting checkpoint
-    // mapAngleChange = mapAngleChange + 0.004;
-    //   if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-    //     mapAngleChange = mapAngleChange + 0.001;
-    //     }
-    //   }
-    //
-    // if (scoreKeeper > 20) {
-    //     fogActive = true;
-    // }
-    //
-    // if (scoreKeeper > 22) {
-    //     mapAngleChange = 0;
-    //     mapAngle = 0;
-    // }
-    //
+    if (scoreKeeper === 0) {
+      // Activate fog of war
+      fogActive = true;
+    }
+
+    if (scoreKeeper === 10) {
+        fogActive = false;
+    }
+
+    // Trigger map spinning effect
+
+    if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
+    // Rotating map when collecting checkpoint
+    mapAngleChange = mapAngleChange + 0.004;
+      if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+        mapAngleChange = mapAngleChange + 0.001;
+        }
+      }
+
+    if (scoreKeeper > 20) {
+        fogActive = true;
+    }
+
+    if (scoreKeeper > 22) {
+        mapAngleChange = 0;
+        mapAngle = 0;
+    }
+
 
   // To leave a maze trail behind player
     // if (scoreKeeper > 2) {

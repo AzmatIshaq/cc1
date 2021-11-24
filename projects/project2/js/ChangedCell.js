@@ -10,7 +10,7 @@ class ChangedCell {
   }
 
   move() {
-    // this.x =
+    
   }
 
   display() {
