@@ -7,6 +7,16 @@ This is a prototype of Project 2 for the CART 253 Class at Concordia University.
 
 "use strict";
 
+//
+
+let levels = [
+ [`W`,`C`,``],
+ [`W`,`C`,``,`F`],
+ [`W`,`C`,``,`S`],
+ [`W`,`C`,``,`X`],
+ [`W`,`C`,``,`X`,`S`],
+];
+
 // A variable to introduce the player class
 let player;
 // Walls represented by the grid
@@ -36,6 +46,9 @@ let maze = {
   height: 20,
 }
 
+// Door variable to initialize class
+let door;
+
 // Wall variables
 
 let wallWidth = 10;
@@ -43,7 +56,9 @@ let wallHeight = 30;
 
 // Image variables
 
+let titleBackground = undefined;
 let spritePlayer = undefined;
+
 
 // Fog
 let fog;
@@ -78,6 +93,7 @@ Description of preload
 function preload() {
 
 spritePlayer = loadImage(`assets/images/test_sprite.png`);
+titleBackground = loadImage(`assets/images/title_background3.png`);
 fog = loadImage(`assets/images/fog_war1.png`);
 }
 
@@ -92,6 +108,8 @@ function setup() {
   // Initialize audio
   userStartAudio();
 
+  // door = new Door();
+
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);
 
@@ -101,6 +119,10 @@ function setup() {
   // Initialize sounds class
 
   sounds = new Sounds();
+
+  // Initialize door class
+
+  // door = new Door();
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -150,6 +172,7 @@ function draw() {
   background(0);
   if (state === `title`) {
   title();
+
   }
   if (state === `animation`) {
   animation();
@@ -204,6 +227,10 @@ function animation() {
     // }
   }
 
+// Door animation
+
+// door.display();
+
   // Player animation
 
   player.display();
@@ -223,8 +250,6 @@ function animation() {
   }
 
 
-
-
   // Health bar animation
   healthBar.display();
 
@@ -241,22 +266,41 @@ function animation() {
 }
 
 function keyPressed() {
-  if (state === `title`) {
+  if (state === `title` && key === "Enter") {
     state = `animation`;
+  }
+  if (state === `title` && key === "t") {
+    state = `tutorial`;
   }
 
     player.keypressed();
 }
 
 function title() {
+
+  // Title background
+  background(titleBackground);
+
   // Opening text and instructions
   push();
   textSize(16);
   textAlign(CENTER, CENTER);
+
   fill(255);
-  text(`Explore the Maze`, width / 2, height / 2.7);
+  text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
   text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-  text(`Press Any Key to Start`, width / 2, height / 1.5);
+  text(`Press Enter to Start`, width / 2, height / 1.5);
+  pop();
+
+
+}
+
+function tutorial() {
+  fill(255);
+  text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
+  text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  text(`Collect Checkpoints to move to the next level`, width / 2, height / 1.5);
+  text(`Watch your Health Bar and Escape through the door when it appears`, width / 2, height / 1.5);
   pop();
 }
 
@@ -300,7 +344,7 @@ function checkCollisionWithWalls(){
       }
 
   }
-   console.log(minDist);
+   // console.log(minDist);
    return minDist;
 
 

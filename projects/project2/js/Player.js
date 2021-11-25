@@ -153,6 +153,18 @@ class Player {
       );
       // Scorekeeper goes up whenever checkpoint is collected
       scoreKeeper++;
+      if (scoreKeeper == 2) {
+        console.log("create door");
+            grid[this.currentcol + 1][this.currentrow] = new Door (
+                  20,
+                  20,
+                (this.currentcol + 1)*unit,
+                this.currentrow*unit
+                  // unit * this.currentcol + 25,
+                  // unit * this.currentrow + 25
+            )
+
+      }
       // Trigger sound when checkpoint is collected
       sounds.playOscillator()
     }
@@ -160,34 +172,40 @@ class Player {
 
     // Use for loop to count and set spin?
 
-    if (scoreKeeper === 0) {
-      // Activate fog of war
-      fogActive = true;
-    }
-
-    if (scoreKeeper === 10) {
-        fogActive = false;
-    }
+    // if (scoreKeeper === 0) {
+    //   // Activate fog of war
+    //   fogActive = true;
+    // }
+    //
+    // if (scoreKeeper === 10) {
+    //     fogActive = false;
+    // }
 
     // Trigger map spinning effect
 
-    if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
-    // Rotating map when collecting checkpoint
-    mapAngleChange = mapAngleChange + 0.004;
-      if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-        mapAngleChange = mapAngleChange + 0.001;
-        }
-      }
+    // if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
+    // // Rotating map when collecting checkpoint
+    // mapAngleChange = mapAngleChange + 0.004;
+    //   if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+    //     mapAngleChange = mapAngleChange + 0.001;
+    //     }
+    //   }
+    //
+    // if (scoreKeeper > 20) {
+    //     fogActive = true;
+    // }
+    //
+    // if (scoreKeeper > 22) {
+    //     mapAngleChange = 0;
+    //     mapAngle = 0;
+    // }
 
-    if (scoreKeeper > 20) {
-        fogActive = true;
-    }
 
-    if (scoreKeeper > 22) {
-        mapAngleChange = 0;
-        mapAngle = 0;
-    }
 
+
+    // To go to another round of maze and different events
+    // if (grid[this.currentcol][this.currentrow].name === `changedCell` && scoreKeeper ===) {
+    // }
 
   // To leave a maze trail behind player
     // if (scoreKeeper > 2) {
