@@ -7,7 +7,7 @@ This is a prototype of Project 2 for the CART 253 Class at Concordia University.
 
 "use strict";
 
-//
+// Levels array to alternate variety of pickups
 
 let levels = [
  [`W`,`C`,``],
@@ -16,6 +16,13 @@ let levels = [
  [`W`,`C`,``,`X`],
  [`W`,`C`,``,`X`,`S`],
 ];
+
+// Variables to alternate between specific levels
+
+let currentLevel = 0;
+
+let level = undefined;
+
 
 // A variable to introduce the player class
 let player;
@@ -30,7 +37,7 @@ let cols = 25;
 // The unit size (how big a square for each tile)
 let unit = 25;
 // Random items to populate the game map
-let items = [`W`, `C`, ``];
+let items = [`W`, `C`, ``, `F`, `S`];
 let walls = [];
 // Starting row
 let startRow = 8;
@@ -105,63 +112,17 @@ Player class is initiated
 function setup() {
   createCanvas(cols * unit, rows * unit + width / 2);
 
+  // Levels
+  setupLevel();
+
+  level = levels[currentLevel]
+
   // Initialize audio
   userStartAudio();
 
   // door = new Door();
 
-  // Initialize player class
-  player = new Player(10, 10, unit, startCol, startRow);
 
-  // Initialize health bar class
-  healthBar = new HealthBar();
-
-  // Initialize sounds class
-
-  sounds = new Sounds();
-
-  // Initialize door class
-
-  // door = new Door();
-
-  // For loop for the grid
-  for (let c = 0; c < cols; c++) {
-    // For each row add an empty array to represent the row
-    grid.push([]);
-    // Go through the grid's rows
-    for (let r = 0; r < rows; r++) {
-      // Choose a random item to add at this position
-      // (W, c, or nothing)
-      let item = random(items);
-        // Add a Maze and paths to the columns
-        if (item === `C` && (c!==startCol || r!==startRow)) {
-          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
-        } else if (item === `W` && (c!==startCol || r!==startRow)) {
-          grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
-        } else {
-          grid[c].push(new PathCell(20, 20, unit * c, unit * r));
-        }
-      }
-    }
-
-  // Added a couple of test walls
-
-//  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
-//  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
-
-// For loop for the grid
-for (let c = 0; c < cols; c++) {
-  // For each row add an empty array to represent the row
-  walls.push([]);
-  // Go through the grid's rows
-  for (let r = 0; r < rows; r++) {
-    if (grid[c][r].name === `Maze`) {
-        walls[c].push(new Wall(20, 20, c, r,unit));
-      }
-
-  }
-
-}
 }
 
 /**
@@ -348,4 +309,63 @@ function checkCollisionWithWalls(){
    return minDist;
 
 
+}
+
+function setupLevel() {
+  // Initialize player class
+  player = new Player(10, 10, unit, startCol, startRow);
+
+  // Initialize health bar class
+  healthBar = new HealthBar();
+
+  // Initialize sounds class
+
+  sounds = new Sounds();
+
+  // Initialize door class
+
+  // door = new Door();
+
+  // For loop for the grid
+  for (let c = 0; c < cols; c++) {
+    // For each row add an empty array to represent the row
+    grid.push([]);
+    // Go through the grid's rows
+    for (let r = 0; r < rows; r++) {
+      // Choose a random item to add at this position
+      // (W, c, or nothing)
+      let item = random(items);
+        // Add a Maze and paths to the columns
+        if (item === `C` && (c!==startCol || r!==startRow)) {
+          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
+        }
+          else if (item === `W` && (c!==startCol || r!==startRow)) {
+            grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+          }
+            else if (item === `F` && (c!==startCol || r!==startRow)) {
+              grid[c].push(new Fog(20, 20, unit * c, unit * r));
+            }
+
+        else {
+          grid[c].push(new PathCell(20, 20, unit * c, unit * r));
+        }
+      }
+    }
+
+  // Added a couple of test walls
+
+//  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
+//  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
+
+// For loop for the grid
+for (let c = 0; c < cols; c++) {
+  // For each row add an empty array to represent the row
+  walls.push([]);
+  // Go through the grid's rows
+  for (let r = 0; r < rows; r++) {
+    if (grid[c][r].name === `Maze`) {
+        walls[c].push(new Wall(20, 20, c, r,unit));
+      }
+    }
+  }
 }

@@ -143,8 +143,9 @@ class Player {
     // Checkpoint collection and interaction
     // Convert a checkpoint into a changed cell aka pathcell.
 
-    if (grid[this.currentcol][this.currentrow].name === `checkPoint`) {
-      wallsStopMoving = true;
+    let currentCellName = grid[this.currentcol][this.currentrow].name;
+    if (currentCellName === `checkPoint`) {
+      // wallsStopMoving = true;
       grid[this.currentcol][this.currentrow] = new ChangedCell(
         20,
         20,
@@ -153,23 +154,31 @@ class Player {
       );
       // Scorekeeper goes up whenever checkpoint is collected
       scoreKeeper++;
-      if (scoreKeeper == 2) {
-        console.log("create door");
-            grid[this.currentcol + 1][this.currentrow] = new Door (
-                  20,
-                  20,
-                (this.currentcol + 1)*unit,
-                this.currentrow*unit
-                  // unit * this.currentcol + 25,
-                  // unit * this.currentrow + 25
-            )
-
-      }
       // Trigger sound when checkpoint is collected
-      sounds.playOscillator()
+      sounds.playOscillator();
     }
 
+    if (currentCellName === `fog`) {
+      // wallsStopMoving = true;
+        fogActive = true;
+      // Scorekeeper goes up whenever checkpoint is collected
+      scoreKeeper++;
+      // Trigger sound when checkpoint is collected
+      sounds.playOscillator();
+    }
 
+    if (scoreKeeper == 2) {
+      console.log("create door");
+          grid[this.currentcol + 1][this.currentrow] = new Door (
+                20,
+                20,
+              (this.currentcol + 1)*unit,
+              this.currentrow*unit
+                // unit * this.currentcol + 25,
+                // unit * this.currentrow + 25
+          );
+
+    }
     // Use for loop to count and set spin?
 
     // if (scoreKeeper === 0) {

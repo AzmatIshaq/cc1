@@ -10,8 +10,19 @@ class Wall {
   }
 
   move() {
-     this.width = this.width + 0.02;
-    // this.height = this.height + 0.02;
+
+
+
+      this.width = this.width + 0.1
+
+    if (this.width > 30) {
+      this.width = this.width - 10
+    }
+
+    //
+    // if (this.width < 5 && this.width !> 30) {
+    //   this.width = this.width + 0.1;
+    // }
 
   }
 

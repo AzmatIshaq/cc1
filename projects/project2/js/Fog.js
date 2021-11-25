@@ -6,7 +6,7 @@ class Fog {
     this.height = h;
     this.x = gridcol*u;
     this.y = gridrow*u;
-    this.name = `wall`;
+    this.name = `fog`;
   }
 
   move() {
