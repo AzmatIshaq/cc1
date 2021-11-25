@@ -144,7 +144,15 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentcol][this.currentrow].name;
-    if (currentCellName === `checkPoint`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog`) {
+
+
+        // Scorekeeper goes up whenever checkpoint is collected
+        scoreKeeper++;
+        // Trigger sound when checkpoint is collected
+        sounds.playOscillator();
+
+
       // wallsStopMoving = true;
       grid[this.currentcol][this.currentrow] = new ChangedCell(
         20,
@@ -152,30 +160,21 @@ class Player {
         unit * this.currentcol,
         unit * this.currentrow
       );
-      // Scorekeeper goes up whenever checkpoint is collected
-      scoreKeeper++;
-      // Trigger sound when checkpoint is collected
-      sounds.playOscillator();
     }
+
 
     if (currentCellName === `fog`) {
       // wallsStopMoving = true;
         fogActive = true;
-      // Scorekeeper goes up whenever checkpoint is collected
-      scoreKeeper++;
-      // Trigger sound when checkpoint is collected
-      sounds.playOscillator();
     }
 
-    if (scoreKeeper == 2) {
+    if (scoreKeeper == 30) {
       console.log("create door");
           grid[this.currentcol + 1][this.currentrow] = new Door (
                 20,
                 20,
               (this.currentcol + 1)*unit,
               this.currentrow*unit
-                // unit * this.currentcol + 25,
-                // unit * this.currentrow + 25
           );
 
     }
@@ -207,13 +206,6 @@ class Player {
     // if (scoreKeeper > 22) {
     //     mapAngleChange = 0;
     //     mapAngle = 0;
-    // }
-
-
-
-
-    // To go to another round of maze and different events
-    // if (grid[this.currentcol][this.currentrow].name === `changedCell` && scoreKeeper ===) {
     // }
 
   // To leave a maze trail behind player

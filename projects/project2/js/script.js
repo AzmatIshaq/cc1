@@ -19,7 +19,7 @@ let levels = [
 
 // Variables to alternate between specific levels
 
-let currentLevel = 0;
+let currentLevel = 1;
 
 let level = undefined;
 
@@ -312,6 +312,7 @@ function checkCollisionWithWalls(){
 }
 
 function setupLevel() {
+  level = levels[currentLevel];
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);
 
@@ -334,16 +335,16 @@ function setupLevel() {
     for (let r = 0; r < rows; r++) {
       // Choose a random item to add at this position
       // (W, c, or nothing)
-      let item = random(items);
+      let item = random(level);
         // Add a Maze and paths to the columns
         if (item === `C` && (c!==startCol || r!==startRow)) {
           grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
         }
           else if (item === `W` && (c!==startCol || r!==startRow)) {
-            grid[c].push(new Checkpoint(20, 20, unit * c, unit * r));
+            grid[c].push(new Checkpoint(20, 20, unit * c, unit * r,`checkPoint`));
           }
             else if (item === `F` && (c!==startCol || r!==startRow)) {
-              grid[c].push(new Fog(20, 20, unit * c, unit * r));
+              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
             }
 
         else {

@@ -1,11 +1,11 @@
 // Fog Class
 
 class Fog {
-  constructor(w, h, gridcol, gridrow, u) {
+  constructor(w, h, x, y) {
     this.width = w;
     this.height = h;
-    this.x = gridcol*u;
-    this.y = gridrow*u;
+    this.x = x;
+    this.y = y;
     this.name = `fog`;
   }
 
@@ -15,7 +15,7 @@ class Fog {
 
   display() {
     push();
-    fill(255);
+    fill(255, 0, 220);
     rect(this.x, this.y, this.width, this.height);
     pop();
 
