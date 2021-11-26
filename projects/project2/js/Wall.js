@@ -10,20 +10,12 @@ class Wall {
   }
 
   move() {
-
-
-
+    // Wall movement so they expand and retract
       this.width = this.width + 0.1
 
     if (this.width > 30) {
       this.width = this.width - 10
     }
-
-    //
-    // if (this.width < 5 && this.width !> 30) {
-    //   this.width = this.width + 0.1;
-    // }
-
   }
 
   display() {
@@ -32,7 +24,5 @@ class Wall {
     // rectMode(CENTER);
     rect(this.x, this.y, this.width, this.height);
     pop();
-
   }
-
 }

@@ -10,9 +10,7 @@ class Checkpoint {
     this.active = true;
   }
 
-  move() {
-    // this.x =
-  }
+  // move() {}
 
   display() {
     push();

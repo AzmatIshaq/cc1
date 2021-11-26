@@ -14,12 +14,12 @@ let levels = [
  [`W`,`C`,``,`F`],
  [`W`,`C`,``,`S`],
  [`W`,`C`,``,`X`],
- [`W`,`C`,``,`X`,`S`],
+ [`W`,`C`,``,`F`,`S`],
 ];
 
 // Variables to alternate between specific levels
 
-let currentLevel = 1;
+let currentLevel = 4;
 
 let level = undefined;
 
@@ -109,6 +109,7 @@ Setup:
 Create a canvas out of the rows, columns.
 Player class is initiated
 */
+
 function setup() {
   createCanvas(cols * unit, rows * unit + width / 2);
 
@@ -230,9 +231,10 @@ function keyPressed() {
   if (state === `title` && key === "Enter") {
     state = `animation`;
   }
-  if (state === `title` && key === "t") {
-    state = `tutorial`;
-  }
+
+  // if (state === `title` && key === "t") {
+  //   state = `tutorial`;
+  // }
 
     player.keypressed();
 }
@@ -346,6 +348,12 @@ function setupLevel() {
             else if (item === `F` && (c!==startCol || r!==startRow)) {
               grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
             }
+              else if (item === `S` && (c!==startCol || r!==startRow)) {
+                grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
+              }
+                else if (item === `X` && (c!==startCol || r!==startRow)) {
+                  grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
+                }
 
         else {
           grid[c].push(new PathCell(20, 20, unit * c, unit * r));

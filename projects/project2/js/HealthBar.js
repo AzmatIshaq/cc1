@@ -13,8 +13,7 @@ class HealthBar {
     this.name = "healthBar";
   }
 
-  move() {
-  }
+  // move() {}
 
   display() {
 
@@ -56,8 +55,6 @@ class HealthBar {
       state = `endLose`;
     }
 
-
-
 // Health bar affected by wall
 
   }
@@ -73,9 +70,5 @@ class HealthBar {
     if (wallDistance < 6) {
         this.width = this.width - 0.05;
       }
-    // 
-    // if(wallDistance < 3 ) {
-    //     this.width = 0;
-    //   }
    }
 }

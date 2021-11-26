@@ -6,13 +6,12 @@ class Door {
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = `Door`;
+    this.name = `door`;
 
 
   }
 
   move() {
-    // this.x =
   }
 
   display() {

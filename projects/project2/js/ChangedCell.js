@@ -9,9 +9,7 @@ class ChangedCell {
     this.name = "changedCell";
   }
 
-  move() {
-    
-  }
+  // move() {}
 
   display() {
     push();

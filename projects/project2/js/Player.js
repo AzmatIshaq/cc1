@@ -24,7 +24,7 @@ class Player {
     console.log(this.y);
   }
 
-  move() {}
+  // move() {}
 
 // Display player square
 
@@ -52,6 +52,8 @@ class Player {
     );
     pop();
 
+// Display fog around player when it is active
+
     if (fogActive === true) {
       imageMode(CENTER);
       image(
@@ -65,12 +67,11 @@ class Player {
   }
 
   // Player keypress movement and grid checking
+  // Also effects triggering based on keypresses
 
   keypressed() {
     console.log(key);
     if (key === "ArrowLeft") {
-      // reset fog
-      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol - 1 >= 0) {
         this.currentcol = this.currentcol - 1;
@@ -87,8 +88,6 @@ class Player {
     }
 
     if (key === "ArrowRight") {
-      // reset fog
-      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentcol + 1 <= cols - 1) {
         this.currentcol = this.currentcol + 1;
@@ -105,9 +104,7 @@ class Player {
     }
 
     if (key === "ArrowUp") {
-      // reset fog
-      // fogActive = true;
-      // if we are not on left boundary, adjust to remain in grid.
+        // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow - 1 >= 0) {
         this.currentrow = this.currentrow - 1;
         // So that we cannot go over this grid
@@ -123,8 +120,6 @@ class Player {
     }
 
     if (key === "ArrowDown") {
-      // reset fog
-      // fogActive = true;
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentrow + 1 <= rows - 1) {
         this.currentrow = this.currentrow + 1;
@@ -144,14 +139,11 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentcol][this.currentrow].name;
-    if (currentCellName === `checkPoint` || currentCellName === `fog`) {
-
-
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
         sounds.playOscillator();
-
 
       // wallsStopMoving = true;
       grid[this.currentcol][this.currentrow] = new ChangedCell(
@@ -162,23 +154,41 @@ class Player {
       );
     }
 
-
+    // Should these ifs be else if?
+    // Turn fog on and off based on touching fog checkpoint
     if (currentCellName === `fog`) {
-      // wallsStopMoving = true;
-        fogActive = true;
+          fogActive = !fogActive;
     }
 
-    if (scoreKeeper == 30) {
-      console.log("create door");
-          grid[this.currentcol + 1][this.currentrow] = new Door (
-                20,
-                20,
-              (this.currentcol + 1)*unit,
-              this.currentrow*unit
-          );
+    // Rotating map when collecting checkpoint
+    if (currentCellName === `spin`) {
+      mapAngleChange = mapAngleChange + 0.004;
+        if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+          mapAngleChange = mapAngleChange + 0.001;
+          }
+        }
 
-    }
-    // Use for loop to count and set spin?
+// Changing levels based on score count
+    // if (scoreKeeper === 10) {
+    //   // console.log("create door");
+    //   // // Add +1 to this.currentcol in order to have door appear next to player
+    //   //     grid[this.currentcol ][this.currentrow] = new Door (
+    //   //           20,
+    //   //           20,
+    //   // // Add + 1 to this.currentcol in order to have door appear next to player
+    //   //         (this.currentcol) * unit,
+    //   //         this.currentrow * unit
+    //   //     );
+    //       // To prevent more doors from appearing
+    //       // Need to find a better solution though eventually
+    //       // scoreKeeper++
+    //   // Change level
+    //   currentLevel = 1;
+    //   console.log(currentLevel);
+    //   // setupLevel();
+    //
+    // }
+
 
     // if (scoreKeeper === 0) {
     //   // Activate fog of war
