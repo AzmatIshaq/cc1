@@ -14,7 +14,7 @@ let levels = [
  [`W`,`C`,``,`F`],
  [`W`,`C`,``,`S`],
  [`W`,`C`,``,`X`],
- [`W`,`C`,``,`F`,`S`],
+ [`W`,`C`, `C`, `C`, ``, ``, `X`,`F`,`S`],
 ];
 
 // Variables to alternate between specific levels
@@ -132,30 +132,32 @@ Display states
 */
 function draw() {
   background(0);
+
   if (state === `title`) {
   title();
-
   }
+
   if (state === `animation`) {
   animation();
   }
+
   if (state === `endLose`) {
   endLose();
   }
 
-  if ( state === `end`) {
-    wallWidth = 20;
-    wallHeight = 20;
+  if (state === `endWin`) {
+    // wallWidth = 20;
+    // wallHeight = 20;
     //Ending
   push();
   fill(255);
   textSize(16);
   textAlign(CENTER, CENTER);
-  text(`GAME OVER`, width / 2, height / 2);
+  text(`You Win!`, width / 2, height / 2);
   text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
   pop();
-
   }
+
 }
 
 function animation() {
@@ -352,7 +354,7 @@ function setupLevel() {
                 grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
               }
                 else if (item === `X` && (c!==startCol || r!==startRow)) {
-                  grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
+                  grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
                 }
 
         else {

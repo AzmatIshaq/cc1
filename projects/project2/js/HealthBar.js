@@ -51,7 +51,7 @@ class HealthBar {
     }
 
     // Health bar reset depending on state
-    if (this.width === 0) {
+    if (this.width < 0) {
       state = `endLose`;
     }
 
@@ -60,15 +60,15 @@ class HealthBar {
   }
    changeStatus(wallDistance) {
      if (wallDistance < 12) {
-     this.width = this.width - 0.05;
+     this.width = this.width - 0.2;
    }
 
     if (wallDistance < 9) {
-        this.width = this.width - 0.05;
+        this.width = this.width - 0.2;
       }
 
     if (wallDistance < 6) {
-        this.width = this.width - 0.05;
+        this.width = this.width - 0.2;
       }
    }
 }

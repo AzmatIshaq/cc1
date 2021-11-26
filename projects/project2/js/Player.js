@@ -139,7 +139,7 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentcol][this.currentrow].name;
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
@@ -167,6 +167,19 @@ class Player {
           mapAngleChange = mapAngleChange + 0.001;
           }
         }
+
+    // Stop spin
+    if (currentCellName === `stopSpin`) {
+      mapAngle = 0;
+      mapAngleChange = 0;
+      }
+
+
+    // Trigger game win condition
+
+    if (scoreKeeper === 20) {
+      state = `endWin`;
+    }
 
 // Changing levels based on score count
     // if (scoreKeeper === 10) {
