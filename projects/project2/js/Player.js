@@ -31,7 +31,7 @@ class Player {
   display() {
     push();
     noStroke();
-    fill(0, 320, 255);
+    fill(0);
     rectMode(CORNER);
     rect(
       this.x + this.width / 2,
@@ -139,7 +139,7 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentcol][this.currentrow].name;
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
@@ -161,6 +161,8 @@ class Player {
     }
 
     // Rotating map when collecting checkpoint
+
+
     if (currentCellName === `spin`) {
       mapAngleChange = mapAngleChange + 0.004;
         if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
@@ -174,10 +176,28 @@ class Player {
       mapAngleChange = 0;
       }
 
+    // Activate walls
+    if (currentCellName === `startWalls` && startWalls === false) {
+      startWalls = true;
+      // Adding walls overlay to the grid
+      // For loop for the grid
+      for (let c = 0; c < cols; c++) {
+        // For each row add an empty array to represent the row
+        walls.push([]);
+        // Go through the grid's rows
+        for (let r = 0; r < rows; r++) {
+          if (grid[c][r].name === `Maze`) {
+              walls[c].push(new Wall(20, 20, c, r,unit));
+            }
+          }
+        }
+      }
+
+
 
     // Trigger game win condition
 
-    if (scoreKeeper === 20) {
+    if (scoreKeeper === 300) {
       state = `endWin`;
     }
 

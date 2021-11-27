@@ -14,7 +14,7 @@ let levels = [
  [`W`,`C`,``,`F`],
  [`W`,`C`,``,`S`],
  [`W`,`C`,``,`X`],
- [`W`,`C`, `C`, `C`, ``, ``, `X`,`F`,`S`],
+ [`W`,`M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`,`F`,`S`],
 ];
 
 // Variables to alternate between specific levels
@@ -23,12 +23,12 @@ let currentLevel = 4;
 
 let level = undefined;
 
-
 // A variable to introduce the player class
 let player;
 // Walls represented by the grid
 let wall;
-
+// Starting walls are set to false so they can be turned on and off
+let startWalls = false;
 // Grid array in order to make game map
 let grid = [];
 // Rows and columns in the grid
@@ -37,7 +37,8 @@ let cols = 25;
 // The unit size (how big a square for each tile)
 let unit = 25;
 // Random items to populate the game map
-let items = [`W`, `C`, ``, `F`, `S`];
+// Don't think this is doing anything anymore:
+// let items = [`W`, `C`, ``, `F`, `S`];
 let walls = [];
 // Starting row
 let startRow = 8;
@@ -78,9 +79,8 @@ let fogActive;
 let mapAngle = 0;
 let mapAngleChange = 0.00;
 
-// Checkpoint variables
+// Variable to initiate checkpoints
 
-// Checkpoints
 let checkpoint;
 
 // This is the scoreKeeper variable that we see at the top left of the canvas
@@ -99,7 +99,7 @@ Description of preload
 */
 function preload() {
 
-spritePlayer = loadImage(`assets/images/test_sprite.png`);
+spritePlayer = loadImage(`assets/images/Rat_1.png`);
 titleBackground = loadImage(`assets/images/title_background3.png`);
 fog = loadImage(`assets/images/fog_war1.png`);
 }
@@ -146,9 +146,8 @@ function draw() {
   }
 
   if (state === `endWin`) {
-    // wallWidth = 20;
-    // wallHeight = 20;
-    //Ending
+
+  //Ending text
   push();
   fill(255);
   textSize(16);
@@ -228,6 +227,8 @@ function animation() {
     pop();
 
 }
+
+
 
 function keyPressed() {
   if (state === `title` && key === "Enter") {
@@ -327,9 +328,8 @@ function setupLevel() {
 
   sounds = new Sounds();
 
-  // Initialize door class
 
-  // door = new Door();
+// Section to introduce new checkpoint elements
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -341,7 +341,7 @@ function setupLevel() {
       // (W, c, or nothing)
       let item = random(level);
         // Add a Maze and paths to the columns
-        if (item === `C` && (c!==startCol || r!==startRow)) {
+        if (item === `M` && (c!==startCol || r!==startRow)) {
           grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
         }
           else if (item === `W` && (c!==startCol || r!==startRow)) {
@@ -356,27 +356,15 @@ function setupLevel() {
                 else if (item === `X` && (c!==startCol || r!==startRow)) {
                   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
                 }
-
+                  else if (item === `SW` && (c!==startCol || r!==startRow)) {
+                    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startWalls`));
+                  }
         else {
           grid[c].push(new PathCell(20, 20, unit * c, unit * r));
         }
       }
     }
 
-  // Added a couple of test walls
 
-//  walls.push(new Wall(wallWidth, wallHeight + 40, 1, 1, unit));
-//  walls.push(new Wall(wallWidth, wallHeight, 1, 2, unit));
 
-// For loop for the grid
-for (let c = 0; c < cols; c++) {
-  // For each row add an empty array to represent the row
-  walls.push([]);
-  // Go through the grid's rows
-  for (let r = 0; r < rows; r++) {
-    if (grid[c][r].name === `Maze`) {
-        walls[c].push(new Wall(20, 20, c, r,unit));
-      }
-    }
-  }
 }
