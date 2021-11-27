@@ -15,6 +15,7 @@ class Door {
   }
 
   display() {
+    for (let i = 0; i === 0; i++) {
     console.log(this.x);
     push();
     noStroke();
@@ -22,7 +23,6 @@ class Door {
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();
-
+    }
   }
-
 }

@@ -163,12 +163,12 @@ class Player {
     // Rotating map when collecting checkpoint
 
 
-    if (currentCellName === `spin`) {
-      mapAngleChange = mapAngleChange + 0.004;
-        if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-          mapAngleChange = mapAngleChange + 0.001;
-          }
-        }
+    // if (currentCellName === `spin`) {
+    //   mapAngleChange = mapAngleChange + 0.004;
+    //     if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+    //       mapAngleChange = mapAngleChange + 0.001;
+    //       }
+    //     }
 
     // Stop spin
     if (currentCellName === `stopSpin`) {
@@ -202,16 +202,17 @@ class Player {
     }
 
 // Changing levels based on score count
-    // if (scoreKeeper === 10) {
-    //   // console.log("create door");
-    //   // // Add +1 to this.currentcol in order to have door appear next to player
-    //   //     grid[this.currentcol ][this.currentrow] = new Door (
-    //   //           20,
-    //   //           20,
-    //   // // Add + 1 to this.currentcol in order to have door appear next to player
-    //   //         (this.currentcol) * unit,
-    //   //         this.currentrow * unit
-    //   //     );
+    if (scoreKeeper === 3) {
+      console.log("create door");
+      // Add +1 to this.currentcol in order to have door appear next to player
+          grid[this.currentcol ][this.currentrow] = new Door (
+                20,
+                20,
+      // Add + 1 to this.currentcol in order to have door appear next to player
+              (this.currentcol) * unit,
+              this.currentrow * unit
+          );
+        }
     //       // To prevent more doors from appearing
     //       // Need to find a better solution though eventually
     //       // scoreKeeper++

@@ -347,7 +347,7 @@ function setupLevel() {
             grid[c].push(new Checkpoint(20, 20, unit * c, unit * r,`checkPoint`));
           }
             else if (item === `F` && (c!==startCol || r!==startRow)) {
-              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`, pickupFog));
+              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
             }
               else if (item === `S` && (c!==startCol || r!==startRow)) {
                 grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
