@@ -1,12 +1,12 @@
 // Fog Class
 
 class Fog {
-  constructor(w, h, x, y) {
+  constructor(w, h, x, y, name) {
     this.width = w;
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = `fog`;
+    this.name = name;
   }
 
   move() {

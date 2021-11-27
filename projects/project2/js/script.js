@@ -66,7 +66,7 @@ let wallHeight = 30;
 
 let titleBackground = undefined;
 let spritePlayer = undefined;
-
+let pickupFog = undefined;
 
 // Fog
 let fog;
@@ -99,6 +99,7 @@ Description of preload
 */
 function preload() {
 
+pickupFog = loadImage("assets/images/pickupFog.png");
 spritePlayer = loadImage(`assets/images/Rat_1.png`);
 titleBackground = loadImage(`assets/images/title_background3.png`);
 fog = loadImage(`assets/images/fog_war1.png`);
@@ -122,7 +123,6 @@ function setup() {
   userStartAudio();
 
   // door = new Door();
-
 
 }
 
@@ -215,7 +215,6 @@ function animation() {
 
   // Health bar animation
   healthBar.display();
-
 
   // To display the play score
 
@@ -348,7 +347,7 @@ function setupLevel() {
             grid[c].push(new Checkpoint(20, 20, unit * c, unit * r,`checkPoint`));
           }
             else if (item === `F` && (c!==startCol || r!==startRow)) {
-              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
+              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`, pickupFog));
             }
               else if (item === `S` && (c!==startCol || r!==startRow)) {
                 grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
