@@ -20,5 +20,4 @@ class Sounds {
     this.osc.amp(0, 0.1, 0.7);
 
   }
-
 }

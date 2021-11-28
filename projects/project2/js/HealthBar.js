@@ -59,16 +59,19 @@ class HealthBar {
 
   }
    changeStatus(wallDistance) {
-     if (wallDistance < 12) {
+     while (wallDistance < 26) {
      this.width = this.width - 0.2;
+
+     squeakAudio();
+     }
+
+    // if (wallDistance < 9) {
+    //     this.width = this.width - 0.2;
+    //   }
+    //
+    // if (wallDistance < 6) {
+    //     this.width = this.width - 0.2;
+    //   }
    }
 
-    if (wallDistance < 9) {
-        this.width = this.width - 0.2;
-      }
-
-    if (wallDistance < 6) {
-        this.width = this.width - 0.2;
-      }
-   }
 }

@@ -187,7 +187,7 @@ class Player {
         // Go through the grid's rows
         for (let r = 0; r < rows; r++) {
           if (grid[c][r].name === `Maze`) {
-              walls[c].push(new Wall(20, 20, c, r,unit));
+              walls[c].push(new Wall(c, r, 20, 20, unit));
             }
           }
         }
@@ -204,6 +204,7 @@ class Player {
 // Changing levels based on score count
     if (scoreKeeper === 3) {
       console.log("create door");
+      for (let i = 0; i === 0; i++) {
       // Add +1 to this.currentcol in order to have door appear next to player
           grid[this.currentcol ][this.currentrow] = new Door (
                 20,
@@ -212,6 +213,7 @@ class Player {
               (this.currentcol) * unit,
               this.currentrow * unit
           );
+          }
         }
     //       // To prevent more doors from appearing
     //       // Need to find a better solution though eventually

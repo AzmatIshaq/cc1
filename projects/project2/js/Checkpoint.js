@@ -31,10 +31,5 @@ class Checkpoint {
         );
         pop();
       }
-
+    }
   }
-
-
-
-
-}

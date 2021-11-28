@@ -2,7 +2,7 @@
 Project 2 Prototype
 Azmat
 
-This is a prototype of Project 2 for the CART 253 Class at Concordia University.
+This is Project 2 for the CART 253 Class at Concordia University.
 */
 
 "use strict";
@@ -10,11 +10,11 @@ This is a prototype of Project 2 for the CART 253 Class at Concordia University.
 // Levels array to alternate variety of pickups
 
 let levels = [
- [`W`,`C`,``],
- [`W`,`C`,``,`F`],
- [`W`,`C`,``,`S`],
- [`W`,`C`,``,`X`],
- [`W`,`M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`,`F`,`S`],
+ [`W`, `C`, ``],
+ [`W`, `C`, ``, `F`],
+ [`W`, `C`, ``, `S`],
+ [`W`, `C`, ``, `X`],
+ [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`, `F`, `S`],
 ];
 
 // Variables to alternate between specific levels
@@ -25,84 +25,104 @@ let level = undefined;
 
 // A variable to introduce the player class
 let player;
+
 // Walls represented by the grid
 let wall;
+
 // Starting walls are set to false so they can be turned on and off
 let startWalls = false;
+
 // Grid array in order to make game map
 let grid = [];
+
 // Rows and columns in the grid
 let rows = 20;
 let cols = 25;
+
 // The unit size (how big a square for each tile)
 let unit = 25;
+
 // Random items to populate the game map
 // Don't think this is doing anything anymore:
 // let items = [`W`, `C`, ``, `F`, `S`];
+
+// Array to load walls
 let walls = [];
+
 // Starting row
 let startRow = 8;
+
 // Starting column
 let startCol = 8;
+
 // Title State
 let state = `title`;
 
-let wallsStopMoving =false;
+let wallsStopMoving = false;
 
 let maze = {
   width: 20,
   height: 20,
-}
+};
 
 // Door variable to initialize class
 let door;
 
 // Wall variables
-
 let wallWidth = 10;
 let wallHeight = 30;
 
 // Image variables
-
 let titleBackground = undefined;
 let spritePlayer = undefined;
 let pickupFog = undefined;
 
-// Fog
+// Fog variable to load fog of war image
 let fog;
 
 // Variable to set fog to true for fog effect
 let fogActive;
 
 // Map angle
-
 let mapAngle = 0;
 let mapAngleChange = 0.00;
 
 // Variable to initiate checkpoints
-
 let checkpoint;
 
 // This is the scoreKeeper variable that we see at the top left of the canvas
 let scoreKeeper = 0;
 
 // Variable to initiate health bar
-
 let healthBar;
 
-// Variable to initiate sounds
-
+// Variables to initiate sounds
 let sounds;
+let squeak;
 
 /**
 Description of preload
 */
 function preload() {
 
+/** Images */
+
+// Image for fog checkpoint pickup
 pickupFog = loadImage("assets/images/pickupFog.png");
+
+// Image for player sprite
 spritePlayer = loadImage(`assets/images/Rat_1.png`);
+
+// Background image for title screen
 titleBackground = loadImage(`assets/images/title_background3.png`);
+
+// Fog of war image
 fog = loadImage(`assets/images/fog_war1.png`);
+
+/** Sounds */
+
+squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
+
 }
 
 /**
@@ -123,6 +143,7 @@ function setup() {
   userStartAudio();
 
   // door = new Door();
+
 
 }
 
@@ -295,7 +316,7 @@ function checkCollisionWithWalls(){
         // Establish distance between player and maze
         // Have to add + 10 to player in order to prevent maze distance
         // Calculation from going back to positive
-        let d = dist(player.x + 12, player.y, col[r].x + col[r].width, col[r].y);
+        let d = dist(player.x + 12, player.y, col[r].x + col[r].u, col[r].y);
 
         if (d < minDist) {
           minDist = d;
@@ -363,7 +384,12 @@ function setupLevel() {
         }
       }
     }
+  } // End of setupLevel function
 
 
-
-}
+function squeakAudio(){
+  // Play music if this is the first interaction
+  if (!squeak.isPlaying()) {
+    squeak.loop();
+  }
+} // End of squakAudio function
