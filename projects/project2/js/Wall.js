@@ -20,6 +20,7 @@ class Wall {
   }
 
   display() {
+
     push();
     fill(255, 0, 0, 120);
     ellipseMode(CORNER);

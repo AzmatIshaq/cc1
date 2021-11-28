@@ -21,15 +21,17 @@ class Checkpoint {
 
     // Display fog pickup image
     if (this.name === `fog`) {
-        imageMode(CENTER);
+        imageMode(CORNER);
         image(
           pickupFog,
-          this.x + this.width,
-          this.y + this.height,
+          this.x,
+          this.y,
           this.width,
           this.height
         );
         pop();
       }
+
+
     }
   }

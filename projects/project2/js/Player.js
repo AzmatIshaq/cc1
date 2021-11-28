@@ -16,12 +16,13 @@ class Player {
     this.height = h;
     this.r = 0;
     this.c = 0;
-    this.currentcol = startColP;
-    this.currentrow = startRowP;
-    this.x = this.currentcol * 25;
-    this.y = this.currentrow * 25;
+    this.currentCol = startColP;
+    this.currentRow = startRowP;
+    this.x = this.currentCol * 25;
+    this.y = this.currentRow * 25;
     console.log(this.x);
     console.log(this.y);
+    this.createDoor = false;
   }
 
   // move() {}
@@ -51,19 +52,6 @@ class Player {
       this.height * 2
     );
     pop();
-
-// // Display fog around player when it is active
-//
-//     if (fogActive === true) {
-//       imageMode(CENTER);
-//       image(
-//         fog,
-//         this.x + this.width / 1.5,
-//         this.y + this.height / 1.5,
-//         width * 2,
-//         height * 2
-//       );
-//     }
   }
 
   // Player keypress movement and grid checking
@@ -73,13 +61,13 @@ class Player {
     console.log(key);
     if (key === "ArrowLeft") {
       // if we are not on left boundary, adjust to remain in grid.
-      if (this.currentcol - 1 >= 0) {
-        this.currentcol = this.currentcol - 1;
+      if (this.currentCol - 1 >= 0) {
+        this.currentCol = this.currentCol - 1;
         // So that we cannot go over this grid
-        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+        if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //reset change
-          this.currentcol = this.currentcol + 1;
+          this.currentCol = this.currentCol + 1;
         } else {
           console.log("go ahead");
           this.x = this.x - this.speed;
@@ -89,13 +77,13 @@ class Player {
 
     if (key === "ArrowRight") {
       // if we are not on left boundary, adjust to remain in grid.
-      if (this.currentcol + 1 <= cols - 1) {
-        this.currentcol = this.currentcol + 1;
+      if (this.currentCol + 1 <= cols - 1) {
+        this.currentCol = this.currentCol + 1;
         // So that we cannot go over this grid
-        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+        if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //   //reset change
-          this.currentcol = this.currentcol - 1;
+          this.currentCol = this.currentCol - 1;
         } else {
           console.log("go ahead");
           this.x = this.x + this.speed;
@@ -105,13 +93,13 @@ class Player {
 
     if (key === "ArrowUp") {
         // if we are not on left boundary, adjust to remain in grid.
-      if (this.currentrow - 1 >= 0) {
-        this.currentrow = this.currentrow - 1;
+      if (this.currentRow - 1 >= 0) {
+        this.currentRow = this.currentRow - 1;
         // So that we cannot go over this grid
-        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+        if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //reset change
-          this.currentrow = this.currentrow + 1;
+          this.currentRow = this.currentRow + 1;
         } else {
           console.log("go ahead");
           this.y = this.y - this.speed;
@@ -121,13 +109,13 @@ class Player {
 
     if (key === "ArrowDown") {
       // if we are not on left boundary, adjust to remain in grid.
-      if (this.currentrow + 1 <= rows - 1) {
-        this.currentrow = this.currentrow + 1;
+      if (this.currentRow + 1 <= rows - 1) {
+        this.currentRow = this.currentRow + 1;
         // So that we cannot go over this grid
-        if (grid[this.currentcol][this.currentrow].name === `Maze`) {
+        if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //reset change
-          this.currentrow = this.currentrow - 1;
+          this.currentRow = this.currentRow - 1;
         } else {
           console.log("go ahead");
           this.y = this.y + this.speed;
@@ -138,19 +126,21 @@ class Player {
     // Checkpoint collection and interaction
     // Convert a checkpoint into a changed cell aka pathcell.
 
-    let currentCellName = grid[this.currentcol][this.currentrow].name;
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls`) {
+    let currentCellName = grid[this.currentCol][this.currentRow].name;
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
         sounds.playOscillator();
 
       // wallsStopMoving = true;
-      grid[this.currentcol][this.currentrow] = new ChangedCell(
+      grid[this.currentCol][this.currentRow] = new ChangedCell(
         20,
         20,
-        unit * this.currentcol,
-        unit * this.currentrow
+        unit * this.currentCol,
+        unit * this.currentRow,
+        this.currentCol,
+        this.currentRow
       );
     }
 
@@ -180,20 +170,26 @@ class Player {
     if (currentCellName === `startWalls` && startWalls === false) {
       startWalls = true;
       // Adding walls overlay to the grid
-      // For loop for the grid
-      for (let c = 0; c < cols; c++) {
-        // For each row add an empty array to represent the row
-        walls.push([]);
-        // Go through the grid's rows
-        for (let r = 0; r < rows; r++) {
-          if (grid[c][r].name === `Maze`) {
-              walls[c].push(new Wall(c, r, 20, 20, unit));
+        for (let c = 0; c < cols; c++) {
+          // For each row add an empty array to represent the row
+          walls.push([]);
+          // Go through the grid's rows
+          for (let r = 0; r < rows; r++) {
+            if (grid[c][r].name === `Maze`) {
+                walls[c].push(new Wall(c, r, 20, 20, unit));
+
+
+              }
             }
           }
         }
-      }
 
+    // Stop walls moving if stop wall checkpoint is collected
 
+    // if (currentCellName === `stopWalls`) {
+    //   startWalls = false;
+    //
+    // }
 
     // Trigger game win condition
 
@@ -202,19 +198,21 @@ class Player {
     }
 
 // Changing levels based on score count
-    if (scoreKeeper === 3) {
+    if (scoreKeeper === 3 && this.createDoor == false) {
+      this.createDoor = true;
       console.log("create door");
-      for (let i = 0; i === 0; i++) {
-      // Add +1 to this.currentcol in order to have door appear next to player
-          grid[this.currentcol ][this.currentrow] = new Door (
+      // Add +1 to this.currentCol in order to have door appear next to player
+          grid[this.currentCol ][this.currentRow] = new Door (
                 20,
                 20,
-      // Add + 1 to this.currentcol in order to have door appear next to player
-              (this.currentcol) * unit,
-              this.currentrow * unit
+      // Add + 1 to this.currentCol in order to have door appear next to player
+              (this.currentCol) * unit,
+              this.currentRow * unit
           );
-          }
-        }
+      }
+
+
+
     //       // To prevent more doors from appearing
     //       // Need to find a better solution though eventually
     //       // scoreKeeper++
@@ -256,10 +254,10 @@ class Player {
 
   // To leave a maze trail behind player
     // if (scoreKeeper > 2) {
-    //   grid[this.currentcol][this.currentrow] = new Maze(
+    //   grid[this.currentCol][this.currentrow] = new Maze(
     //     20,
     //     20,
-    //     unit * this.currentcol,
+    //     unit * this.currentCol,
     //     unit * this.currentrow
     //   );
     // }
@@ -276,14 +274,14 @@ class Player {
     // }
 
   // Deactivating fog of war
-    // if (grid[this.currentcol][this.currentrow].name === `pathcell`){
+    // if (grid[this.currentCol][this.currentrow].name === `pathcell`){
     // fogActive = false;
     // }
 
     console.log(this.x);
     console.log(this.y);
-    console.log(this.currentrow);
-    console.log(this.currentcol);
-    console.log(grid[this.currentcol][this.currentrow].name);
-  }
+    console.log(this.currentRow);
+    console.log(this.currentCol);
+    console.log(grid[this.currentCol][this.currentRow].name);
+  } // End of keyPressed function
 }

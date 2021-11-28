@@ -7,15 +7,12 @@ class Door {
     this.x = x;
     this.y = y;
     this.name = `door`;
-
-
   }
 
   move() {
   }
 
   display() {
-    // for (let i = 0; i === 0; i++) {}
     console.log(this.x);
     push();
     noStroke();

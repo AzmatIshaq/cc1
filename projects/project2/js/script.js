@@ -14,7 +14,7 @@ let levels = [
  [`W`, `C`, ``, `F`],
  [`W`, `C`, ``, `S`],
  [`W`, `C`, ``, `X`],
- [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`, `F`, `S`],
+ [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`, `F`, `S`, `StpW`],
 ];
 
 // Variables to alternate between specific levels
@@ -100,6 +100,11 @@ let healthBar;
 let sounds;
 let squeak;
 
+// Variables to load tutorial class
+
+let tutorial;
+
+
 /**
 Description of preload
 */
@@ -178,9 +183,13 @@ function draw() {
   pop();
   }
 
+
+
 }
 
 function animation() {
+
+
 
   // Collision detection between player character and walls
   let minWallDist = checkCollisionWithWalls();
@@ -237,6 +246,9 @@ function animation() {
   // Health bar animation
   healthBar.display();
 
+  // Tutorial animation
+  tutorial.display();
+
   // To display the play score
 
     push();
@@ -246,9 +258,9 @@ function animation() {
     textAlign(CENTER, CENTER);
     pop();
 
-// Didplay fog
+// Display fog
 
-displayFog(player)
+  displayFog(player)
 
 }
 
@@ -285,14 +297,14 @@ function title() {
 
 }
 
-function tutorial() {
-  fill(255);
-  text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
-  text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-  text(`Collect Checkpoints to move to the next level`, width / 2, height / 1.5);
-  text(`Watch your Health Bar and Escape through the door when it appears`, width / 2, height / 1.5);
-  pop();
-}
+// function tutorial() {
+//   fill(255);
+//   text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
+//   text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+//   text(`Collect Checkpoints to move to the next level`, width / 2, height / 1.5);
+//   text(`Watch your Health Bar and Escape through the door when it appears`, width / 2, height / 1.5);
+//   pop();
+// }
 
 function endLose() {
   // End text
@@ -352,6 +364,10 @@ function setupLevel() {
 
   sounds = new Sounds();
 
+  // Initialize tutorial class
+
+  tutorial = new Tutorial(startCol, startRow);
+
 
 // Section to introduce new checkpoint elements
 
@@ -383,6 +399,9 @@ function setupLevel() {
                   else if (item === `SW` && (c!==startCol || r!==startRow)) {
                     grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startWalls`));
                   }
+                    else if (item === `StpW` && (c!==startCol || r!==startRow)) {
+                      grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopWalls`));
+                    }
         else {
           grid[c].push(new PathCell(20, 20, unit * c, unit * r));
         }
