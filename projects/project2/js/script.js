@@ -246,6 +246,10 @@ function animation() {
     textAlign(CENTER, CENTER);
     pop();
 
+// Didplay fog
+
+displayFog(player)
+
 }
 
 
@@ -386,10 +390,25 @@ function setupLevel() {
     }
   } // End of setupLevel function
 
-
+// Function to set squeak audio on a loop when player collision occurs
+// with wall
 function squeakAudio(){
   // Play music if this is the first interaction
   if (!squeak.isPlaying()) {
     squeak.loop();
   }
 } // End of squakAudio function
+
+// Display fog around player when it is active
+function displayFog(player){
+    if (fogActive === true) {
+      imageMode(CENTER);
+      image(
+        fog,
+        player.x + player.width / 1.5,
+        player.y + player.height / 1.5,
+        width * 2,
+        height * 2
+      );
+    }
+  }

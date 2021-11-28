@@ -52,18 +52,18 @@ class Player {
     );
     pop();
 
-// Display fog around player when it is active
-
-    if (fogActive === true) {
-      imageMode(CENTER);
-      image(
-        fog,
-        this.x + this.width / 1.5,
-        this.y + this.height / 1.5,
-        width * 2,
-        height * 2
-      );
-    }
+// // Display fog around player when it is active
+//
+//     if (fogActive === true) {
+//       imageMode(CENTER);
+//       image(
+//         fog,
+//         this.x + this.width / 1.5,
+//         this.y + this.height / 1.5,
+//         width * 2,
+//         height * 2
+//       );
+//     }
   }
 
   // Player keypress movement and grid checking
