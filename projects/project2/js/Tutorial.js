@@ -20,15 +20,15 @@ class Tutorial {
   display() {
 
   // Display tutorial dialogue depending on checkpoint name
-//
-//   if (grid[this.currentCol][this.currentRow].name === ``) {
-    // push();
-    // fill(255);
-    // textSize(16);
-    // textAlign(CENTER, CENTER);
-    // text(`Fog of War!`, width / 2, height / 1.07);
-    // text(`Find another Fog of War item to disable it!`, width / 2, height / 1.04);
-    // pop();
-//   }
+
+  // if (grid[this.currentCol][this.currentRow].name === ``) {
+    push();
+    fill(255);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text(`Fog of War!`, width / 2, height / 1.07);
+    text(`Find another Fog of War item to disable it!`, width / 2, height / 1.04);
+    pop();
+  // }
  }
 }
