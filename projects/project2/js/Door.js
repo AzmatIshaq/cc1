@@ -1,12 +1,14 @@
 // Door Class
 
 class Door {
-  constructor(w,h,x,y) {
+  constructor(w,h,x,y,cc,cr) {
     this.width = w;
     this.height = h;
     this.x = x;
     this.y = y;
     this.name = `door`;
+    this.cr  = cr;
+    this.cc =cc ;
   }
 
   move() {

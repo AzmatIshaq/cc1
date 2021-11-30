@@ -127,6 +127,27 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
+
+    if(currentCellName === "door"){
+      console.log("on a door");
+      if(currentLevel < 4){
+            currentLevel++;
+            setupLevel();
+      }
+
+
+    }
+
+
+        // Stop walls moving if stop wall checkpoint is collected
+
+        if (currentCellName === `stopWalls`) {
+         console.log("stopping");
+         wallsAreActive =false;
+
+        }
+
+        // Add to bottom so it is the last state change to occur
     if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
@@ -169,8 +190,14 @@ class Player {
       }
 
     // Activate walls
-    if (currentCellName === `startWalls` && startWalls === false) {
-      startWalls = true;
+    if(currentCellName ==='startWalls'){
+        wallsAreActive =true;
+    }
+    if (currentCellName === `startWalls` && buildWalls === false) {
+      buildWalls = true;
+
+
+
       // Adding walls overlay to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
@@ -185,13 +212,6 @@ class Player {
             }
           }
         }
-
-    // Stop walls moving if stop wall checkpoint is collected
-
-    // if (currentCellName === `stopWalls`) {
-    //   startWalls = false;
-    //
-    // }
 
 
     // Active waky keys
@@ -218,12 +238,16 @@ class Player {
       this.createDoor = true;
       console.log("create door");
       // Add +1 to this.currentCol in order to have door appear next to player
-          grid[this.currentCol ][this.currentRow] = new Door (
+          grid[this.currentCol+1 ][this.currentRow] = new Door (
                 20,
                 20,
       // Add + 1 to this.currentCol in order to have door appear next to player
-              (this.currentCol) * unit,
-              this.currentRow * unit
+              (this.currentCol+1) * unit,
+              this.currentRow * unit,
+              (this.currentCol+1),
+                this.currentRow
+
+
           );
       }
 

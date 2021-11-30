@@ -14,7 +14,7 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // C is for Checkpoints
 // F is for Fog
 // SW is for StartWalls
-// Stp is for Stoping Walls
+// StpW is for Stoping Walls
 // WK is for Wacky Keys
 // S is for Spinning Maze
 // X is for Stoping Spin
@@ -23,14 +23,15 @@ This is Project 2 for the CART 253 Class at Concordia University.
 let levels = [
  [`W`, `C`, ``],
  [`W`, `C`, ``, `F`],
- [`W`, `C`, ``, `S`],
+[`StpW`,'M','C','SW'],
  [`W`, `C`, ``, `X`],
- [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`],
+ //[`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`, `StpW`, `StpW`, `StpW`, `StpW`, `StpW`],
+ [`StpW`,'M','C','SW'],
 ];
 
 // Variables to alternate between specific levels
 
-let currentLevel = 4;
+let currentLevel = 2;
 
 let level = undefined;
 
@@ -41,7 +42,7 @@ let player;
 let wall;
 
 // Starting walls are set to false so they can be turned on and off
-let startWalls = false;
+let buildWalls = false;
 
 // Grid array in order to make game map
 let grid = [];
@@ -69,7 +70,7 @@ let startCol = 8;
 // Title State
 let state = `title`;
 
-let wallsStopMoving = false;
+let wallsAreActive= false;
 
 let maze = {
   width: 20,
@@ -156,7 +157,7 @@ fog = loadImage(`assets/images/fog_war1.png`);
 
 /** Sounds */
 
-// squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
+squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
 
 }
 
@@ -168,6 +169,8 @@ Player class is initiated
 
 function setup() {
   createCanvas(cols * unit, rows * unit + width / 2);
+
+squeak.loop();
 
   // Levels
   setupLevel();
@@ -219,12 +222,15 @@ function draw() {
 
 function animation() {
 
+if(wallsAreActive ===true){
 
+  console.log("collide");
 
   // Collision detection between player character and walls
   let minWallDist = checkCollisionWithWalls();
   // HealthBar decrease during collision
   healthBar.changeStatus(minWallDist);
+}
 
 
   // Map spin effect
@@ -258,6 +264,7 @@ function animation() {
 
   player.display();
 
+if(wallsAreActive ===true){
   // for loops to display the columns and rows of walls
   for (let c = 0; c < walls.length; c++) {
     //console.log(grid[r]);
@@ -271,6 +278,7 @@ function animation() {
       //  }
     }
   }
+}
 
 
   // Health bar animation
@@ -376,13 +384,20 @@ function checkCollisionWithWalls(){
       }
 
   }
-    console.log(minDist);
+    // console.log(minDist);
    return minDist;
 
 
 }
 
 function setupLevel() {
+  console.log(`set up level ${currentLevel}`)
+  grid = [];
+  buildWalls = false;
+  //reset other variables?
+   walls = [];
+   wallsAreActive= false;
+
   level = levels[currentLevel];
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);
@@ -412,7 +427,7 @@ function setupLevel() {
       let item = random(level);
         // Add a Maze and paths to the columns
         if (item === `M` && (c!==startCol || r!==startRow)) {
-          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r));
+          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r, `Maze`));
         }
           else if (item === `W` && (c!==startCol || r!==startRow)) {
             grid[c].push(new Checkpoint(20, 20, unit * c, unit * r,`checkPoint`));
@@ -452,9 +467,9 @@ function setupLevel() {
 
 function squeakAudio(){
   // Play music if this is the first interaction
-  // if (!squeak.isPlaying()) {
-  //   squeak.loop();
-  // }
+  if (!squeak.isPlaying()) {
+    squeak.loop();
+  }
 } // End of squakAudio function
 
 
