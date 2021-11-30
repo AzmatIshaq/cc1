@@ -13,7 +13,7 @@ class Door {
   }
 
   display() {
-    console.log(this.x);
+  //  console.log(this.x);
     push();
     noStroke();
     fill(0,255,0);

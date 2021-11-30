@@ -12,7 +12,7 @@ class Wall {
   }
 
   move() {
-    console.log("MOVE");
+    // console.log("MOVE");
     this.angle = this.angle+0.02;
     this.u = sin(this.angle)*40;
 

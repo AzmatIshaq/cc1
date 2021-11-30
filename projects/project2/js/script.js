@@ -156,7 +156,7 @@ fog = loadImage(`assets/images/fog_war1.png`);
 
 /** Sounds */
 
-squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
+// squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
 
 }
 
@@ -362,10 +362,10 @@ function checkCollisionWithWalls(){
         // Establish distance between player and maze
         // Have to add + 10 to player in order to prevent maze distance
         // Calculation from going back to positive
-        let d = dist(player.x + 12, player.y, col[r].x + col[r].u, col[r].y);
+        let d = dist(player.x, player.y, col[r].x, col[r].y);
 
-        if (d < minDist) {
-          minDist = d;
+        if (d+(col[r].u/2) < minDist) {
+          minDist = d+(col[r].u/2);
           minWallCol = c;
           minWallRow = r;
         }
@@ -376,7 +376,7 @@ function checkCollisionWithWalls(){
       }
 
   }
-   // console.log(minDist);
+    console.log(minDist);
    return minDist;
 
 
@@ -447,12 +447,18 @@ function setupLevel() {
 
 // Function to set squeak audio on a loop when player collision occurs
 // with wall
+
+
+
 function squeakAudio(){
   // Play music if this is the first interaction
-  if (!squeak.isPlaying()) {
-    squeak.loop();
-  }
+  // if (!squeak.isPlaying()) {
+  //   squeak.loop();
+  // }
 } // End of squakAudio function
+
+
+
 
 // Display fog around player when it is active
 function displayFog(player){

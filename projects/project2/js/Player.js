@@ -18,8 +18,8 @@ class Player {
     this.c = 0;
     this.currentCol = startColP;
     this.currentRow = startRowP;
-    this.x = this.currentCol * 25;
-    this.y = this.currentRow * 25;
+    this.x = this.currentCol * 25 +w;
+    this.y = this.currentRow * 25+h;
     console.log(this.x);
     console.log(this.y);
     this.createDoor = false;
@@ -37,20 +37,20 @@ class Player {
     rect(
       this.x,
       this.y,
-      this.width,
-      this.height
+      this.width*2,
+      this.height*2
     );
 
 // Display player sprite
 
-    imageMode(CENTER);
-    image(
-      spritePlayer,
-      this.x + this.width,
-      this.y + this.height,
-      this.width * 2,
-      this.height * 2
-    );
+    // imageMode(CENTER);
+    // image(
+    //   spritePlayer,
+    //   this.x,
+    //   this.y,
+    //   this.width * 2,
+    //   this.height * 2
+    // );
     pop();
   }
 

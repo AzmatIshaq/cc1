@@ -51,15 +51,15 @@ class HealthBar {
     }
 
     // Health bar reset depending on state
-    if (this.width < 0) {
-      state = `endLose`;
-    }
+    // if (this.width < 0) {
+    //   state = `endLose`;
+    // }
 
 // Health bar affected by wall
 
   }
    changeStatus(wallDistance) {
-     if (wallDistance < 26) {
+     if (wallDistance < 17) {
      this.width = this.width - 0.2;
      squeakAudio();
      }
