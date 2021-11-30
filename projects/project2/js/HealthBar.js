@@ -61,7 +61,7 @@ class HealthBar {
    changeStatus(wallDistance) {
      if (wallDistance < 26) {
      this.width = this.width - 0.2;
-     // squeakAudio();
+     squeakAudio();
      }
 
     // if (wallDistance < 9) {

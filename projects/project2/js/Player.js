@@ -33,10 +33,10 @@ class Player {
     push();
     noStroke();
     fill(0);
-    rectMode(CORNER);
+    rectMode(CENTER);
     rect(
-      this.x + this.width / 2,
-      this.y + this.height / 2,
+      this.x,
+      this.y,
       this.width,
       this.height
     );
@@ -127,7 +127,7 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
@@ -143,6 +143,8 @@ class Player {
         this.currentRow
       );
     }
+
+  /** This section is for triggering gameplay elements */
 
     // Should these ifs be else if?
     // Turn fog on and off based on touching fog checkpoint
@@ -190,6 +192,20 @@ class Player {
     //   startWalls = false;
     //
     // }
+
+
+    // Active waky keys
+
+    if (currentCellName === `wackyKeys` && wackyKeysActive === false) {
+          wackyKeysActive = true;
+        }
+
+
+    if (currentCellName === `cheese`) {
+          console.log(`cheese`)
+
+          //find way to increase health
+        }
 
     // Trigger game win condition
 

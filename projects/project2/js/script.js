@@ -9,12 +9,23 @@ This is Project 2 for the CART 253 Class at Concordia University.
 
 // Levels array to alternate variety of pickups
 
+// W is for
+// M is for Maze
+// C is for Checkpoints
+// F is for Fog
+// SW is for StartWalls
+// Stp is for Stoping Walls
+// WK is for Wacky Keys
+// S is for Spinning Maze
+// X is for Stoping Spin
+// CH is for Cheese
+
 let levels = [
  [`W`, `C`, ``],
  [`W`, `C`, ``, `F`],
  [`W`, `C`, ``, `S`],
  [`W`, `C`, ``, `X`],
- [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, ``, ``, `X`, `F`, `S`, `StpW`],
+ [`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`],
 ];
 
 // Variables to alternate between specific levels
@@ -76,6 +87,9 @@ let wallHeight = 30;
 let titleBackground = undefined;
 let spritePlayer = undefined;
 let pickupFog = undefined;
+let pickupWackyKeys = undefined;
+let pickupCheese = undefined;
+let pickupWalls = undefined;
 
 // Fog variable to load fog of war image
 let fog;
@@ -104,6 +118,10 @@ let squeak;
 
 let tutorial;
 
+//
+
+let wackyKeysActive = false;
+
 
 /**
 Description of preload
@@ -114,6 +132,18 @@ function preload() {
 
 // Image for fog checkpoint pickup
 pickupFog = loadImage("assets/images/pickupFog.png");
+
+// Image for wacky keys checkpoint
+
+pickupWackyKeys = loadImage("assets/images/pickupWackyKeys.png")
+
+// Image for cheese checkpoint
+
+pickupCheese = loadImage("assets/images/pickupCheese.png")
+
+// Image for reactive Walls checkpoint
+
+pickupWalls = loadImage("assets/images/pickupWalls.png")
 
 // Image for player sprite
 spritePlayer = loadImage(`assets/images/Rat_1.png`);
@@ -402,6 +432,12 @@ function setupLevel() {
                     else if (item === `StpW` && (c!==startCol || r!==startRow)) {
                       grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopWalls`));
                     }
+                      else if (item === `WK` && (c!==startCol || r!==startRow)) {
+                        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `wackyKeys`));
+                      }
+                        else if (item === `CH` && (c!==startCol || r!==startRow)) {
+                          grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `cheese`));
+                        }
         else {
           grid[c].push(new PathCell(20, 20, unit * c, unit * r));
         }

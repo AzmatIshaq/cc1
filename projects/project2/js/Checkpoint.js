@@ -29,9 +29,48 @@ class Checkpoint {
           this.width,
           this.height
         );
-        pop();
+        // pop();
+    }
+
+
+        // Display wakcy keys pickup image
+        if (this.name === `wackyKeys`) {
+            imageMode(CORNER);
+            image(
+              pickupWackyKeys,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
+            // pop();
       }
 
-
+      // Display cheese pickup image
+      if (this.name === `cheese`) {
+          imageMode(CORNER);
+          image(
+            pickupCheese,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+          );
+          // pop();
     }
+
+    // Display cheese pickup image
+    if (this.name === `startWalls`) {
+        imageMode(CORNER);
+        image(
+          pickupWalls,
+          this.x,
+          this.y,
+          this.width,
+          this.height
+        );
+        pop();
   }
+
+  }
+}
