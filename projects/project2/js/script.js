@@ -170,8 +170,6 @@ Player class is initiated
 function setup() {
   createCanvas(cols * unit, rows * unit + width / 2);
 
-squeak.loop();
-
   // Levels
   setupLevel();
 
