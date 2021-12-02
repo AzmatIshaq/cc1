@@ -69,7 +69,7 @@ class Checkpoint {
           this.width,
           this.height
         );
-        }
+      }
 
 
         // Display spin pickup image

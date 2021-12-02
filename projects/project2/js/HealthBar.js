@@ -58,19 +58,19 @@ class HealthBar {
 // Health bar affected by wall
 
   }
-   changeStatus(wallDistance) {
-     if (wallDistance < 30) {
-     this.width = this.width - 0.2;
-     // squeakAudio();
-     }
-
-    // if (wallDistance < 9) {
-    //     this.width = this.width - 0.2;
-    //   }
-    //
-    // if (wallDistance < 6) {
-    //     this.width = this.width - 0.2;
-    //   }
-   }
+   // changeStatus(wallDistance) {
+   //   if (wallDistance < 30) {
+   //   this.width = this.width - 0.2;
+   //   squeakAudio();
+   //   }
+   //
+   //  // if (wallDistance < 9) {
+   //  //     this.width = this.width - 0.2;
+   //  //   }
+   //  //
+   //  // if (wallDistance < 6) {
+   //  //     this.width = this.width - 0.2;
+   //  //   }
+   // }
 
 }

@@ -14,7 +14,8 @@ class Wall {
   move() {
     // console.log("MOVE");
     this.angle = this.angle+0.02;
-    this.u = sin(this.angle)*40;
+    this.u = abs(sin(this.angle))*40;
+
 
 
     // Wall movement so they expand and retract
@@ -25,6 +26,8 @@ class Wall {
   //  }
 
   }
+
+
 
   display() {
 

@@ -201,8 +201,7 @@ function setup() {
   userStartAudio();
 
   // door = new Door();
-
-
+  
 }
 
 /**
@@ -243,13 +242,22 @@ function draw() {
 function animation() {
 
 if(wallsAreActive ===true){
+  for (let r = 0; r < walls.length; r++) {
+    for (let c = 0; c < walls[r].length; c++) {
+      let wall = walls[r][c];
+      let d = dist(player.x, player.y, wall.x, wall.y);
+      if (d < player.width + wall.u/2) {
+        healthBar.width -= 1;
+      }
+    }
+  }
 
   console.log("collide");
 
   // Collision detection between player character and walls
-  let minWallDist = checkCollisionWithWalls();
+  //let minWallDist = checkCollisionWithWalls();
   // HealthBar decrease during collision
-  healthBar.changeStatus(minWallDist);
+  //healthBar.changeStatus(minWallDist);
 }
 
 

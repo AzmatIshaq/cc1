@@ -68,10 +68,12 @@ class Player {
           console.log("no go");
           //reset change
           this.currentCol = this.currentCol + 1;
-          mazeDamage++
+            cell.hit();
+
         } else {
           console.log("go ahead");
           this.x = this.x - this.speed;
+
         }
       }
     }
@@ -85,7 +87,7 @@ class Player {
           console.log("no go");
           //   //reset change
           this.currentCol = this.currentCol - 1;
-          mazeDamage++
+
         } else {
           console.log("go ahead");
           this.x = this.x + this.speed;
@@ -97,12 +99,13 @@ class Player {
         // if we are not on left boundary, adjust to remain in grid.
       if (this.currentRow - 1 >= 0) {
         this.currentRow = this.currentRow - 1;
+        let cell = grid[this.currentCol][this.currentRow]
         // So that we cannot go over this grid
-        if (grid[this.currentCol][this.currentRow].name === `Maze`) {
+        if (cell.name === `Maze`) {
           console.log("no go");
           //reset change
           this.currentRow = this.currentRow + 1;
-          mazeDamage++
+          cell.hit();
         } else {
           console.log("go ahead");
           this.y = this.y - this.speed;
@@ -119,7 +122,7 @@ class Player {
           console.log("no go");
           //reset change
           this.currentRow = this.currentRow - 1;
-          mazeDamage++
+        
         } else {
           console.log("go ahead");
           this.y = this.y + this.speed;
