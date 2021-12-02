@@ -15,7 +15,7 @@ class Checkpoint {
   display() {
     push();
     noStroke();
-    fill(200,30,25);
+    fill(0);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
 
@@ -37,7 +37,7 @@ class Checkpoint {
         if (this.name === `wackyKeys`) {
             imageMode(CORNER);
             image(
-              pickupWackyKeys,
+              pickupWacky,
               this.x,
               this.y,
               this.width,
@@ -59,7 +59,7 @@ class Checkpoint {
           // pop();
     }
 
-    // Display cheese pickup image
+    // Display walls pickup image
     if (this.name === `startWalls`) {
         imageMode(CORNER);
         image(
@@ -69,8 +69,21 @@ class Checkpoint {
           this.width,
           this.height
         );
-        pop();
-  }
+        }
+
+        // Display walls pickup image
+        if (this.name === `stopWalls`) {
+            imageMode(CORNER);
+            image(
+              pickupWalls,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
+            }
+          pop();
+
 
   }
 }

@@ -8,8 +8,9 @@ class Door {
     this.y = y;
     this.name = `door`;
     this.cr  = cr;
-    this.cc =cc ;
-  }
+    this.cc = cc;
+    this.createDoor = false;
+    }
 
   move() {
   }
@@ -21,7 +22,23 @@ class Door {
     fill(0,255,0);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
-    pop();
+
+
+    // Display end door image
+    if (this.name === `door`) {
+        imageMode(CORNER);
+        image(
+          exitDoor,
+          this.x,
+          this.y,
+          this.width,
+          this.height
+        );
+      }
+      pop();
+
+
+
 
   }
 }

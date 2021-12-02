@@ -16,7 +16,7 @@ class ChangedCell {
   display() {
     push();
     noStroke();
-    fill(0,30,255);
+    fill(0, 100, 255);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();

@@ -21,17 +21,17 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
- [`W`, `C`, ``],
  [`W`, `C`, ``, `F`],
-[`StpW`,'M','C','SW'],
- [`W`, `C`, ``, `X`],
- //[`W`, `M`, `M`, `M`, `M`, `SW`, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`, `StpW`, `StpW`, `StpW`, `StpW`, `StpW`],
+ [`WK`, `C`, ``, `F`],
  [`StpW`,'M','C','SW'],
+ [`W`, `C`, ``, `X`],
+ [`W`, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`]
+ // [`StpW`,'M','C','SW'],
 ];
 
 // Variables to alternate between specific levels
 
-let currentLevel = 2;
+let currentLevel = 0;
 
 let level = undefined;
 
@@ -49,7 +49,7 @@ let grid = [];
 
 // Rows and columns in the grid
 let rows = 20;
-let cols = 25;
+let cols = 40;
 
 // The unit size (how big a square for each tile)
 let unit = 25;
@@ -88,15 +88,17 @@ let wallHeight = 30;
 let titleBackground = undefined;
 let spritePlayer = undefined;
 let pickupFog = undefined;
-let pickupWackyKeys = undefined;
+let pickupWacky = undefined;
 let pickupCheese = undefined;
 let pickupWalls = undefined;
+let exitDoor = undefined;
+
 
 // Fog variable to load fog of war image
 let fog;
 
 // Variable to set fog to true for fog effect
-let fogActive;
+let fogActive = true;
 
 // Map angle
 let mapAngle = 0;
@@ -136,7 +138,7 @@ pickupFog = loadImage("assets/images/pickupFog.png");
 
 // Image for wacky keys checkpoint
 
-pickupWackyKeys = loadImage("assets/images/pickupWackyKeys.png")
+pickupWacky = loadImage("assets/images/wacky1.png")
 
 // Image for cheese checkpoint
 
@@ -147,13 +149,20 @@ pickupCheese = loadImage("assets/images/pickupCheese.png")
 pickupWalls = loadImage("assets/images/pickupWalls.png")
 
 // Image for player sprite
+
 spritePlayer = loadImage(`assets/images/Rat_1.png`);
+
+// Image for wacky keys pickup
 
 // Background image for title screen
 titleBackground = loadImage(`assets/images/title_background3.png`);
 
 // Fog of war image
 fog = loadImage(`assets/images/fog_war1.png`);
+
+// Door image
+
+exitDoor = loadImage(`assets/images/door1.png`);
 
 /** Sounds */
 
@@ -253,8 +262,6 @@ if(wallsAreActive ===true){
     //     grid[r][c].display();
     // }
   }
-
-// Door animation
 
 // door.display();
 
@@ -409,7 +416,7 @@ function setupLevel() {
 
   // Initialize tutorial class
 
-  tutorial = new Tutorial(startCol, startRow);
+  tutorial = new Tutorial();
 
 
 // Section to introduce new checkpoint elements

@@ -18,8 +18,8 @@ class Player {
     this.c = 0;
     this.currentCol = startColP;
     this.currentRow = startRowP;
-    this.x = this.currentCol * 25 +w;
-    this.y = this.currentRow * 25+h;
+    this.x = this.currentCol * unit + w;
+    this.y = this.currentRow * unit + h;
     console.log(this.x);
     console.log(this.y);
     this.createDoor = false;
@@ -43,14 +43,14 @@ class Player {
 
 // Display player sprite
 
-    // imageMode(CENTER);
-    // image(
-    //   spritePlayer,
-    //   this.x,
-    //   this.y,
-    //   this.width * 2,
-    //   this.height * 2
-    // );
+    imageMode(CENTER);
+    image(
+      spritePlayer,
+      this.x,
+      this.y,
+      this.width * 2,
+      this.height * 2
+    );
     pop();
   }
 
@@ -134,8 +134,6 @@ class Player {
             currentLevel++;
             setupLevel();
       }
-
-
     }
 
 
@@ -197,8 +195,7 @@ class Player {
       buildWalls = true;
 
 
-
-      // Adding walls overlay to the grid
+    // Adding walls overlay to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
           walls.push([]);
@@ -234,20 +231,18 @@ class Player {
     }
 
 // Changing levels based on score count
-    if (scoreKeeper === 3 && this.createDoor == false) {
+    if (scoreKeeper === 10 && this.createDoor == false || scoreKeeper === 30 && this.createDoor == false || scoreKeeper === 60 && this.createDoor == false || scoreKeeper === 90 && this.createDoor == false || scoreKeeper === 120 && this.createDoor == false) {
       this.createDoor = true;
       console.log("create door");
-      // Add +1 to this.currentCol in order to have door appear next to player
-          grid[this.currentCol+1 ][this.currentRow] = new Door (
+      // Have door appear next to player
+          grid[this.currentCol + 1 ][this.currentRow] = new Door (
                 20,
                 20,
-      // Add + 1 to this.currentCol in order to have door appear next to player
-              (this.currentCol+1) * unit,
+      // Have door appear next to player
+              (this.currentCol + 1) * unit,
               this.currentRow * unit,
-              (this.currentCol+1),
-                this.currentRow
-
-
+              (this.currentCol + 1),
+              this.currentRow
           );
       }
 
