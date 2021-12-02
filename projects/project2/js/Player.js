@@ -63,13 +63,14 @@ class Player {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentCol - 1 >= 0) {
         this.currentCol = this.currentCol - 1;
+        // Defining current cell name
+        let cell = grid[this.currentCol][this.currentRow]
         // So that we cannot go over this grid
         if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //reset change
           this.currentCol = this.currentCol + 1;
-            cell.hit();
-
+          cell.hit();
         } else {
           console.log("go ahead");
           this.x = this.x - this.speed;
@@ -82,12 +83,14 @@ class Player {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentCol + 1 <= cols - 1) {
         this.currentCol = this.currentCol + 1;
+        // Defining current cell name
+        let cell = grid[this.currentCol][this.currentRow]
         // So that we cannot go over this grid
         if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //   //reset change
           this.currentCol = this.currentCol - 1;
-
+          cell.hit();
         } else {
           console.log("go ahead");
           this.x = this.x + this.speed;
@@ -99,6 +102,7 @@ class Player {
         // if we are not on left boundary, adjust to remain in grid.
       if (this.currentRow - 1 >= 0) {
         this.currentRow = this.currentRow - 1;
+        // Defining current cell name
         let cell = grid[this.currentCol][this.currentRow]
         // So that we cannot go over this grid
         if (cell.name === `Maze`) {
@@ -117,12 +121,14 @@ class Player {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentRow + 1 <= rows - 1) {
         this.currentRow = this.currentRow + 1;
+        // Defining current cell name
+        let cell = grid[this.currentCol][this.currentRow]
         // So that we cannot go over this grid
         if (grid[this.currentCol][this.currentRow].name === `Maze`) {
           console.log("no go");
           //reset change
           this.currentRow = this.currentRow - 1;
-        
+          cell.hit();
         } else {
           console.log("go ahead");
           this.y = this.y + this.speed;

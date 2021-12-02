@@ -11,8 +11,7 @@ class Door {
     this.cc = cc;
     }
 
-  move() {
-  }
+  move() {}
 
   display() {
   //  console.log(this.x);
@@ -34,11 +33,6 @@ class Door {
           this.height
         );
       }
-      
       pop();
-
-
-
-
   }
 }

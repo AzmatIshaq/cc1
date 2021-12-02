@@ -179,7 +179,7 @@ exitDoor = loadImage(`assets/images/door1.png`);
 
 /** Sounds */
 
-squeak = loadSound(`assets/sounds/mouse_squeak.wav`);
+squeak = loadSound(`assets/sounds/mouse_squeak2.wav`);
 
 }
 
@@ -201,7 +201,7 @@ function setup() {
   userStartAudio();
 
   // door = new Door();
-  
+
 }
 
 /**
@@ -241,13 +241,14 @@ function draw() {
 
 function animation() {
 
-if(wallsAreActive ===true){
+if(wallsAreActive === true){
   for (let r = 0; r < walls.length; r++) {
     for (let c = 0; c < walls[r].length; c++) {
       let wall = walls[r][c];
       let d = dist(player.x, player.y, wall.x, wall.y);
       if (d < player.width + wall.u/2) {
-        healthBar.width -= 1;
+        healthBar.width -= 0.1;
+        squeakAudio();
       }
     }
   }
@@ -271,20 +272,13 @@ if(wallsAreActive ===true){
 
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
-    //console.log(grid[r]);
-    let col = grid[c];
+        let col = grid[c];
 
   for (let r = 0; r < col.length; r++) {
       col[r].display();
     }
-    // For each row add an empty array to represent the row
-    // Go through all the columns in this row
-    // for (let c = 0; c < cols; c++) {
-    //     grid[r][c].display();
-    // }
   }
 
-// door.display();
 
   // Player animation
 
@@ -383,40 +377,38 @@ image(endRat, width / 2, height / 2, 100, 100);
 }
 
 /*** COLLISION  BETWEEN WALLS  AND PLAYER**/
-function checkCollisionWithWalls(){
-  let minDist = 500;
-  let minWallCol = 0;
-  let minWallRow = 0;
-  // for loop the columns and rows
-  for (let c = 0; c < walls.length; c++) {
-    //console.log(grid[r]);
-    let col = walls[c];
-
-    for (let r = 0; r < col.length; r++) {
-
-        //    console.log(col[r])
-        // Establish distance between player and maze
-        // Have to add + 10 to player in order to prevent maze distance
-        // Calculation from going back to positive
-        let d = dist(player.x, player.y, col[r].x, col[r].y);
-
-        if (d+(col[r].u/2) < minDist) {
-          minDist = d+(col[r].u/2);
-          minWallCol = c;
-          minWallRow = r;
-        }
-        // if(player.x > col[r].x && player.x > col[r].x+col[r].width ){
-        //     if(player.y > col[r].x && player.x > col[r].x+col[r].width )
-        // }
-
-      }
-
-  }
-    // console.log(minDist);
-   return minDist;
-
-
-}
+// function checkCollisionWithWalls(){
+//   let minDist = 500;
+//   let minWallCol = 0;
+//   let minWallRow = 0;
+//   // for loop the columns and rows
+//   for (let c = 0; c < walls.length; c++) {
+//     //console.log(grid[r]);
+//     let col = walls[c];
+//
+//     for (let r = 0; r < col.length; r++) {
+//
+//         //    console.log(col[r])
+//         // Establish distance between player and maze
+//         // Have to add + 10 to player in order to prevent maze distance
+//         // Calculation from going back to positive
+//         let d = dist(player.x, player.y, col[r].x, col[r].y);
+//
+//         if (d+(col[r].u/2) < minDist) {
+//           minDist = d+(col[r].u/2);
+//           minWallCol = c;
+//           minWallRow = r;
+//         }
+//         // if(player.x > col[r].x && player.x > col[r].x+col[r].width ){
+//         //     if(player.y > col[r].x && player.x > col[r].x+col[r].width )
+//         // }
+//
+//       }
+//
+//       }
+//     // console.log(minDist);
+//    return minDist;
+// }
 
 function setupLevel() {
   console.log(`set up level ${currentLevel}`)
@@ -499,7 +491,7 @@ function setupLevel() {
 function squeakAudio(){
   // Play music if this is the first interaction
   if (!squeak.isPlaying()) {
-    squeak.loop();
+    squeak.play();
   }
 } // End of squakAudio function
 
