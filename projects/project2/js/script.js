@@ -79,6 +79,8 @@ let maze = {
 
 // Door variable to initialize class
 let door;
+// Door state
+let doorState = false;
 
 // Wall variables
 let wallWidth = 10;
@@ -139,7 +141,7 @@ pickupFog = loadImage("assets/images/pickupFog.png");
 
 // Image for wacky keys checkpoint
 
-pickupWacky = loadImage("assets/images/wacky1.png")
+pickupWacky = loadImage("assets/images/wacky2.png")
 
 // Image for cheese checkpoint
 
@@ -407,11 +409,13 @@ function setupLevel() {
   //reset other variables?
    walls = [];
    wallsAreActive= false;
-   // createDoor = false;
+
+   //
+   let doorState = false;
 
   level = levels[currentLevel];
   // Initialize player class
-  player = new Player(10, 10, unit, startCol, startRow);
+  player = new Player(10, 10, unit, startCol, startRow, doorState);
 
   // Initialize health bar class
   healthBar = new HealthBar();

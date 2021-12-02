@@ -9,7 +9,6 @@ class Door {
     this.name = `door`;
     this.cr  = cr;
     this.cc = cc;
-    this.createDoor = false;
     }
 
   move() {

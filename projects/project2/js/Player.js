@@ -1,7 +1,7 @@
 // Player Class
 
 class Player {
-  constructor(w, h, unit, startColP, startRowP) {
+  constructor(w, h, unit, startColP, startRowP, createDoor) {
     this.x = 0;
     this.y = 250;
     this.vx = 0;
@@ -128,13 +128,9 @@ class Player {
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
 
-    if(currentCellName === "door"){
-      console.log("on a door");
-      if(currentLevel < 4){
-            currentLevel++;
-            setupLevel();
-      }
-    }
+
+
+
 
 
         // Stop walls moving if stop wall checkpoint is collected
@@ -146,6 +142,7 @@ class Player {
         }
 
         // Add to bottom so it is the last state change to occur
+        // Change a checkpoint cell to a changed cell.
     if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
@@ -230,10 +227,24 @@ class Player {
       state = `endWin`;
     }
 
+    // Change levels based on score
+
+    if(currentCellName === "door"){
+      console.log("on a door");
+      if(currentLevel < 4){
+            currentLevel++;
+            scoreKeeper++;
+            setupLevel();
+      // reset door to false
+      doorState = false;
+      }
+    }
+
 // Changing levels based on score count
     if (scoreKeeper === 4 && this.createDoor == false || scoreKeeper === 8 && this.createDoor == false || scoreKeeper === 12 && this.createDoor == false || scoreKeeper === 16 && this.createDoor == false || scoreKeeper === 20 && this.createDoor == false) {
       this.createDoor = true;
       console.log("create door");
+      console.log(scoreKeeper);
       // Have door appear next to player
           grid[this.currentCol + 1 ][this.currentRow] = new Door (
                 20,
@@ -313,10 +324,12 @@ class Player {
     // fogActive = false;
     // }
 
-    console.log(this.x);
-    console.log(this.y);
-    console.log(this.currentRow);
-    console.log(this.currentCol);
-    console.log(grid[this.currentCol][this.currentRow].name);
+/** Useful console logs */
+    // console.log(this.x);
+    // console.log(this.y);
+    // console.log(this.currentRow);
+    // console.log(this.currentCol);
+    // console.log(grid[this.currentCol][this.currentRow].name);
+
   } // End of keyPressed function
 }

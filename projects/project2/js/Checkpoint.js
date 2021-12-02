@@ -15,7 +15,7 @@ class Checkpoint {
   display() {
     push();
     noStroke();
-    fill(0);
+    fill(255, 20, 50);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
 
