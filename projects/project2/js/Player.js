@@ -231,7 +231,7 @@ class Player {
     }
 
 // Changing levels based on score count
-    if (scoreKeeper === 10 && this.createDoor == false || scoreKeeper === 30 && this.createDoor == false || scoreKeeper === 60 && this.createDoor == false || scoreKeeper === 90 && this.createDoor == false || scoreKeeper === 120 && this.createDoor == false) {
+    if (scoreKeeper === 4 && this.createDoor == false || scoreKeeper === 8 && this.createDoor == false || scoreKeeper === 12 && this.createDoor == false || scoreKeeper === 16 && this.createDoor == false || scoreKeeper === 20 && this.createDoor == false) {
       this.createDoor = true;
       console.log("create door");
       // Have door appear next to player

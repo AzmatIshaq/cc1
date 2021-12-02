@@ -21,10 +21,10 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
- [`W`, `C`, ``, `F`],
- [`WK`, `C`, ``, `F`],
- [`StpW`,'M','C','SW'],
- [`W`, `C`, ``, `X`],
+ [`W`,'M','M', `C`, ``,`SW`, `F`],
+ [`WK`,'M','M','M', `C`, ``, `F`],
+ [`StpW`,'M','M','M','M','C','SW'],
+ [`W`, `C`,'M','M','M','M','M', ``, `X`],
  [`W`, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`]
  // [`StpW`,'M','C','SW'],
 ];
@@ -92,6 +92,7 @@ let pickupWacky = undefined;
 let pickupCheese = undefined;
 let pickupWalls = undefined;
 let exitDoor = undefined;
+let endRat = undefined;
 
 
 // Fog variable to load fog of war image
@@ -152,7 +153,9 @@ pickupWalls = loadImage("assets/images/pickupWalls.png")
 
 spritePlayer = loadImage(`assets/images/Rat_1.png`);
 
-// Image for wacky keys pickup
+// Image for end game state
+
+endRat = loadImage(`assets/images/rat_lose.png`)
 
 // Background image for title screen
 titleBackground = loadImage(`assets/images/title_background3.png`);
@@ -351,6 +354,8 @@ function title() {
 
 function endLose() {
   // End text
+image(endRat, width / 2, height / 2, 100, 100);
+
   push();
   textSize(16);
   textAlign(CENTER, CENTER);
@@ -402,6 +407,7 @@ function setupLevel() {
   //reset other variables?
    walls = [];
    wallsAreActive= false;
+   // createDoor = false;
 
   level = levels[currentLevel];
   // Initialize player class
