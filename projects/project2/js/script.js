@@ -9,24 +9,24 @@ This is Project 2 for the CART 253 Class at Concordia University.
 
 // Levels array to alternate variety of pickups
 
-// W is for
+
 // M is for Maze
 // C is for Checkpoints
 // F is for Fog
 // SW is for StartWalls
 // StpW is for Stoping Walls
 // WK is for Wacky Keys
+// StpWK is to stop Wacky Keys
 // S is for Spinning Maze
-// X is for Stoping Spin
+// StpS is for Stoping Spin
 // CH is for Cheese
 
 let levels = [
- [`W`,'M','M', `C`, ``,`SW`, `F`],
- [`WK`,'M','M','M', `C`, ``, `F`],
- [`StpW`,'M','M','M','M','C','SW'],
- [`W`, `C`,'M','M','M','M','M', ``, `X`],
- [`W`, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SW`, `WK`, `CH`, `X`, `F`, `S`, `StpW`]
- // [`StpW`,'M','C','SW'],
+ [``,`M`,`M`, ``, `StpW`, `SW`, `F`],
+ [`WK`,`M`,`M`,`M`, ``, ``, `F`],
+ [`StpW`,`M`,`M`,`M`, ``, `SW`],
+ [``, ``,`M`,`M`, `M`, ``, `StpS`],
+ [``, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SW`, `WK`, `CH`, `StpS`, `F`, `S`, `StpW`]
 ];
 
 // Variables to alternate between specific levels
@@ -60,6 +60,10 @@ let unit = 25;
 
 // Array to load walls
 let walls = [];
+
+//
+
+let mazeDamage;
 
 // Starting row
 let startRow = 8;
@@ -142,6 +146,10 @@ pickupFog = loadImage("assets/images/pickupFog.png");
 // Image for wacky keys checkpoint
 
 pickupWacky = loadImage("assets/images/wacky2.png")
+
+// Image for spin checkpoint
+
+pickupWacky = loadImage("assets/images/pickupSpin.png")
 
 // Image for cheese checkpoint
 
@@ -453,7 +461,7 @@ function setupLevel() {
               else if (item === `S` && (c!==startCol || r!==startRow)) {
                 grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
               }
-                else if (item === `X` && (c!==startCol || r!==startRow)) {
+                else if (item === `StpS` && (c!==startCol || r!==startRow)) {
                   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
                 }
                   else if (item === `SW` && (c!==startCol || r!==startRow)) {

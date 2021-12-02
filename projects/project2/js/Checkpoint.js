@@ -60,7 +60,7 @@ class Checkpoint {
     }
 
     // Display walls pickup image
-    if (this.name === `startWalls`) {
+    if (this.name === `startWalls` || this.name === `stopWalls`) {
         imageMode(CORNER);
         image(
           pickupWalls,
@@ -71,8 +71,9 @@ class Checkpoint {
         );
         }
 
-        // Display walls pickup image
-        if (this.name === `stopWalls`) {
+
+        // Display spin pickup image
+        if (this.name === `spin` || this.name === `stopSpin`) {
             imageMode(CORNER);
             image(
               pickupWalls,

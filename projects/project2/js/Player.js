@@ -68,6 +68,7 @@ class Player {
           console.log("no go");
           //reset change
           this.currentCol = this.currentCol + 1;
+          mazeDamage++
         } else {
           console.log("go ahead");
           this.x = this.x - this.speed;
@@ -84,6 +85,7 @@ class Player {
           console.log("no go");
           //   //reset change
           this.currentCol = this.currentCol - 1;
+          mazeDamage++
         } else {
           console.log("go ahead");
           this.x = this.x + this.speed;
@@ -100,6 +102,7 @@ class Player {
           console.log("no go");
           //reset change
           this.currentRow = this.currentRow + 1;
+          mazeDamage++
         } else {
           console.log("go ahead");
           this.y = this.y - this.speed;
@@ -116,6 +119,7 @@ class Player {
           console.log("no go");
           //reset change
           this.currentRow = this.currentRow - 1;
+          mazeDamage++
         } else {
           console.log("go ahead");
           this.y = this.y + this.speed;
@@ -123,6 +127,7 @@ class Player {
       }
     }
 
+console.log(mazeDamage);
     // Checkpoint collection and interaction
     // Convert a checkpoint into a changed cell aka pathcell.
 
@@ -233,8 +238,10 @@ class Player {
       console.log("on a door");
       if(currentLevel < 4){
             currentLevel++;
+            // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
             scoreKeeper++;
             setupLevel();
+            sounds.playOscillator();
       // reset door to false
       doorState = false;
       }
