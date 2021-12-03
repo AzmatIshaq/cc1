@@ -9,7 +9,6 @@ This is Project 2 for the CART 253 Class at Concordia University.
 
 // Levels array to alternate variety of pickups
 
-
 // M is for Maze
 // C is for Checkpoints
 // F is for Fog
@@ -18,15 +17,15 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // WK is for Wacky Keys
 // StpWK is to stop Wacky Keys
 // S is for Spinning Maze
-// StpS is for Stoping Spin
+// StpS is for Stoping Spinning Maze
 // CH is for Cheese
 
 let levels = [
- [``,`M`,`M`, ``, `StpR`, `SR`, `F`],
- [`WK`,`M`,`M`,`M`, ``, ``, `F`],
- [`StpR`,`M`,`M`,`M`, ``, `SR`],
- [``, ``,`M`,`M`, `M`, ``, `StpS`],
- [``, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`]
+  [``, `CH`, `M`, `M`, ``, `StpR`, `SR`, `F`],
+  [`WK`, `M`, `M`, `M`, ``, ``, `F`],
+  [`StpR`, `M`, `M`, `M`, ``, `SR`],
+  [``, ``, `M`, `M`, `M`, ``, `StpS`],
+  [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
@@ -70,7 +69,7 @@ let startCol = 8;
 // Title State
 let state = `title`;
 
-let radiationIsActive= false;
+let radiationIsActive = false;
 
 let maze = {
   width: 20,
@@ -79,8 +78,6 @@ let maze = {
 
 // Door variable to initialize class
 let door;
-// Door state
-let doorState = false;
 
 // Wall variables
 // let wallWidth = 10;
@@ -93,9 +90,9 @@ let pickupFog = undefined;
 let pickupWacky = undefined;
 let pickupCheese = undefined;
 let pickupRadiation = undefined;
+let pickupSpin = undefined;
 let exitDoor = undefined;
 let endRat = undefined;
-
 
 // Fog variable to load fog of war image
 let fog;
@@ -119,12 +116,13 @@ let healthBar;
 // Variables to initiate sounds
 let sounds;
 let squeak;
+let cheesePickupChime;
 
 // Variables to load tutorial class
 
 let tutorial;
 
-//
+// Set wacky keys to be off at beginning of program
 
 let wackyKeysActive = false;
 
@@ -134,48 +132,45 @@ Description of preload
 */
 function preload() {
 
-/** Images */
+  /** Images */
 
-// Image for fog checkpoint pickup
-pickupFog = loadImage("assets/images/pickupFog.png");
+  // Image for fog checkpoint pickup
+  pickupFog = loadImage("assets/images/pickupFog.png");
 
-// Image for wacky keys checkpoint
+  // Image for wacky keys checkpoint
+  pickupWacky = loadImage("assets/images/wacky2.png");
 
-pickupWacky = loadImage("assets/images/wacky2.png")
+  // Image for spin checkpoint
+  pickupSpin = loadImage("assets/images/pickupSpin.png");
 
-// Image for spin checkpoint
+  // Image for cheese checkpoint
+  pickupCheese = loadImage("assets/images/pickupCheese.png");
 
-pickupWacky = loadImage("assets/images/pickupSpin.png")
+  // Image for reactive radiationCircles checkpoint
+  pickupRadiation = loadImage("assets/images/pickupRadiation.png");
 
-// Image for cheese checkpoint
+  // Image for player sprite
+  spritePlayer = loadImage(`assets/images/Rat_1.png`);
 
-pickupCheese = loadImage("assets/images/pickupCheese.png")
+  // Image for end game state
+  endRat = loadImage(`assets/images/rat_lose.png`);
 
-// Image for reactive radiationCircles checkpoint
+  // Background image for title screen
+  titleBackground = loadImage(`assets/images/title_background3.png`);
 
-pickupRadiation = loadImage("assets/images/pickupRadiation.png")
+  // Fog of war image
+  fog = loadImage(`assets/images/fog_war1.png`);
 
-// Image for player sprite
+  // Door image
+  exitDoor = loadImage(`assets/images/door1.png`);
 
-spritePlayer = loadImage(`assets/images/Rat_1.png`);
+  /** Sounds */
 
-// Image for end game state
+  // Mouse squeak for collision audio
+  squeak = loadSound(`assets/sounds/mouse_squeak2.wav`);
 
-endRat = loadImage(`assets/images/rat_lose.png`)
-
-// Background image for title screen
-titleBackground = loadImage(`assets/images/title_background3.png`);
-
-// Fog of war image
-fog = loadImage(`assets/images/fog_war1.png`);
-
-// Door image
-
-exitDoor = loadImage(`assets/images/door1.png`);
-
-/** Sounds */
-
-squeak = loadSound(`assets/sounds/mouse_squeak2.wav`);
+  // Chime for cheese pickups
+  cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup.wav`);
 
 }
 
@@ -186,12 +181,15 @@ Player class is initiated
 */
 
 function setup() {
+
+  // Set up canvas size based on colums and rows
   createCanvas(cols * unit, rows * unit + width / 2);
 
-  // Levels
+  // Level setup function
   setupLevel();
 
-  level = levels[currentLevel]
+  // Variable to start and use levels
+  level = levels[currentLevel];
 
   // Initialize audio
   userStartAudio();
@@ -205,27 +203,27 @@ function draw() {
   background(0);
 
   if (state === `title`) {
-  title();
+    title();
   }
 
   if (state === `animation`) {
-  animation();
+    animation();
   }
 
   if (state === `endLose`) {
-  endLose();
+    endLose();
   }
 
   if (state === `endWin`) {
 
-  //Ending text
-  push();
-  fill(255);
-  textSize(16);
-  textAlign(CENTER, CENTER);
-  text(`You Win!`, width / 2, height / 2);
-  text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
-  pop();
+    //Ending text
+    push();
+    fill(255);
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text(`You Win!`, width / 2, height / 2);
+    text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
+    pop();
   }
 
 
@@ -234,27 +232,27 @@ function draw() {
 
 function animation() {
 
-// Collision detection
+  // Collision detection and healthbar decrease
 
-if(radiationIsActive === true){
-  for (let r = 0; r < radiationCircles.length; r++) {
-    for (let c = 0; c < radiationCircles[r].length; c++) {
-      let wall = radiationCircles[r][c];
-      let d = dist(player.x, player.y, wall.x, wall.y);
-      if (d < player.width + wall.u/2) {
-        healthBar.width -= 0.1;
-        squeakAudio();
+  if (radiationIsActive === true) {
+    for (let r = 0; r < radiationCircles.length; r++) {
+      for (let c = 0; c < radiationCircles[r].length; c++) {
+        let wall = radiationCircles[r][c];
+        let d = dist(player.x, player.y, wall.x, wall.y);
+        if (d < player.width + wall.u / 2) {
+          healthBar.width -= 0.1;
+          squeakAudio();
+        }
       }
     }
+
+    console.log("collide");
+
+    // Collision detection between player character and walls
+    //let minWallDist = checkCollisionWithWalls();
+    // HealthBar decrease during collision
+    //healthBar.changeStatus(minWallDist);
   }
-
-  console.log("collide");
-
-  // Collision detection between player character and walls
-  //let minWallDist = checkCollisionWithWalls();
-  // HealthBar decrease during collision
-  //healthBar.changeStatus(minWallDist);
-}
 
 
   // Map spin effect
@@ -267,9 +265,9 @@ if(radiationIsActive === true){
 
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
-        let col = grid[c];
+    let col = grid[c];
 
-  for (let r = 0; r < col.length; r++) {
+    for (let r = 0; r < col.length; r++) {
       col[r].display();
     }
   }
@@ -279,21 +277,21 @@ if(radiationIsActive === true){
 
   player.display();
 
-if(radiationIsActive ===true){
-  // for loops to display the columns and rows of radiationCircles
-  for (let c = 0; c < radiationCircles.length; c++) {
-    //console.log(grid[r]);
-    let col = radiationCircles[c];
+  if (radiationIsActive === true) {
+    // for loops to display the columns and rows of radiationCircles
+    for (let c = 0; c < radiationCircles.length; c++) {
+      //console.log(grid[r]);
+      let col = radiationCircles[c];
 
-    for (let r = 0; r < col.length; r++) {
+      for (let r = 0; r < col.length; r++) {
         col[r].display();
         //if (wallsStopMoving ===false) {
         // Dispaly wall growth
         col[r].move();
-      //  }
+        //  }
+      }
     }
   }
-}
 
 
   // Health bar animation
@@ -304,18 +302,24 @@ if(radiationIsActive ===true){
 
   // To display the play score
 
-    push();
-    fill(255);
-    textSize(44);
-    text(scoreKeeper, width / 1.2, height / 1.02);
-    textAlign(CENTER, CENTER);
-    pop();
+  push();
+  fill(255);
+  textSize(44);
+  text(scoreKeeper, width / 1.2, height / 1.02);
+  textAlign(CENTER, CENTER);
+  pop();
 
-// Display fog
+  // To prevent score from increasing while exit door is open
+
+  // if (doorState === true) {
+  //
+  // }
+
+  // Display fog
 
   displayFog(player)
 
-}
+} // End of animation function
 
 
 
@@ -328,7 +332,7 @@ function keyPressed() {
   //   state = `tutorial`;
   // }
 
-    player.keypressed();
+  player.keypressed();
 }
 
 function title() {
@@ -361,7 +365,7 @@ function title() {
 
 function endLose() {
   // End text
-image(endRat, width / 2, height / 2, 100, 100);
+  image(endRat, width / 2, height / 2, 100, 100);
 
   push();
   textSize(16);
@@ -372,55 +376,18 @@ image(endRat, width / 2, height / 2, 100, 100);
   pop();
 }
 
-/*** COLLISION  BETWEEN WALLS  AND PLAYER**/
-// function checkCollisionWithWalls(){
-//   let minDist = 500;
-//   let minWallCol = 0;
-//   let minWallRow = 0;
-//   // for loop the columns and rows
-//   for (let c = 0; c < walls.length; c++) {
-//     //console.log(grid[r]);
-//     let col = walls[c];
-//
-//     for (let r = 0; r < col.length; r++) {
-//
-//         //    console.log(col[r])
-//         // Establish distance between player and maze
-//         // Have to add + 10 to player in order to prevent maze distance
-//         // Calculation from going back to positive
-//         let d = dist(player.x, player.y, col[r].x, col[r].y);
-//
-//         if (d+(col[r].u/2) < minDist) {
-//           minDist = d+(col[r].u/2);
-//           minWallCol = c;
-//           minWallRow = r;
-//         }
-//         // if(player.x > col[r].x && player.x > col[r].x+col[r].width ){
-//         //     if(player.y > col[r].x && player.x > col[r].x+col[r].width )
-//         // }
-//
-//       }
-//
-//       }
-//     // console.log(minDist);
-//    return minDist;
-// }
-
 function setupLevel() {
   console.log(`set up level ${currentLevel}`)
   grid = [];
   buildWalls = false;
   //reset other variables?
-   radiationCircles = [];
-   radiationIsActive= false;
-
-   // Reset door state
-   let doorState = false;
+  radiationCircles = [];
+  radiationIsActive = false;
 
   level = levels[currentLevel];
 
   // Initialize player class
-  player = new Player(10, 10, unit, startCol, startRow, doorState);
+  player = new Player(10, 10, unit, startCol, startRow);
 
   // Initialize health bar class
   healthBar = new HealthBar();
@@ -429,12 +396,12 @@ function setupLevel() {
 
   sounds = new Sounds();
 
+
   // Initialize tutorial class
 
   tutorial = new Tutorial();
 
-
-// Section to introduce new checkpoint elements
+  // Section to introduce new checkpoint elements
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -445,44 +412,35 @@ function setupLevel() {
       // Choose a random item to add at this position
       // (W, c, or nothing)
       let item = random(level);
-        // Add a Maze and paths to the columns
-        if (item === `M` && (c!==startCol || r!==startRow)) {
-          grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r, `Maze`));
-        }
-          else if (item === `W` && (c!==startCol || r!==startRow)) {
-            grid[c].push(new Checkpoint(20, 20, unit * c, unit * r,`checkPoint`));
-          }
-            else if (item === `F` && (c!==startCol || r!==startRow)) {
-              grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
-            }
-              else if (item === `S` && (c!==startCol || r!==startRow)) {
-                grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
-              }
-                else if (item === `StpS` && (c!==startCol || r!==startRow)) {
-                  grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
-                }
-                  else if (item === `SR` && (c!==startCol || r!==startRow)) {
-                    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startRadiation`));
-                  }
-                    else if (item === `StpR` && (c!==startCol || r!==startRow)) {
-                      grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopRadiation`));
-                    }
-                      else if (item === `WK` && (c!==startCol || r!==startRow)) {
-                        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `wackyKeys`));
-                      }
-                        else if (item === `CH` && (c!==startCol || r!==startRow)) {
-                          grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `cheese`));
-                        }
-        else {
-          grid[c].push(new PathCell(20, 20, unit * c, unit * r));
-        }
+      // Add a Maze and paths to the columns
+      if (item === `M` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Maze(maze.width, maze.height, unit * c, unit * r, `Maze`));
+      } else if (item === `W` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `checkPoint`));
+      } else if (item === `F` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `fog`));
+      } else if (item === `S` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `spin`));
+      } else if (item === `StpS` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
+      } else if (item === `SR` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startRadiation`));
+      } else if (item === `StpR` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopRadiation`));
+      } else if (item === `WK` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `wackyKeys`));
+      } else if (item === `CH` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `cheese`));
+      } else {
+        grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
     }
-  } // End of setupLevel function
+  }
+} // End of setupLevel function
 
 
 // Function to play squaking audio
-function squeakAudio(){
+function squeakAudio() {
   if (!squeak.isPlaying()) {
     squeak.play();
   }
@@ -492,15 +450,15 @@ function squeakAudio(){
 
 
 // Display fog around player when it is active
-function displayFog(player){
-    if (fogActive === true) {
-      imageMode(CENTER);
-      image(
-        fog,
-        player.x + player.width / 1.5,
-        player.y + player.height / 1.5,
-        width * 2,
-        height * 2
-      );
-    }
+function displayFog(player) {
+  if (fogActive === true) {
+    imageMode(CENTER);
+    image(
+      fog,
+      player.x + player.width / 1.5,
+      player.y + player.height / 1.5,
+      width * 2,
+      height * 2
+    );
   }
+} // End ofdisplayFog function

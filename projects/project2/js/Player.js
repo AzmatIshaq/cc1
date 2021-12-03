@@ -141,11 +141,6 @@ class Player {
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
 
-
-
-
-
-
         // Stop radiationCircles moving if stop wall checkpoint is collected
 
         if (currentCellName === `stopRadiation`) {
@@ -156,9 +151,10 @@ class Player {
 
         // Add to bottom so it is the last state change to occur
         // Change a checkpoint cell to a changed cell.
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
-        // Scorekeeper goes up whenever checkpoint is collected
-        scoreKeeper++;
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys`) {
+          // Scorekeeper goes up whenever checkpoint is collected
+          // but only if there is no door available to get to next level
+        if(this.createDoor === false) { scoreKeeper++; }
         // Trigger sound when checkpoint is collected
         sounds.playOscillator();
 
@@ -173,7 +169,27 @@ class Player {
       );
     }
 
-  /** This section is for triggering gameplay elements */
+// Separate cheese cell name if statement to play different sound on pickup and no scoreKeeper increase
+if (currentCellName === `cheese`) {
+    // Trigger sound when checkpoint is collected
+    cheesePickupChime.play();
+    // Health gain
+    // if (healthBar.width < width / 19.8) {
+    //   healthBar.width += 10
+    // }
+  grid[this.currentCol][this.currentRow] = new ChangedCell(
+    20,
+    20,
+    unit * this.currentCol,
+    unit * this.currentRow,
+    this.currentCol,
+    this.currentRow
+  );
+}
+
+// return currentCellName;
+
+  /** This section is for triggering gameplay elements based on pickup item */
 
     // Should these ifs be else if?
     // Turn fog on and off based on touching fog checkpoint
@@ -227,11 +243,6 @@ class Player {
           wackyKeysActive = true;
         }
 
-
-    if (currentCellName === `cheese`) {
-          console.log(`cheese`)
-        }
-
     // Trigger game win condition
 
     if (scoreKeeper === 300) {
@@ -241,7 +252,8 @@ class Player {
     // Change levels based on score
 
     if(currentCellName === "door"){
-      console.log("on a door");
+      this.createDoor = false;
+      // console.log("on a door");
       if(currentLevel < 4){
             currentLevel++;
             // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
@@ -249,17 +261,16 @@ class Player {
             setupLevel();
             sounds.playOscillator();
       // reset door to false
-      doorState = false;
       }
     }
+
+
 
 // Changing levels based on score count
     if (scoreKeeper === 4 && this.createDoor == false || scoreKeeper === 8 && this.createDoor == false || scoreKeeper === 12 && this.createDoor == false || scoreKeeper === 16 && this.createDoor == false || scoreKeeper === 20 && this.createDoor == false) {
       this.createDoor = true;
-      console.log("create door");
-      console.log(scoreKeeper);
       // Have door appear next to player
-          grid[this.currentCol + 1 ][this.currentRow] = new Door (
+          grid[this.currentCol + 1][this.currentRow] = new Door (
                 20,
                 20,
       // Have door appear next to player
@@ -270,17 +281,11 @@ class Player {
           );
       }
 
+      // ScoreKeeper from increasing when createdoor is true
+      // if (createDoor === true && currentCellName =) {
+      //       scoreKeeper = scoreKeeper--
+      //     }
 
-
-    //       // To prevent more doors from appearing
-    //       // Need to find a better solution though eventually
-    //       // scoreKeeper++
-    //   // Change level
-    //   currentLevel = 1;
-    //   console.log(currentLevel);
-    //   // setupLevel();
-    //
-    // }
 
 
     // if (scoreKeeper === 0) {
@@ -342,7 +347,7 @@ class Player {
     // console.log(this.y);
     // console.log(this.currentRow);
     // console.log(this.currentCol);
-    // console.log(grid[this.currentCol][this.currentRow].name);
+    console.log(grid[this.currentCol][this.currentRow].name);
 
   } // End of keyPressed function
 }

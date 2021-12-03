@@ -15,7 +15,7 @@ class Checkpoint {
   display() {
     push();
     noStroke();
-    fill(255, 20, 50);
+    fill(0);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
 
@@ -76,7 +76,7 @@ class Checkpoint {
         if (this.name === `spin` || this.name === `stopSpin`) {
             imageMode(CORNER);
             image(
-              pickupRadiation,
+              pickupSpin,
               this.x,
               this.y,
               this.width,
