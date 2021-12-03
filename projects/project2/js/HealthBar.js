@@ -55,7 +55,7 @@ class HealthBar {
       state = `endLose`;
     }
 
-// Health bar affected by wall
+// Health bar affected by radiation
 
   }
    // changeStatus(wallDistance) {

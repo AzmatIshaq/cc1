@@ -1,24 +1,24 @@
-// Wall Class
+// Radiation Class
 
-class Wall {
+class Radiation {
   constructor(gridcol, gridrow, w, h, u) {
     this.width = w / 2;
     this.height = h;
     this.x = gridcol * u+w/2;
     this.y = gridrow * u+h/2;
-    this.name = `wall`;
+    this.name = `radiation`;
     this.u = u;
-    this.angle = 0;
+    this.angle = 20;
   }
 
   move() {
-    // console.log("MOVE");
+    // Movement for radiation
     this.angle = this.angle+0.02;
-    this.u = abs(sin(this.angle))*40;
+    this.u = abs(sin(this.angle))*70;
 
 
 
-    // Wall movement so they expand and retract
+    // radiation movement so they expand and retract
     //   this.u = this.u + 0.1
     //
     // if (this.u > 40) {
@@ -32,6 +32,7 @@ class Wall {
   display() {
 
     push();
+    noStroke();
     fill(255, 0, 0, 120);
     ellipseMode(CENTER);
     // rect(this.x, this.y, this.width, this.height);

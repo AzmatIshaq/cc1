@@ -37,8 +37,8 @@ class Player {
     rect(
       this.x,
       this.y,
-      this.width*2,
-      this.height*2
+      this.width * 2,
+      this.height * 2
     );
 
 // Display player sprite
@@ -136,7 +136,6 @@ class Player {
       }
     }
 
-console.log(mazeDamage);
     // Checkpoint collection and interaction
     // Convert a checkpoint into a changed cell aka pathcell.
 
@@ -149,15 +148,15 @@ console.log(mazeDamage);
 
         // Stop walls moving if stop wall checkpoint is collected
 
-        if (currentCellName === `stopWalls`) {
+        if (currentCellName === `stopRadiation`) {
          console.log("stopping");
-         wallsAreActive =false;
+         radiationIsActive =false;
 
         }
 
         // Add to bottom so it is the last state change to occur
         // Change a checkpoint cell to a changed cell.
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startWalls` || currentCellName === `stopWalls` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys` || currentCellName === `cheese`) {
         // Scorekeeper goes up whenever checkpoint is collected
         scoreKeeper++;
         // Trigger sound when checkpoint is collected
@@ -199,10 +198,10 @@ console.log(mazeDamage);
       }
 
     // Activate walls
-    if(currentCellName ==='startWalls'){
-        wallsAreActive =true;
+    if(currentCellName ==='startRadiation'){
+        radiationIsActive =true;
     }
-    if (currentCellName === `startWalls` && buildWalls === false) {
+    if (currentCellName === `startRadiation` && buildWalls === false) {
       buildWalls = true;
 
 
@@ -213,7 +212,7 @@ console.log(mazeDamage);
           // Go through the grid's rows
           for (let r = 0; r < rows; r++) {
             if (grid[c][r].name === `Maze`) {
-                walls[c].push(new Wall(c, r, 20, 20, unit));
+                walls[c].push(new Radiation(c, r, 20, 20, unit));
 
 
               }
@@ -231,8 +230,6 @@ console.log(mazeDamage);
 
     if (currentCellName === `cheese`) {
           console.log(`cheese`)
-
-          //find way to increase health
         }
 
     // Trigger game win condition

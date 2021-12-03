@@ -13,8 +13,8 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // M is for Maze
 // C is for Checkpoints
 // F is for Fog
-// SW is for StartWalls
-// StpW is for Stoping Walls
+// SR is for Start Radiation
+// StpR is for Stoping Radiation
 // WK is for Wacky Keys
 // StpWK is to stop Wacky Keys
 // S is for Spinning Maze
@@ -22,11 +22,11 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
- [``,`M`,`M`, ``, `StpW`, `SW`, `F`],
+ [``,`M`,`M`, ``, `StpR`, `SR`, `F`],
  [`WK`,`M`,`M`,`M`, ``, ``, `F`],
- [`StpW`,`M`,`M`,`M`, ``, `SW`],
+ [`StpR`,`M`,`M`,`M`, ``, `SR`],
  [``, ``,`M`,`M`, `M`, ``, `StpS`],
- [``, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SW`, `WK`, `CH`, `StpS`, `F`, `S`, `StpW`]
+ [``, `M`, `M`, `M`,  ``,  ``,  ``, ``,  ``,  ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`]
 ];
 
 // Variables to alternate between specific levels
@@ -61,10 +61,6 @@ let unit = 25;
 // Array to load walls
 let walls = [];
 
-//
-
-let mazeDamage;
-
 // Starting row
 let startRow = 8;
 
@@ -74,7 +70,7 @@ let startCol = 8;
 // Title State
 let state = `title`;
 
-let wallsAreActive= false;
+let radiationIsActive= false;
 
 let maze = {
   width: 20,
@@ -96,7 +92,7 @@ let spritePlayer = undefined;
 let pickupFog = undefined;
 let pickupWacky = undefined;
 let pickupCheese = undefined;
-let pickupWalls = undefined;
+let pickupRadiation = undefined;
 let exitDoor = undefined;
 let endRat = undefined;
 
@@ -157,7 +153,7 @@ pickupCheese = loadImage("assets/images/pickupCheese.png")
 
 // Image for reactive Walls checkpoint
 
-pickupWalls = loadImage("assets/images/pickupWalls.png")
+pickupRadiation = loadImage("assets/images/pickupRadiation.png")
 
 // Image for player sprite
 
@@ -199,9 +195,6 @@ function setup() {
 
   // Initialize audio
   userStartAudio();
-
-  // door = new Door();
-
 }
 
 /**
@@ -241,7 +234,9 @@ function draw() {
 
 function animation() {
 
-if(wallsAreActive === true){
+// Collision detection
+
+if(radiationIsActive === true){
   for (let r = 0; r < walls.length; r++) {
     for (let c = 0; c < walls[r].length; c++) {
       let wall = walls[r][c];
@@ -284,7 +279,7 @@ if(wallsAreActive === true){
 
   player.display();
 
-if(wallsAreActive ===true){
+if(radiationIsActive ===true){
   // for loops to display the columns and rows of walls
   for (let c = 0; c < walls.length; c++) {
     //console.log(grid[r]);
@@ -416,7 +411,7 @@ function setupLevel() {
   buildWalls = false;
   //reset other variables?
    walls = [];
-   wallsAreActive= false;
+   radiationIsActive= false;
 
    //
    let doorState = false;
@@ -464,11 +459,11 @@ function setupLevel() {
                 else if (item === `StpS` && (c!==startCol || r!==startRow)) {
                   grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopSpin`));
                 }
-                  else if (item === `SW` && (c!==startCol || r!==startRow)) {
-                    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startWalls`));
+                  else if (item === `SR` && (c!==startCol || r!==startRow)) {
+                    grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `startRadiation`));
                   }
-                    else if (item === `StpW` && (c!==startCol || r!==startRow)) {
-                      grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopWalls`));
+                    else if (item === `StpR` && (c!==startCol || r!==startRow)) {
+                      grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopRadiation`));
                     }
                       else if (item === `WK` && (c!==startCol || r!==startRow)) {
                         grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `wackyKeys`));
@@ -483,13 +478,9 @@ function setupLevel() {
     }
   } // End of setupLevel function
 
-// Function to set squeak audio on a loop when player collision occurs
-// with wall
 
-
-
+// Function to play squaking audio
 function squeakAudio(){
-  // Play music if this is the first interaction
   if (!squeak.isPlaying()) {
     squeak.play();
   }

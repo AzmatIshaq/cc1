@@ -60,10 +60,10 @@ class Checkpoint {
     }
 
     // Display walls pickup image
-    if (this.name === `startWalls` || this.name === `stopWalls`) {
+    if (this.name === `startRadiation` || this.name === `stopRadiation`) {
         imageMode(CORNER);
         image(
-          pickupWalls,
+          pickupRadiation,
           this.x,
           this.y,
           this.width,
@@ -76,7 +76,7 @@ class Checkpoint {
         if (this.name === `spin` || this.name === `stopSpin`) {
             imageMode(CORNER);
             image(
-              pickupWalls,
+              pickupRadiation,
               this.x,
               this.y,
               this.width,
