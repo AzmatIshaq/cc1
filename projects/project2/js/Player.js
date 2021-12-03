@@ -146,7 +146,7 @@ class Player {
 
 
 
-        // Stop walls moving if stop wall checkpoint is collected
+        // Stop radiationCircles moving if stop wall checkpoint is collected
 
         if (currentCellName === `stopRadiation`) {
          console.log("stopping");
@@ -197,7 +197,7 @@ class Player {
       mapAngleChange = 0;
       }
 
-    // Activate walls
+    // Activate radiationCircles
     if(currentCellName ==='startRadiation'){
         radiationIsActive =true;
     }
@@ -208,11 +208,11 @@ class Player {
     // Adding walls overlay to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
-          walls.push([]);
+          radiationCircles.push([]);
           // Go through the grid's rows
           for (let r = 0; r < rows; r++) {
             if (grid[c][r].name === `Maze`) {
-                walls[c].push(new Radiation(c, r, 20, 20, unit));
+                radiationCircles[c].push(new Radiation(c, r, 20, 20, unit));
 
 
               }

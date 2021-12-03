@@ -54,23 +54,5 @@ class HealthBar {
     if (this.width < 0) {
       state = `endLose`;
     }
-
-// Health bar affected by radiation
-
   }
-   // changeStatus(wallDistance) {
-   //   if (wallDistance < 30) {
-   //   this.width = this.width - 0.2;
-   //   squeakAudio();
-   //   }
-   //
-   //  // if (wallDistance < 9) {
-   //  //     this.width = this.width - 0.2;
-   //  //   }
-   //  //
-   //  // if (wallDistance < 6) {
-   //  //     this.width = this.width - 0.2;
-   //  //   }
-   // }
-
 }

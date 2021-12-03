@@ -59,7 +59,7 @@ let unit = 25;
 // let items = [`W`, `C`, ``, `F`, `S`];
 
 // Array to load walls
-let walls = [];
+let radiationCircles = [];
 
 // Starting row
 let startRow = 8;
@@ -83,8 +83,8 @@ let door;
 let doorState = false;
 
 // Wall variables
-let wallWidth = 10;
-let wallHeight = 30;
+// let wallWidth = 10;
+// let wallHeight = 30;
 
 // Image variables
 let titleBackground = undefined;
@@ -151,7 +151,7 @@ pickupWacky = loadImage("assets/images/pickupSpin.png")
 
 pickupCheese = loadImage("assets/images/pickupCheese.png")
 
-// Image for reactive Walls checkpoint
+// Image for reactive radiationCircles checkpoint
 
 pickupRadiation = loadImage("assets/images/pickupRadiation.png")
 
@@ -237,9 +237,9 @@ function animation() {
 // Collision detection
 
 if(radiationIsActive === true){
-  for (let r = 0; r < walls.length; r++) {
-    for (let c = 0; c < walls[r].length; c++) {
-      let wall = walls[r][c];
+  for (let r = 0; r < radiationCircles.length; r++) {
+    for (let c = 0; c < radiationCircles[r].length; c++) {
+      let wall = radiationCircles[r][c];
       let d = dist(player.x, player.y, wall.x, wall.y);
       if (d < player.width + wall.u/2) {
         healthBar.width -= 0.1;
@@ -280,10 +280,10 @@ if(radiationIsActive === true){
   player.display();
 
 if(radiationIsActive ===true){
-  // for loops to display the columns and rows of walls
-  for (let c = 0; c < walls.length; c++) {
+  // for loops to display the columns and rows of radiationCircles
+  for (let c = 0; c < radiationCircles.length; c++) {
     //console.log(grid[r]);
-    let col = walls[c];
+    let col = radiationCircles[c];
 
     for (let r = 0; r < col.length; r++) {
         col[r].display();
@@ -411,7 +411,7 @@ function setupLevel() {
   grid = [];
   buildWalls = false;
   //reset other variables?
-   walls = [];
+   radiationCircles = [];
    radiationIsActive= false;
 
    // Reset door state
