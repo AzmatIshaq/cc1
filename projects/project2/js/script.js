@@ -368,6 +368,7 @@ image(endRat, width / 2, height / 2, 100, 100);
   textAlign(CENTER, CENTER);
   fill(255);
   text(`GAME OVER`, width / 2, height / 2.7);
+  text(`Don't worry, he's just tuckered out. Press Enter to try again!`, width / 2, height / 1.2);
   pop();
 }
 
@@ -413,10 +414,11 @@ function setupLevel() {
    walls = [];
    radiationIsActive= false;
 
-   //
+   // Reset door state
    let doorState = false;
 
   level = levels[currentLevel];
+
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow, doorState);
 
