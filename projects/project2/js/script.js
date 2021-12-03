@@ -93,6 +93,7 @@ let pickupRadiation = undefined;
 let pickupSpin = undefined;
 let exitDoor = undefined;
 let endRat = undefined;
+let endRatWin = undefined;
 
 // Fog variable to load fog of war image
 let fog;
@@ -126,7 +127,6 @@ let tutorial;
 
 let wackyKeysActive = false;
 
-
 /**
 Description of preload
 */
@@ -152,8 +152,9 @@ function preload() {
   // Image for player sprite
   spritePlayer = loadImage(`assets/images/Rat_1.png`);
 
-  // Image for end game state
+  // Image for end game states
   endRat = loadImage(`assets/images/rat_lose.png`);
+  endRatWin = loadImage(`assets/images/rat_win.png`);
 
   // Background image for title screen
   titleBackground = loadImage(`assets/images/title_background3.png`);
@@ -215,13 +216,17 @@ function draw() {
   }
 
   if (state === `endWin`) {
+    // make this function?
+
+    // End text
+    image(endRatWin, width / 2, height / 2, 100, 100);
 
     //Ending text
     push();
     fill(255);
     textSize(16);
     textAlign(CENTER, CENTER);
-    text(`You Win!`, width / 2, height / 2);
+    text(`You Win!`, width / 2, height / 4);
     text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
     pop();
   }
@@ -364,9 +369,9 @@ function title() {
 // }
 
 function endLose() {
-  // End text
+  // End image
   image(endRat, width / 2, height / 2, 100, 100);
-
+  // End text
   push();
   textSize(16);
   textAlign(CENTER, CENTER);

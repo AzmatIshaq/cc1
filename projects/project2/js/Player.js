@@ -264,6 +264,9 @@ if (currentCellName === `cheese`) {
       }
     }
 
+if (scoreKeeper === 20) {
+  state = `endWin`
+}
 
 
 // Changing levels based on score count
