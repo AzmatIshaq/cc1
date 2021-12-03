@@ -21,7 +21,7 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
-  [``, `CH`, `M`, `M`, ``, `StpR`, `SR`, `F`],
+  [``, `S`, `CH`, `M`, `M`, ``, `StpR`, `SR`, `F`],
   [`WK`, `M`, `M`, `M`, ``, ``, `F`],
   [`StpR`, `M`, `M`, `M`, ``, `SR`],
   [``, ``, `M`, `M`, `M`, ``, `StpS`],
@@ -127,6 +127,12 @@ let tutorial;
 
 let wackyKeysActive = false;
 
+// Title alpha
+
+let titleAlpha = 255;
+let fadeOut = true;
+
+
 /**
 Description of preload
 */
@@ -217,12 +223,12 @@ function draw() {
 
   if (state === `endWin`) {
     // make this function?
-
+    push();
     // End text
     image(endRatWin, width / 2, height / 2, 100, 100);
 
     //Ending text
-    push();
+
     fill(255);
     textSize(16);
     textAlign(CENTER, CENTER);
@@ -245,7 +251,7 @@ function animation() {
         let wall = radiationCircles[r][c];
         let d = dist(player.x, player.y, wall.x, wall.y);
         if (d < player.width + wall.u / 2) {
-          healthBar.width -= 0.1;
+          healthBar.width -= 1;
           squeakAudio();
         }
       }
@@ -261,10 +267,11 @@ function animation() {
 
 
   // Map spin effect
-
+push();
   translate(width / 2, height / 2);
   rotate(mapAngle);
   translate(-width / 2, -height / 2);
+
   mapAngle += mapAngleChange;
 
 
@@ -276,6 +283,7 @@ function animation() {
       col[r].display();
     }
   }
+
 
 
   // Player animation
@@ -324,6 +332,7 @@ function animation() {
 
   displayFog(player)
 
+pop();
 } // End of animation function
 
 
@@ -333,30 +342,46 @@ function keyPressed() {
     state = `animation`;
   }
 
+
+
   // if (state === `title` && key === "t") {
   //   state = `tutorial`;
   // }
+if(state ==='animation'){
+    player.keypressed();
 
-  player.keypressed();
+}
+if((state ==='endWin'||state ==='endLose')  && key === "Enter"){
+  console.log('reload');
+  setupLevel();
+  state = `title`;
+
+}
+
 }
 
 function title() {
 
   // Title background
-  background(titleBackground);
-
+background(0);
   // Opening text and instructions
   push();
+  image(titleBackground,0,0, width, height);
   textSize(16);
   textAlign(CENTER, CENTER);
 
-  fill(255);
+
+
+  fill(255, 255, 255, titleAlpha);
   text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
   text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   text(`Press Enter to Start`, width / 2, height / 1.5);
   pop();
 
+// Blinking starting text
 
+if (titleAlpha >= 256 || titleAlpha <= 0) { fadeOut = !fadeOut;}
+if (fadeOut) {titleAlpha -= 5} else {titleAlpha +=5}
 }
 
 // function tutorial() {
@@ -369,10 +394,11 @@ function title() {
 // }
 
 function endLose() {
+  push();
   // End image
   image(endRat, width / 2, height / 2, 100, 100);
   // End text
-  push();
+
   textSize(16);
   textAlign(CENTER, CENTER);
   fill(255);
@@ -390,6 +416,9 @@ function setupLevel() {
   radiationIsActive = false;
 
   level = levels[currentLevel];
+
+  titleAlpha = 255;
+  fadeOut = true;
 
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);

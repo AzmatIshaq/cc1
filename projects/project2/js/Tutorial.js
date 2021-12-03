@@ -11,16 +11,19 @@ class Tutorial {
     this.outlineX = 1;
     this.outlineY = 1;
     this.name = "tutorial";
-    // this.currentName = currentCellName;
+     this.currentName = "";
     // this.currentRow = startRowT;
   }
 
   // move() {}
-
+  setName(currentCellName)
+{
+  this.currentName = currentCellName;
+}
   display() {
 
 
-    if (this.currentNamee === `fog`) {
+     if (this.currentName === `fog`) {
       push();
       fill(255);
       textSize(16);
@@ -34,8 +37,8 @@ class Tutorial {
       fill(255);
       textSize(16);
       textAlign(CENTER, CENTER);
-      text(`Fog of War!`, width / 2, height / 1.07);
-      text(`Find another Fog of War item to disable it!`, width / 2, height / 1.04);
+      text(`Radiation!`, width / 2, height / 1.07);
+      text(`Radiation!`, width / 2, height / 1.04);
       pop();
     }
   }

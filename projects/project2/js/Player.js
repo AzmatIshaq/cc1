@@ -140,6 +140,7 @@ class Player {
     // Convert a checkpoint into a changed cell aka pathcell.
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
+    tutorial.setName(currentCellName);
 
         // Stop radiationCircles moving if stop wall checkpoint is collected
 
@@ -200,12 +201,12 @@ if (currentCellName === `cheese`) {
     // Rotating map when collecting checkpoint
 
 
-    // if (currentCellName === `spin`) {
-    //   mapAngleChange = mapAngleChange + 0.004;
-    //     if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-    //       mapAngleChange = mapAngleChange + 0.001;
-    //       }
-    //     }
+    if (currentCellName === `spin`) {
+      mapAngleChange = mapAngleChange + 0.004;
+        if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
+          mapAngleChange = mapAngleChange + 0.001;
+          }
+        }
 
     // Stop spin
     if (currentCellName === `stopSpin`) {
@@ -244,10 +245,10 @@ if (currentCellName === `cheese`) {
         }
 
     // Trigger game win condition
-
-    if (scoreKeeper === 300) {
-      state = `endWin`;
-    }
+    //
+    // if (scoreKeeper === 300) {
+    //   state = `endWin`;
+    // }
 
     // Change levels based on score
 
