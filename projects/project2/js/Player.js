@@ -284,13 +284,14 @@ if (currentCellName === `cheese`) {
     }
 
 // Trigger win state
-if (scoreKeeper === 20) {
+if (scoreKeeper === 100) {
   state = `endWin`
 }
 
 
 // Changing levels based on score count
-    if (scoreKeeper === 4 && this.createDoor == false || scoreKeeper === 8 && this.createDoor == false || scoreKeeper === 12 && this.createDoor == false || scoreKeeper === 16 && this.createDoor == false || scoreKeeper === 20 && this.createDoor == false) {
+// Change the scorekeeper amount to adjust when a level change should happen
+    if (scoreKeeper === 10 && this.createDoor == false || scoreKeeper === 21 && this.createDoor == false || scoreKeeper === 32 && this.createDoor == false || scoreKeeper === 43 && this.createDoor == false || scoreKeeper === 54 && this.createDoor == false) {
       this.createDoor = true;
       // Have door appear next to player
           grid[this.currentCol + 1][this.currentRow] = new Door (
@@ -304,30 +305,6 @@ if (scoreKeeper === 20) {
           );
       }
 
-      // ScoreKeeper from increasing when createdoor is true
-      // if (createDoor === true && currentCellName =) {
-      //       scoreKeeper = scoreKeeper--
-      //     }
-
-
-
-
-    // Trigger map spinning effect
-
-    // if (scoreKeeper > 4 && scoreKeeper < 21 && mapAngleChange < 0.06) {
-    // // Rotating map when collecting checkpoint
-    // mapAngleChange = mapAngleChange + 0.004;
-    //   if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-    //     mapAngleChange = mapAngleChange + 0.001;
-    //     }
-    //   }
-
-    //
-    // if (scoreKeeper > 22) {
-    //     mapAngleChange = 0;
-    //     mapAngle = 0;
-    // }
-
   // To leave a maze trail behind player
     // if (scoreKeeper > 2) {
     //   grid[this.currentCol][this.currentrow] = new Maze(
@@ -338,16 +315,6 @@ if (scoreKeeper === 20) {
     //   );
     // }
 
-
-
-
-
-    // // Stopping map rotation
-    //
-    // if (mapAngleChange === 0.003) {
-    //   mapAngle = - 0.003
-    //   mapAngleChange = mapAngleChange - 0.003;
-    // }
 
 
 

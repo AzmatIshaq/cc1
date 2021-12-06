@@ -13,6 +13,10 @@ class Tutorial {
     this.name = "tutorial";
     this.currentName = "name";
     this.levelName = 0;
+    // this.spinActive;
+    // this.fogActive;
+    // this.wackyKeysActive;
+    // this.radiationActive;
 
   }
 
@@ -60,7 +64,7 @@ class Tutorial {
      fill(255);
      textSize(16);
      textAlign(CENTER, CENTER);
-     text(`Collect enough items to reveal the green exit door!`, width / 2, height / 1.07);
+     text(`Collect items and enter the green exit door!`, width / 2, height / 1.07);
      text(`You can break through walls but you take damage`, width / 2, height / 1.03);
      pop();
 } else if (this.currentName === `fog`) {
@@ -69,7 +73,7 @@ class Tutorial {
       textSize(16);
       textAlign(CENTER, CENTER);
       text(`Fog of War!`, width / 2, height / 1.07);
-      text(`Find another Fog of War item to disable it!`, width / 2, height / 1.03);
+      // text(`Find another Fog of War item to disable it!`, width / 2, height / 1.03);
       pop();
 
     } else if (this.currentName === `startRadiation`) {
@@ -80,7 +84,7 @@ class Tutorial {
       text(`Radiation!`, width / 2, height / 1.07);
       text(`Another random Radiation item can disable it!`, width / 2, height / 1.03);
       pop();
-    } else if (this.currentName === `spin` || this.currentName === `stopSpin`) {
+    } else if (this.currentName === `spin`) {
       push();
       fill(255);
       textSize(16);
@@ -88,7 +92,7 @@ class Tutorial {
       text(`Spin!`, width / 2, height / 1.07);
       text(`Another random Spin item can disable it!`, width / 2, height / 1.03);
       pop();
-    } else if (this.currentName === `startRadiation` || this.currentName === `stopRadiation`) {
+    } else if (this.currentName === `startRadiation`) {
       push();
       fill(255);
       textSize(16);

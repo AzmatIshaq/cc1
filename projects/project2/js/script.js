@@ -2,7 +2,7 @@
 Project 2 Prototype
 Azmat
 
-This is Project 2 for the CART 253 Class at Concordia University.
+This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia University.
 */
 
 "use strict";
@@ -21,7 +21,8 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
-  [``, `S`, `StpS`, `CH`, `M`, `M`, ``, `SR`, `StpR`, `F`],
+  // [``, `M`, `S`, `StpS`, `CH`, `M`, `M`, ``, `SR`, `StpR`, `F`],
+  [``, `M`, `M`, `F`],
   [`WK`, `M`, `M`, `M`, ``, ``, `F`],
   [`StpR`, `M`, `M`, `M`, ``, `SR`],
   [``, ``, `M`, `M`, `M`, ``, `S`, `StpS`],
@@ -84,7 +85,7 @@ let door;
 // let wallHeight = 30;
 
 // Image variables
-let titleBackground = undefined;
+let titleImage = undefined;
 let spritePlayer = undefined;
 let pickupFog = undefined;
 let pickupWacky = undefined;
@@ -163,10 +164,10 @@ function preload() {
   endRatWin = loadImage(`assets/images/rat_win.png`);
 
   // Background image for title screen
-  titleBackground = loadImage(`assets/images/title_background3.png`);
+  titleImage = loadImage(`assets/images/title_image_morry.png`);
 
   // Image for instructions screen
-  instructionsImage = loadImage(`assets/images/tutorial_title.png`);
+  instructionsImage = loadImage(`assets/images/instructions_image.png`);
 
   // Fog of war image
   fog = loadImage(`assets/images/fog_war1.png`);
@@ -374,9 +375,11 @@ function title() {
   // Title background
 background(0);
 // Title screen image
+push();
 
-image(titleBackground,0,0, width, height);
+image(titleImage, width / 4, height / 50, width / 2, height / 1.2);
   // Opening text and instructions
+pop();
 
   push();
   textSize(20);
@@ -385,8 +388,8 @@ image(titleBackground,0,0, width, height);
 
   // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
   // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-  text(`Press i for Instructions`, width / 2, height / 2);
-  text(`Press Enter to Start`, width / 2, height / 1.2);
+  text(`Press i for Instructions`, width / 2, height / 1.13);
+  text(`Press Enter to Start`, width / 2, height / 1.06);
   // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   pop();
 
@@ -404,14 +407,14 @@ if (fadeOut) {
 }
 
 function instructions() {
-  image(instructionsImage,0,0, width, height);
+  image(instructionsImage, width / 9, 20, width / 1.8, height);
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
   fill(255, 255, 255, titleAlpha);
   // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
   // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-  text(`Press Enter to go Back`, width / 2, height / 1.2);
+  text(`Press Enter to go Back`, width / 2, height / 1.1);
   // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   pop();
 
@@ -437,7 +440,7 @@ function endWin() {
   textSize(16);
   textAlign(CENTER, CENTER);
   text(`You Win!`, width / 2, height / 4);
-  text(`Click your Mouse to make more balloons!!`, width / 2, height / 3);
+  // text(`Click your Mouse to make more balloons!!`, width / 2, height / 3);
   text(`Press Enter to Play Again`, width / 2, height / 1.5);
   pop();
 
