@@ -19,8 +19,10 @@ class Maze {
     this.health--;
 
     if(this.health === 0) {
-      this.name = `pathcell`
+      this.name = `pathCell`
     }
+    healthBar.width -= 5
+    squeakAudio();
   }
 
   display() {

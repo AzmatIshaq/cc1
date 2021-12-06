@@ -21,10 +21,10 @@ This is Project 2 for the CART 253 Class at Concordia University.
 // CH is for Cheese
 
 let levels = [
-  [``, `S`, `CH`, `M`, `M`, ``, `StpR`, `SR`, `F`],
+  [``, `S`, `StpS`, `CH`, `M`, `M`, ``, `SR`, `StpR`, `F`],
   [`WK`, `M`, `M`, `M`, ``, ``, `F`],
   [`StpR`, `M`, `M`, `M`, ``, `SR`],
-  [``, ``, `M`, `M`, `M`, ``, `StpS`],
+  [``, ``, `M`, `M`, `M`, ``, `S`, `StpS`],
   [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
@@ -40,15 +40,15 @@ let player;
 // Walls represented by the grid
 let wall;
 
-// Starting walls are set to false so they can be turned on and off
-let buildWalls = false;
+// Starting radiation is set to false so they can be turned on and off
+let buildRadiation = false;
 
 // Grid array in order to make game map
 let grid = [];
 
 // Rows and columns in the grid
 let rows = 20;
-let cols = 40;
+let cols = 35;
 
 // The unit size (how big a square for each tile)
 let unit = 25;
@@ -94,6 +94,7 @@ let pickupSpin = undefined;
 let exitDoor = undefined;
 let endRat = undefined;
 let endRatWin = undefined;
+let instructionsImage = undefined;
 
 // Fog variable to load fog of war image
 let fog;
@@ -132,7 +133,6 @@ let wackyKeysActive = false;
 let titleAlpha = 255;
 let fadeOut = true;
 
-
 /**
 Description of preload
 */
@@ -165,6 +165,9 @@ function preload() {
   // Background image for title screen
   titleBackground = loadImage(`assets/images/title_background3.png`);
 
+  // Image for instructions screen
+  instructionsImage = loadImage(`assets/images/tutorial_title.png`);
+
   // Fog of war image
   fog = loadImage(`assets/images/fog_war1.png`);
 
@@ -177,7 +180,7 @@ function preload() {
   squeak = loadSound(`assets/sounds/mouse_squeak2.wav`);
 
   // Chime for cheese pickups
-  cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup.wav`);
+  cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup2.wav`);
 
 }
 
@@ -213,6 +216,10 @@ function draw() {
     title();
   }
 
+  if (state === `instructions`) {
+    instructions();
+  }
+
   if (state === `animation`) {
     animation();
   }
@@ -222,19 +229,7 @@ function draw() {
   }
 
   if (state === `endWin`) {
-    // make this function?
-    push();
-    // End text
-    image(endRatWin, width / 2, height / 2, 100, 100);
-
-    //Ending text
-
-    fill(255);
-    textSize(16);
-    textAlign(CENTER, CENTER);
-    text(`You Win!`, width / 2, height / 4);
-    text(`Refresh the Page to Play Again`, width / 2, height / 1.5);
-    pop();
+    endWin()
   }
 
 
@@ -251,7 +246,7 @@ function animation() {
         let wall = radiationCircles[r][c];
         let d = dist(player.x, player.y, wall.x, wall.y);
         if (d < player.width + wall.u / 2) {
-          healthBar.width -= 1;
+          healthBar.width -= 0.2;
           squeakAudio();
         }
       }
@@ -306,6 +301,9 @@ push();
     }
   }
 
+  // Display fog
+
+  displayFog(player)
 
   // Health bar animation
   healthBar.display();
@@ -328,9 +326,7 @@ push();
   //
   // }
 
-  // Display fog
 
-  displayFog(player)
 
 pop();
 } // End of animation function
@@ -342,6 +338,14 @@ function keyPressed() {
     state = `animation`;
   }
 
+  if (state === `title` && key === "i") {
+    state = `instructions`;
+  }
+
+  if (state === `instructions` && key === "Enter") {
+    state = `title`;
+  }
+
 
 
   // if (state === `title` && key === "t") {
@@ -351,11 +355,16 @@ if(state ==='animation'){
     player.keypressed();
 
 }
-if((state ==='endWin'||state ==='endLose')  && key === "Enter"){
+if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
   console.log('reload');
   setupLevel();
   state = `title`;
+  // Set score to 0
+  scoreKeeper = 0;
+  // doorState = false;
 
+  // Reset level to 0
+  currentLevel = 0;
 }
 
 }
@@ -364,38 +373,85 @@ function title() {
 
   // Title background
 background(0);
+// Title screen image
+
+image(titleBackground,0,0, width, height);
   // Opening text and instructions
+
   push();
-  image(titleBackground,0,0, width, height);
-  textSize(16);
+  textSize(20);
   textAlign(CENTER, CENTER);
-
-
-
   fill(255, 255, 255, titleAlpha);
-  text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
-  text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-  text(`Press Enter to Start`, width / 2, height / 1.5);
+
+  // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
+  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  text(`Press i for Instructions`, width / 2, height / 2);
+  text(`Press Enter to Start`, width / 2, height / 1.2);
+  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   pop();
+
+  image(exitDoor, 20, width, 100, 100);
 
 // Blinking starting text
 
-if (titleAlpha >= 256 || titleAlpha <= 0) { fadeOut = !fadeOut;}
-if (fadeOut) {titleAlpha -= 5} else {titleAlpha +=5}
+if (titleAlpha >= 256 || titleAlpha <= 0) {
+  fadeOut = !fadeOut;
+}
+if (fadeOut) {
+  titleAlpha -= 5
+} else {titleAlpha +=5
+}
 }
 
-// function tutorial() {
-//   fill(255);
-//   text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
-//   text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
-//   text(`Collect Checkpoints to move to the next level`, width / 2, height / 1.5);
-//   text(`Watch your Health Bar and Escape through the door when it appears`, width / 2, height / 1.5);
-//   pop();
-// }
+function instructions() {
+  image(instructionsImage,0,0, width, height);
+  push();
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  fill(255, 255, 255, titleAlpha);
+  // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
+  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  text(`Press Enter to go Back`, width / 2, height / 1.2);
+  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
+  pop();
+
+  // Blinking text
+  if (titleAlpha >= 256 || titleAlpha <= 0) {
+    fadeOut = !fadeOut;
+  }
+  if (fadeOut) {
+    titleAlpha -= 5
+  } else {titleAlpha +=5
+  }
+}
+
+function endWin() {
+  push();
+  // End text
+  imageMode(CENTER)
+  image(endRatWin, width / 2, height / 2, 100, 100);
+
+  //Ending text
+
+  fill(255);
+  textSize(16);
+  textAlign(CENTER, CENTER);
+  text(`You Win!`, width / 2, height / 4);
+  text(`Click your Mouse to make more balloons!!`, width / 2, height / 3);
+  text(`Press Enter to Play Again`, width / 2, height / 1.5);
+  pop();
+
+
+  // Turn into falling cheese
+  // for (let i = 0; i < 50; i++) {
+  //
+  // }
+}
 
 function endLose() {
   push();
   // End image
+  imageMode(CENTER)
   image(endRat, width / 2, height / 2, 100, 100);
   // End text
 
@@ -410,15 +466,23 @@ function endLose() {
 function setupLevel() {
   console.log(`set up level ${currentLevel}`)
   grid = [];
-  buildWalls = false;
-  //reset other variables?
+  buildRadiation = false;
+  //Set radiation array
   radiationCircles = [];
   radiationIsActive = false;
-
+  // Set levels array to change levels
   level = levels[currentLevel];
 
+  // Reset title text values
   titleAlpha = 255;
   fadeOut = true;
+
+  // Reset spinning maze
+  mapAngle = 0;
+  mapAngleChange = 0;
+
+  // Variable to set fog to true for fog effect
+  let fogActive = true;
 
   // Initialize player class
   player = new Player(10, 10, unit, startCol, startRow);
@@ -495,4 +559,4 @@ function displayFog(player) {
       height * 2
     );
   }
-} // End ofdisplayFog function
+} // End of displayFog function

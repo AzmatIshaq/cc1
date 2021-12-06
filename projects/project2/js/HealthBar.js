@@ -41,7 +41,7 @@ class HealthBar {
     noStroke();
     fill(25, 161, 0);
     rectMode();
-    rect(width / 19.8, height / 1.059, this.width, this.height);
+    rect(width / 23, height / 1.059, this.width, this.height);
     pop();
 
 

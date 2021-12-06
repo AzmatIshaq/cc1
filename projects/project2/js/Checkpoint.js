@@ -21,70 +21,67 @@ class Checkpoint {
 
     // Display fog pickup image
     if (this.name === `fog`) {
-        imageMode(CORNER);
-        image(
-          pickupFog,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
-        // pop();
+      imageMode(CORNER);
+      image(
+        pickupFog,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+
     }
 
+    // Display wakcy keys pickup image
+    if (this.name === `wackyKeys`) {
+      imageMode(CORNER);
+      image(
+        pickupWacky,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
 
-        // Display wakcy keys pickup image
-        if (this.name === `wackyKeys`) {
-            imageMode(CORNER);
-            image(
-              pickupWacky,
-              this.x,
-              this.y,
-              this.width,
-              this.height
-            );
-            // pop();
-      }
+    }
 
-      // Display cheese pickup image
-      if (this.name === `cheese`) {
-          imageMode(CORNER);
-          image(
-            pickupCheese,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-          );
-          // pop();
+    // Display cheese pickup image
+    if (this.name === `cheese`) {
+      imageMode(CORNER);
+      image(
+        pickupCheese,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+
     }
 
     // Display walls pickup image
     if (this.name === `startRadiation` || this.name === `stopRadiation`) {
-        imageMode(CORNER);
-        image(
-          pickupRadiation,
-          this.x,
-          this.y,
-          this.width,
-          this.height
-        );
-      }
+      imageMode(CORNER);
+      image(
+        pickupRadiation,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+    }
 
-
-        // Display spin pickup image
-        if (this.name === `spin` || this.name === `stopSpin`) {
-            imageMode(CORNER);
-            image(
-              pickupSpin,
-              this.x,
-              this.y,
-              this.width,
-              this.height
-            );
-            }
-          pop();
-
+    // Display spin pickup image
+    if (this.name === `spin` || this.name === `stopSpin`) {
+      imageMode(CORNER);
+      image(
+        pickupSpin,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+    }
+    pop();
 
   }
 }

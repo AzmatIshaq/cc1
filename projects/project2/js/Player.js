@@ -23,6 +23,12 @@ class Player {
     console.log(this.x);
     console.log(this.y);
     this.createDoor = false;
+    // Pippin Barr's code for wacky keys
+    this.left = "ArrowLeft";
+    this.right = "ArrowRight";
+    this.down = "ArrowDown";
+    this.up = "ArrowUp";
+    this.wackyMode = false;
   }
 
   // move() {}
@@ -59,7 +65,7 @@ class Player {
 
   keypressed() {
     console.log(key);
-    if (key === "ArrowLeft") {
+    if (key === this.left) {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentCol - 1 >= 0) {
         this.currentCol = this.currentCol - 1;
@@ -79,7 +85,7 @@ class Player {
       }
     }
 
-    if (key === "ArrowRight") {
+    if (key === this.right) {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentCol + 1 <= cols - 1) {
         this.currentCol = this.currentCol + 1;
@@ -98,7 +104,7 @@ class Player {
       }
     }
 
-    if (key === "ArrowUp") {
+    if (key === this.up) {
         // if we are not on left boundary, adjust to remain in grid.
       if (this.currentRow - 1 >= 0) {
         this.currentRow = this.currentRow - 1;
@@ -117,7 +123,7 @@ class Player {
       }
     }
 
-    if (key === "ArrowDown") {
+    if (key === this.down) {
       // if we are not on left boundary, adjust to remain in grid.
       if (this.currentRow + 1 <= rows - 1) {
         this.currentRow = this.currentRow + 1;
@@ -137,7 +143,7 @@ class Player {
     }
 
     // Checkpoint collection and interaction
-    // Convert a checkpoint into a changed cell aka pathcell.
+    // Convert a checkpoint into a changed cell aka pathCell.
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
     tutorial.setName(currentCellName);
@@ -175,9 +181,9 @@ if (currentCellName === `cheese`) {
     // Trigger sound when checkpoint is collected
     cheesePickupChime.play();
     // Health gain
-    // if (healthBar.width < width / 19.8) {
-    //   healthBar.width += 10
-    // }
+    if (healthBar.width < 99) {
+      healthBar.width += 10
+    }
   grid[this.currentCol][this.currentRow] = new ChangedCell(
     20,
     20,
@@ -188,19 +194,15 @@ if (currentCellName === `cheese`) {
   );
 }
 
-// return currentCellName;
-
   /** This section is for triggering gameplay elements based on pickup item */
 
-    // Should these ifs be else if?
     // Turn fog on and off based on touching fog checkpoint
     if (currentCellName === `fog`) {
           fogActive = !fogActive;
     }
 
     // Rotating map when collecting checkpoint
-
-
+    // Start Spin
     if (currentCellName === `spin`) {
       mapAngleChange = mapAngleChange + 0.004;
         if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
@@ -218,11 +220,11 @@ if (currentCellName === `cheese`) {
     if(currentCellName ==='startRadiation'){
         radiationIsActive =true;
     }
-    if (currentCellName === `startRadiation` && buildWalls === false) {
-      buildWalls = true;
+    if (currentCellName === `startRadiation` && buildRadiation === false) {
+      buildRadiation = true;
 
 
-    // Adding walls overlay to the grid
+    // Adding radiation overlay to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
           radiationCircles.push([]);
@@ -238,11 +240,24 @@ if (currentCellName === `cheese`) {
         }
 
 
-    // Active waky keys
+    // Active wacky keys
 
-    if (currentCellName === `wackyKeys` && wackyKeysActive === false) {
-          wackyKeysActive = true;
-        }
+    if (currentCellName === `wackyKeys`) {
+      if (!this.wackyMode) {
+        this.left = "ArrowRight";
+        this.right = "ArrowLeft";
+        this.up = "ArrowDown";
+        this.down = "ArrowUp";
+        this.wackyMode = true;
+      }
+      else {
+        this.left = "ArrowLeft";
+        this.right = "ArrowRight";
+        this.up = "ArrowUp";
+        this.down = "ArrowDown";
+        this.wackyMode = false;
+      }
+    }
 
     // Trigger game win condition
     //
@@ -259,12 +274,16 @@ if (currentCellName === `cheese`) {
             currentLevel++;
             // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
             scoreKeeper++;
+            // Stop spinning effect if it is active
+            mapAngle = 0;
+            mapAngleChange = 0;
             setupLevel();
             sounds.playOscillator();
       // reset door to false
       }
     }
 
+// Trigger win state
 if (scoreKeeper === 20) {
   state = `endWin`
 }
@@ -292,14 +311,6 @@ if (scoreKeeper === 20) {
 
 
 
-    // if (scoreKeeper === 0) {
-    //   // Activate fog of war
-    //   fogActive = true;
-    // }
-    //
-    // if (scoreKeeper === 10) {
-    //     fogActive = false;
-    // }
 
     // Trigger map spinning effect
 
@@ -310,10 +321,7 @@ if (scoreKeeper === 20) {
     //     mapAngleChange = mapAngleChange + 0.001;
     //     }
     //   }
-    //
-    // if (scoreKeeper > 20) {
-    //     fogActive = true;
-    // }
+
     //
     // if (scoreKeeper > 22) {
     //     mapAngleChange = 0;
@@ -341,10 +349,7 @@ if (scoreKeeper === 20) {
     //   mapAngleChange = mapAngleChange - 0.003;
     // }
 
-  // Deactivating fog of war
-    // if (grid[this.currentCol][this.currentrow].name === `pathcell`){
-    // fogActive = false;
-    // }
+
 
 /** Useful console logs */
     // console.log(this.x);
@@ -354,4 +359,4 @@ if (scoreKeeper === 20) {
     console.log(grid[this.currentCol][this.currentRow].name);
 
   } // End of keyPressed function
-}
+} // End of Player class

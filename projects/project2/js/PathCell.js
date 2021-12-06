@@ -6,7 +6,7 @@ class PathCell {
     this.height = h;
     this.x = x;
     this.y = y;
-    this.name = "pathcell";
+    this.name = "pathCell";
   }
 
   // move() {}
