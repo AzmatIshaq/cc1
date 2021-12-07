@@ -21,7 +21,7 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // CH is for Cheese
 
 let levels = [
-  [``, ``, ``, `CH`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
+  [``, `WK`, ``, `CH`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
   [``, ``, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
   [``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `F`, `SR`, `StpR`],

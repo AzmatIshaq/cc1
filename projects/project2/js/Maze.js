@@ -42,8 +42,8 @@ class Maze {
       mazeWalls,
       this.x,
       this.y,
-      this.width,
-      this.height
+      this.width + 5,
+      this.height + 5,
     );
   }
     pop();
