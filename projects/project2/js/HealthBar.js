@@ -55,12 +55,17 @@ class HealthBar {
 
     // Notification when health low
 
-    if (this.width < 20) {
-      titleAudio();
-      this.healthBarFill.a = random(180, 255);
+    if (this.width < 25) {
+      damageAudio();
       this.healthBarFill.r = random(180, 255);
       this.healthBarFill.g = random(180, 255);
       this.healthBarFill.b = random(180, 255);
+      this.healthBarFill.a = random(180, 255);
+    } else {
+      this.healthBarFill.r = 25;
+      this.healthBarFill.g = 161;
+      this.healthBarFill.b = 0;
+      this.healthBarFill.a = 255;
     }
 
     // Health bar affected by spin

@@ -65,7 +65,7 @@ class Tutorial {
      textSize(16);
      textAlign(CENTER, CENTER);
      text(`Collect items and enter the green exit door!`, width / 2, height / 1.07);
-     text(`You can eat through the purple walls but you take damage`, width / 2, height / 1.03);
+     text(`You can eat through the walls but you take damage`, width / 2, height / 1.03);
      pop();
 } else if (this.currentName === `fog`) {
       push();

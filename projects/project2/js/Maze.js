@@ -35,6 +35,18 @@ class Maze {
     rect(this.x, this.y, this.width, this.height);
     pop();
 
+    push();
+    if (this.health > 0) {
+    imageMode(CORNER);
+    image(
+      mazeWalls,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  }
+    pop();
 
 
   }

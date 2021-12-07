@@ -21,7 +21,7 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // CH is for Cheese
 
 let levels = [
-  [``, ``, ``, `M`, `M`, `M`, `F`, `SR`, `StpR`],
+  [``, ``, ``, `CH`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
   [``, ``, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
   [``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
@@ -89,6 +89,7 @@ let exitDoor = undefined;
 let endRat = undefined;
 let endRatWin = undefined;
 let instructionsImage = undefined;
+let mazeWalls = undefined;
 
 // Fog variable to load fog of war image
 let fog;
@@ -152,6 +153,9 @@ function preload() {
 
   // Image for player sprite
   spritePlayer = loadImage(`assets/images/Rat_1.png`);
+
+  // Image for maze walls
+  mazeWalls = loadImage(`assets/images/maze_rock.png`);
 
   // Image for end game states
   endRat = loadImage(`assets/images/rat_lose2.png`);
@@ -235,9 +239,6 @@ function draw() {
   if (state === `endWin`) {
     endWin()
   }
-
-
-
 }
 
 function animation() {
@@ -311,6 +312,7 @@ push();
   textAlign(CENTER, CENTER);
   pop();
 
+
 pop();
 } // End of animation function
 
@@ -349,8 +351,6 @@ function title() {
 
   // Title background
 background(0);
-
-// titleAudio();
 
 // Title screen image
 push();
@@ -531,11 +531,11 @@ function squeakAudio() {
 } // End of squakAudio function
 
 // Function to play title music audio
-function titleAudio() {
+function damageAudio() {
   if (!damageAlert.isPlaying()) {
     damageAlert.play();
   }
-} // End of titleAudio function
+} // End of damageAudio function
 
 // Display fog around player when it is active
 function displayFog(player) {
