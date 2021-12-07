@@ -155,7 +155,7 @@ function preload() {
   spritePlayer = loadImage(`assets/images/Rat_1.png`);
 
   // Image for maze walls
-  mazeWalls = loadImage(`assets/images/maze_rock.png`);
+  mazeWalls = loadImage(`assets/images/maze_wall.png`);
 
   // Image for end game states
   endRat = loadImage(`assets/images/rat_lose2.png`);

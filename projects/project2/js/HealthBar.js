@@ -69,7 +69,7 @@ class HealthBar {
     }
 
     // Health bar affected by spin
-    if (mapAngleChange > 0.05) {
+    if (mapAngleChange > 0.003) {
         this.width = this.width - 0.1
     }
 

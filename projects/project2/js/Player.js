@@ -257,6 +257,9 @@ if (currentCellName === `cheese`) {
     if(currentCellName === "door"){
       this.createDoor = false;
       // console.log("on a door");
+      // Activate fog
+      fogActive = true;
+      // Change level
       if(currentLevel < 4){
             currentLevel++;
             // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
