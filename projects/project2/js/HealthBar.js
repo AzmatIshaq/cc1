@@ -44,6 +44,10 @@ class HealthBar {
     rect(width / 23, height / 1.059, this.width, this.height);
     pop();
 
+    // Prevent health from increasing more than max
+    if (this.width > 99) {
+      this.width = 99;
+    }
 
     // Health bar affected by spin
     if (mapAngleChange > 0.05) {

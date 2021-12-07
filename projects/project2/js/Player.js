@@ -4,12 +4,6 @@ class Player {
   constructor(w, h, unit, startColP, startRowP, createDoor) {
     this.x = 0;
     this.y = 250;
-    this.vx = 0;
-    this.vy = 0;
-    this.ax = 0;
-    this.ay = 0;
-    this.maxSpeed = 10;
-    this.size = 20;
     this.speed = unit;
     this.active = true;
     this.width = w;
@@ -31,7 +25,7 @@ class Player {
     this.wackyMode = false;
   }
 
-  // move() {}
+// move() {}
 
 // Display player square
 
@@ -148,7 +142,7 @@ class Player {
     let currentCellName = grid[this.currentCol][this.currentRow].name;
     tutorial.setName(currentCellName);
 
-        // Stop radiationCircles moving if stop wall checkpoint is collected
+        // Stop radiationCircles moving if stop radiation checkpoint is collected
 
         if (currentCellName === `stopRadiation`) {
          console.log("stopping");
@@ -156,16 +150,15 @@ class Player {
 
         }
 
-        // Add to bottom so it is the last state change to occur
+
         // Change a checkpoint cell to a changed cell.
     if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys`) {
           // Scorekeeper goes up whenever checkpoint is collected
           // but only if there is no door available to get to next level
         if(this.createDoor === false) { scoreKeeper++; }
-        // Trigger sound when checkpoint is collected
+        // Trigger sound when checkpoint item is collected
         sounds.playOscillator();
 
-      // wallsStopMoving = true;
       grid[this.currentCol][this.currentRow] = new ChangedCell(
         20,
         20,
@@ -176,7 +169,7 @@ class Player {
       );
     }
 
-// Separate cheese cell name if statement to play different sound on pickup and no scoreKeeper increase
+// Separate cheese cell name 'if statement' to play different sound on pickup and no scoreKeeper increase
 if (currentCellName === `cheese`) {
     // Trigger sound when checkpoint is collected
     cheesePickupChime.play();
@@ -224,7 +217,7 @@ if (currentCellName === `cheese`) {
       buildRadiation = true;
 
 
-    // Adding radiation overlay to the grid
+    // Adding radiation to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
           radiationCircles.push([]);
@@ -259,13 +252,7 @@ if (currentCellName === `cheese`) {
       }
     }
 
-    // Trigger game win condition
-    //
-    // if (scoreKeeper === 300) {
-    //   state = `endWin`;
-    // }
-
-    // Change levels based on score
+    // Change levels
 
     if(currentCellName === "door"){
       this.createDoor = false;
@@ -280,24 +267,20 @@ if (currentCellName === `cheese`) {
             setupLevel();
             sounds.playOscillator();
       // reset door to false
-      }
+    } else if (currentLevel === 4) {
+      state = `endWin`;
     }
-
-// Trigger win state
-if (scoreKeeper === 100) {
-  state = `endWin`
-}
+  }
 
 
-// Changing levels based on score count
-// Change the scorekeeper amount to adjust when a level change should happen
+// Reveal door based on scorecount
+// Change the scorekeeper amount to adjust when a door should appear
     if (scoreKeeper === 10 && this.createDoor == false || scoreKeeper === 21 && this.createDoor == false || scoreKeeper === 32 && this.createDoor == false || scoreKeeper === 43 && this.createDoor == false || scoreKeeper === 54 && this.createDoor == false) {
       this.createDoor = true;
       // Have door appear next to player
           grid[this.currentCol + 1][this.currentRow] = new Door (
                 20,
                 20,
-      // Have door appear next to player
               (this.currentCol + 1) * unit,
               this.currentRow * unit,
               (this.currentCol + 1),
@@ -305,25 +288,7 @@ if (scoreKeeper === 100) {
           );
       }
 
-  // To leave a maze trail behind player
-    // if (scoreKeeper > 2) {
-    //   grid[this.currentCol][this.currentrow] = new Maze(
-    //     20,
-    //     20,
-    //     unit * this.currentCol,
-    //     unit * this.currentrow
-    //   );
-    // }
 
-
-
-
-/** Useful console logs */
-    // console.log(this.x);
-    // console.log(this.y);
-    // console.log(this.currentRow);
-    // console.log(this.currentCol);
-    console.log(grid[this.currentCol][this.currentRow].name);
 
   } // End of keyPressed function
 } // End of Player class

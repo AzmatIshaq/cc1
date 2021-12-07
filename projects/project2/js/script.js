@@ -21,11 +21,10 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // CH is for Cheese
 
 let levels = [
-  // [``, `M`, `S`, `StpS`, `CH`, `M`, `M`, ``, `SR`, `StpR`, `F`],
-  [``, `M`, `M`, `F`],
-  [`WK`, `M`, `M`, `M`, ``, ``, `F`],
-  [`StpR`, `M`, `M`, `M`, ``, `SR`],
-  [``, ``, `M`, `M`, `M`, ``, `S`, `StpS`],
+  [``, ``, ``, `M`, `M`, `M`, `F`, `SR`, `StpR`],
+  [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
+  [``, ``, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
+  [``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
   [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
@@ -36,16 +35,18 @@ let currentLevel = 0;
 let level = undefined;
 
 // A variable to introduce the player class
-let player;
 
-// Walls represented by the grid
-let wall;
+let player;
 
 // Starting radiation is set to false so they can be turned on and off
 let buildRadiation = false;
 
 // Grid array in order to make game map
 let grid = [];
+
+// Cheese end animation variables
+let cheeseAnimationY = 0;
+let cheeseArray = [];
 
 // Rows and columns in the grid
 let rows = 20;
@@ -54,11 +55,7 @@ let cols = 35;
 // The unit size (how big a square for each tile)
 let unit = 25;
 
-// Random items to populate the game map
-// Don't think this is doing anything anymore:
-// let items = [`W`, `C`, ``, `F`, `S`];
-
-// Array to load walls
+// Array to load radiation circles
 let radiationCircles = [];
 
 // Starting row
@@ -79,10 +76,6 @@ let maze = {
 
 // Door variable to initialize class
 let door;
-
-// Wall variables
-// let wallWidth = 10;
-// let wallHeight = 30;
 
 // Image variables
 let titleImage = undefined;
@@ -120,6 +113,7 @@ let healthBar;
 let sounds;
 let squeak;
 let cheesePickupChime;
+let introMusic;
 
 // Variables to load tutorial class
 
@@ -160,14 +154,14 @@ function preload() {
   spritePlayer = loadImage(`assets/images/Rat_1.png`);
 
   // Image for end game states
-  endRat = loadImage(`assets/images/rat_lose.png`);
+  endRat = loadImage(`assets/images/rat_lose2.png`);
   endRatWin = loadImage(`assets/images/rat_win.png`);
 
   // Background image for title screen
-  titleImage = loadImage(`assets/images/title_image_morry.png`);
+  titleImage = loadImage(`assets/images/title_image_morry2.png`);
 
   // Image for instructions screen
-  instructionsImage = loadImage(`assets/images/instructions_image.png`);
+  instructionsImage = loadImage(`assets/images/instructions_image3.png`);
 
   // Fog of war image
   fog = loadImage(`assets/images/fog_war1.png`);
@@ -183,11 +177,15 @@ function preload() {
   // Chime for cheese pickups
   cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup2.wav`);
 
+  // Intro music
+  introMusic = loadSound(`assets/sounds/Intro_music1.wav`)
+
 }
 
 /**
 Setup:
 Create a canvas out of the rows, columns.
+Level setup is initiated
 Player class is initiated
 */
 
@@ -203,7 +201,12 @@ function setup() {
   level = levels[currentLevel];
 
   // Initialize audio
-  userStartAudio();
+  // userStartAudio();
+
+  // Set up array for end animation
+  for (let i = 0; i < 30; i++) {
+      cheeseArray.push({y:0, vy:random(1, 7)});
+  }
 }
 
 /**
@@ -244,21 +247,14 @@ function animation() {
   if (radiationIsActive === true) {
     for (let r = 0; r < radiationCircles.length; r++) {
       for (let c = 0; c < radiationCircles[r].length; c++) {
-        let wall = radiationCircles[r][c];
-        let d = dist(player.x, player.y, wall.x, wall.y);
-        if (d < player.width + wall.u / 2) {
+        let radCircle = radiationCircles[r][c];
+        let d = dist(player.x, player.y, radCircle.x, radCircle.y);
+        if (d < player.width + radCircle.u / 2) {
           healthBar.width -= 0.2;
           squeakAudio();
         }
       }
     }
-
-    console.log("collide");
-
-    // Collision detection between player character and walls
-    //let minWallDist = checkCollisionWithWalls();
-    // HealthBar decrease during collision
-    //healthBar.changeStatus(minWallDist);
   }
 
 
@@ -280,8 +276,6 @@ push();
     }
   }
 
-
-
   // Player animation
 
   player.display();
@@ -294,16 +288,12 @@ push();
 
       for (let r = 0; r < col.length; r++) {
         col[r].display();
-        //if (wallsStopMoving ===false) {
-        // Dispaly wall growth
         col[r].move();
-        //  }
       }
     }
   }
 
   // Display fog
-
   displayFog(player)
 
   // Health bar animation
@@ -321,14 +311,6 @@ push();
   textAlign(CENTER, CENTER);
   pop();
 
-  // To prevent score from increasing while exit door is open
-
-  // if (doorState === true) {
-  //
-  // }
-
-
-
 pop();
 } // End of animation function
 
@@ -339,7 +321,7 @@ function keyPressed() {
     state = `animation`;
   }
 
-  if (state === `title` && key === "i") {
+  if (state === `title` && (key === "i" || key === "I")) {
     state = `instructions`;
   }
 
@@ -347,26 +329,19 @@ function keyPressed() {
     state = `title`;
   }
 
-
-
-  // if (state === `title` && key === "t") {
-  //   state = `tutorial`;
-  // }
-if(state ==='animation'){
+  if (state === `animation`){
     player.keypressed();
+  }
 
-}
-if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
-  console.log('reload');
-  setupLevel();
-  state = `title`;
-  // Set score to 0
-  scoreKeeper = 0;
-  // doorState = false;
-
-  // Reset level to 0
-  currentLevel = 0;
-}
+  if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
+    setupLevel();
+    state = `title`;
+    // Set score to 0
+    scoreKeeper = 0;
+    // doorState = false;
+    // Reset level to 0
+    currentLevel = 0;
+  }
 
 }
 
@@ -374,6 +349,9 @@ function title() {
 
   // Title background
 background(0);
+
+titleAudio();
+
 // Title screen image
 push();
 
@@ -385,14 +363,9 @@ pop();
   textSize(20);
   textAlign(CENTER, CENTER);
   fill(255, 255, 255, titleAlpha);
-
-  // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
-  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   text(`Press i for Instructions`, width / 2, height / 1.13);
   text(`Press Enter to Start`, width / 2, height / 1.06);
-  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   pop();
-
   image(exitDoor, 20, width, 100, 100);
 
 // Blinking starting text
@@ -403,6 +376,9 @@ if (titleAlpha >= 256 || titleAlpha <= 0) {
 if (fadeOut) {
   titleAlpha -= 5
 } else {titleAlpha +=5
+}
+if (state === `title`) {
+
 }
 }
 
@@ -445,10 +421,14 @@ function endWin() {
   pop();
 
 
-  // Turn into falling cheese
-  // for (let i = 0; i < 50; i++) {
-  //
-  // }
+  for (let i = 0; i < 30; i++){
+    if(cheeseArray[i].y<height){
+      cheeseArray[i].y = cheeseArray[i].y+cheeseArray[i].vy;
+    image(pickupCheese, i * 30, cheeseArray[i].y);
+  }
+}
+
+// Function for end state
 }
 
 function endLose() {
@@ -456,18 +436,21 @@ function endLose() {
   // End image
   imageMode(CENTER)
   image(endRat, width / 2, height / 2, 100, 100);
-  // End text
 
+  // End text
   textSize(16);
   textAlign(CENTER, CENTER);
   fill(255);
   text(`GAME OVER`, width / 2, height / 2.7);
   text(`Don't worry, he's just tuckered out. Press Enter to try again!`, width / 2, height / 1.2);
   pop();
+
+  // Reset levels at end state
+  let currentLevel = 0;
 }
 
 function setupLevel() {
-  console.log(`set up level ${currentLevel}`)
+  // console.log(`set up level ${currentLevel}`)
   grid = [];
   buildRadiation = false;
   //Set radiation array
@@ -476,11 +459,11 @@ function setupLevel() {
   // Set levels array to change levels
   level = levels[currentLevel];
 
-  // Reset title text values
+  // Set title text values
   titleAlpha = 255;
   fadeOut = true;
 
-  // Reset spinning maze
+  // Set spinning maze
   mapAngle = 0;
   mapAngleChange = 0;
 
@@ -547,8 +530,12 @@ function squeakAudio() {
   }
 } // End of squakAudio function
 
-
-
+// Function to play title music audio
+function titleAudio() {
+  if (!introMusic.isPlaying()) {
+    introMusic.play();
+  }
+} // End of titleAudio function
 
 // Display fog around player when it is active
 function displayFog(player) {

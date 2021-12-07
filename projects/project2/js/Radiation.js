@@ -15,16 +15,6 @@ class Radiation {
     // Movement for radiation
     this.angle = this.angle+0.02;
     this.u = abs(sin(this.angle))*70;
-
-
-
-    // radiation movement so they expand and retract
-    //   this.u = this.u + 0.1
-    //
-    // if (this.u > 40) {
-    //   this.u = this.u - 10
-  //  }
-
   }
 
 

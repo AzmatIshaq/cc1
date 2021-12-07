@@ -65,7 +65,7 @@ class Tutorial {
      textSize(16);
      textAlign(CENTER, CENTER);
      text(`Collect items and enter the green exit door!`, width / 2, height / 1.07);
-     text(`You can break through walls but you take damage`, width / 2, height / 1.03);
+     text(`You can eat through the purple walls but you take damage`, width / 2, height / 1.03);
      pop();
 } else if (this.currentName === `fog`) {
       push();
@@ -106,7 +106,7 @@ class Tutorial {
       textSize(16);
       textAlign(CENTER, CENTER);
       text(`Wacky Keys!`, width / 2, height / 1.07);
-      text(`Find another Wacky Keys item to disable it!`, width / 2, height / 1.03);
+      // text(`Find another Wacky Keys item to disable it!`, width / 2, height / 1.03);
       pop();
     }
   }

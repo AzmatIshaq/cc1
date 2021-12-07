@@ -11,7 +11,7 @@ class ChangedCell {
     this.name = "changedCell";
   }
 
-  // move() {}
+// Display changed cell 
 
   display() {
     push();
