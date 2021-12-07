@@ -1,5 +1,5 @@
 /**
-Project 2 Prototype
+Project 2 - Morry's Maze
 Azmat
 
 This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia University.
@@ -29,13 +29,11 @@ let levels = [
 ];
 
 // Variables to alternate between specific levels
-
 let currentLevel = 0;
 
 let level = undefined;
 
 // A variable to introduce the player class
-
 let player;
 
 // Starting radiation is set to false so they can be turned on and off
@@ -58,23 +56,25 @@ let unit = 25;
 // Array to load radiation circles
 let radiationCircles = [];
 
-// Starting row
+// Starting row for player
 let startRow = 8;
 
-// Starting column
+// Starting column for player
 let startCol = 8;
 
 // Title State
 let state = `title`;
 
+// Start radiation to be off
 let radiationIsActive = false;
 
+// Starting values for maze size
 let maze = {
   width: 20,
   height: 20,
 };
 
-// Door variable to initialize class
+// Door variable to initialize door class
 let door;
 
 // Image variables
@@ -94,10 +94,10 @@ let mazeWalls = undefined;
 // Fog variable to load fog of war image
 let fog;
 
-// Variable to set fog to true for fog effect
+// Variable to set fog to true for fog effect at the start
 let fogActive = true;
 
-// Map angle
+// Map angle in order to have rotating map effect
 let mapAngle = 0;
 let mapAngleChange = 0.00;
 

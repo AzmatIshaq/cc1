@@ -18,6 +18,22 @@ class HealthBar {
       a: 255,
     };
   }
+  
+  // Notification when health low
+  healthNotification() {
+    if (this.width < 25) {
+      damageAudio();
+      this.healthBarFill.r = random(180, 255);
+      this.healthBarFill.g = random(180, 255);
+      this.healthBarFill.b = random(180, 255);
+      this.healthBarFill.a = random(180, 255);
+    } else {
+      this.healthBarFill.r = 25;
+      this.healthBarFill.g = 161;
+      this.healthBarFill.b = 0;
+      this.healthBarFill.a = 255;
+      }
+    }
 
   display() {
 
@@ -54,19 +70,8 @@ class HealthBar {
     }
 
     // Notification when health low
+    this.healthNotification();
 
-    if (this.width < 25) {
-      damageAudio();
-      this.healthBarFill.r = random(180, 255);
-      this.healthBarFill.g = random(180, 255);
-      this.healthBarFill.b = random(180, 255);
-      this.healthBarFill.a = random(180, 255);
-    } else {
-      this.healthBarFill.r = 25;
-      this.healthBarFill.g = 161;
-      this.healthBarFill.b = 0;
-      this.healthBarFill.a = 255;
-    }
 
     // Health bar affected by spin
     if (mapAngleChange > 0.003) {
@@ -78,4 +83,6 @@ class HealthBar {
       state = `endLose`;
     }
   }
+
+
 }

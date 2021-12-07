@@ -25,8 +25,6 @@ class Player {
     this.wackyMode = false;
   }
 
-// move() {}
-
 // Display player square
 
   display() {
@@ -109,7 +107,6 @@ grid[this.currentCol][this.currentRow] = new ChangedCell(
       this.right = "ArrowLeft";
       this.up = "ArrowDown";
       this.down = "ArrowUp";
-
     }
     else {
       this.left = "ArrowLeft";
@@ -198,9 +195,6 @@ moveDown () {
 }
 
   keypressed() {
-
-
-
 
     if (key === this.left) {
       this.moveLeft();
