@@ -11,9 +11,13 @@ class HealthBar {
     this.outlineX = 1;
     this.outlineY = 1;
     this.name = "healthBar";
+    this.healthBarFill = {
+      r: 25,
+      g: 161,
+      b: 0,
+      a: 255,
+    };
   }
-
-  // move() {}
 
   display() {
 
@@ -39,7 +43,7 @@ class HealthBar {
 
     push();
     noStroke();
-    fill(25, 161, 0);
+    fill(this.healthBarFill.r, this.healthBarFill.g, this.healthBarFill.b, this.healthBarFill.a);
     rectMode();
     rect(width / 23, height / 1.059, this.width, this.height);
     pop();
@@ -47,6 +51,16 @@ class HealthBar {
     // Prevent health from increasing more than max
     if (this.width > 99) {
       this.width = 99;
+    }
+
+    // Notification when health low
+
+    if (this.width < 20) {
+      titleAudio();
+      this.healthBarFill.a = random(180, 255);
+      this.healthBarFill.r = random(180, 255);
+      this.healthBarFill.g = random(180, 255);
+      this.healthBarFill.b = random(180, 255);
     }
 
     // Health bar affected by spin

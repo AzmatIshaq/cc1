@@ -113,7 +113,7 @@ let healthBar;
 let sounds;
 let squeak;
 let cheesePickupChime;
-let introMusic;
+let damageAlert;
 
 // Variables to load tutorial class
 
@@ -178,7 +178,7 @@ function preload() {
   cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup2.wav`);
 
   // Intro music
-  introMusic = loadSound(`assets/sounds/Intro_music1.wav`)
+  damageAlert = loadSound(`assets/sounds/damage_alert2.wav`)
 
 }
 
@@ -350,7 +350,7 @@ function title() {
   // Title background
 background(0);
 
-titleAudio();
+// titleAudio();
 
 // Title screen image
 push();
@@ -532,8 +532,8 @@ function squeakAudio() {
 
 // Function to play title music audio
 function titleAudio() {
-  if (!introMusic.isPlaying()) {
-    introMusic.play();
+  if (!damageAlert.isPlaying()) {
+    damageAlert.play();
   }
 } // End of titleAudio function
 
