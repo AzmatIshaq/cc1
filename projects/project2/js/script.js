@@ -482,7 +482,7 @@ pop();
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
-  fill(endText.r, endText.g, endText.b, titleAlpha);
+  fill(255, 255, 255, titleAlpha);
   text(`Press i for Instructions`, width / 2, height / 1.13);
   text(`Press Enter to Start`, width / 2, height / 1.06);
   pop();
