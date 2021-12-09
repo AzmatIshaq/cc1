@@ -83,5 +83,19 @@ class Checkpoint {
     }
     pop();
 
-  }
+    push();
+    // Display maze trail pickup image
+    if (this.name === `mazeTrail` || this.name === `stopMazeTrail`) {
+      imageMode(CORNER);
+      image(
+        pickupMazeTrail,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+    }
+    pop();
+
+  } // End of display function
 }

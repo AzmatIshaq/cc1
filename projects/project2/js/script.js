@@ -18,32 +18,36 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // StpWK is to stop Wacky Keys
 // S is for Spinning Maze
 // StpS is for Stoping Spinning Maze
+// MT is for Maze Trail
+// StpMT is to stop Maze Trail
 // CH is for Cheese
 
+
+// Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
 let levels = [
-  [``, `WK`, ``, `CH`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
+  [``, `MT`, `StpMT`, ``, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
-  [``, ``, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
-  [``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `F`, `SR`, `StpR`],
+  [``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
+  [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`, `StpR`],
   [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
-let currentLevel = 0;
-
+// Code contribution from Pippin on how to setup levels.
+let currentLevel = 3;
+// Setting a starting level variable
 let level = undefined;
 
 // A variable to introduce the player class
 let player;
 
-// Starting radiation is set to false so they can be turned on and off
+// Starting radiation build is set to false so they can be turned on and off
 let buildRadiation = false;
 
 // Grid array in order to make game map
 let grid = [];
 
 // Cheese end animation variables
-let cheeseAnimationY = 0;
 let cheeseArray = [];
 
 // Rows and columns in the grid
@@ -90,6 +94,7 @@ let endRat = undefined;
 let endRatWin = undefined;
 let instructionsImage = undefined;
 let mazeWalls = undefined;
+let pickupMazeTrail = undefined;
 
 // Fog variable to load fog of war image
 let fog;
@@ -97,7 +102,7 @@ let fog;
 // Variable to set fog to true for fog effect at the start
 let fogActive = true;
 
-// Map angle in order to have rotating map effect
+// Map angle in order to have rotating map effect. Code help from Pippin Barr for spin effect.
 let mapAngle = 0;
 let mapAngleChange = 0.00;
 
@@ -115,6 +120,13 @@ let sounds;
 let squeak;
 let cheesePickupChime;
 let damageAlert;
+let endingLoseChime;
+
+// Variables for music in different states
+
+let introMusic;
+let endWinMusic;
+let levelsMusic;
 
 // Variables to load tutorial class
 
@@ -136,6 +148,8 @@ function preload() {
 
   /** Images */
 
+  // Preloading images to call them when needed
+
   // Image for fog checkpoint pickup
   pickupFog = loadImage("assets/images/pickupFog.png");
 
@@ -147,6 +161,9 @@ function preload() {
 
   // Image for cheese checkpoint
   pickupCheese = loadImage("assets/images/pickupCheese.png");
+
+  // Image for maze trail checkpoint
+  pickupMazeTrail = loadImage("assets/images/pickup_maze_trail2.png");
 
   // Image for reactive radiationCircles checkpoint
   pickupRadiation = loadImage("assets/images/pickupRadiation.png");
@@ -162,7 +179,7 @@ function preload() {
   endRatWin = loadImage(`assets/images/rat_win.png`);
 
   // Background image for title screen
-  titleImage = loadImage(`assets/images/title_image_morry2.png`);
+  titleImage = loadImage(`assets/images/title_image_morry_4.png`);
 
   // Image for instructions screen
   instructionsImage = loadImage(`assets/images/instructions_image3.png`);
@@ -175,15 +192,29 @@ function preload() {
 
   /** Sounds */
 
+  //Preloading sounds to call them when needed
+
   // Mouse squeak for collision audio
   squeak = loadSound(`assets/sounds/mouse_squeak2.wav`);
 
   // Chime for cheese pickups
   cheesePickupChime = loadSound(`assets/sounds/cheeseChimePickup2.wav`);
 
-  // Intro music
-  damageAlert = loadSound(`assets/sounds/damage_alert2.wav`)
+  // Alert audio for when players health low
+  damageAlert = loadSound(`assets/sounds/damage_alert2.wav`);
 
+  // Chime when player loses
+  endingLoseChime = loadSound(`assets/sounds/lose_chime4.wav`);
+
+  // Title screen music produced by yours truly
+
+  introMusic = loadSound(`assets/sounds/intro_music_final2.wav`);
+
+  // End win music
+  endWinMusic = loadSound(`assets/sounds/ending_audio_win4.wav`);
+
+  // Music during levels
+  levelsMusic = loadSound(`assets/sounds/levels_music.wav`);
 }
 
 /**
@@ -205,12 +236,15 @@ function setup() {
   level = levels[currentLevel];
 
   // Initialize audio
-  // userStartAudio();
+  userStartAudio();
 
   // Set up array for end animation
+  // Code contribute from Sabine for falling cheese at end of game. I edited some of the values.
   for (let i = 0; i < 30; i++) {
       cheeseArray.push({y:0, vy:random(1, 7)});
   }
+
+
 }
 
 /**
@@ -220,6 +254,7 @@ Display states
 function draw() {
   background(0);
 
+// If statements to alternate between game states
   if (state === `title`) {
     title();
   }
@@ -230,6 +265,7 @@ function draw() {
 
   if (state === `animation`) {
     animation();
+
   }
 
   if (state === `endLose`) {
@@ -238,12 +274,15 @@ function draw() {
 
   if (state === `endWin`) {
     endWin()
+    endingWinAudio()
   }
 }
 
+// Animation function to hold all of the animation for the project
 function animation() {
 
   // Collision detection and healthbar decrease
+  // Code contribution from Sabine and Pippin. I also adjusted some values and added sound
 
   if (radiationIsActive === true) {
     for (let r = 0; r < radiationCircles.length; r++) {
@@ -260,6 +299,7 @@ function animation() {
 
 
   // Map spin effect
+  // Code Contribution from Pippin. I adjusted some of the values
 push();
   translate(width / 2, height / 2);
   rotate(mapAngle);
@@ -267,7 +307,7 @@ push();
 
   mapAngle += mapAngleChange;
 
-
+  // Code contribution from Sabine and Pippin
   // for loops to display the columns and rows
   for (let c = 0; c < grid.length; c++) {
     let col = grid[c];
@@ -281,10 +321,10 @@ push();
 
   player.display();
 
+  // Code contribution from Sabine and Pippin
   if (radiationIsActive === true) {
     // for loops to display the columns and rows of radiationCircles
     for (let c = 0; c < radiationCircles.length; c++) {
-      //console.log(grid[r]);
       let col = radiationCircles[c];
 
       for (let r = 0; r < col.length; r++) {
@@ -303,7 +343,7 @@ push();
   // Tutorial animation
   tutorial.display();
 
-  // To display the play score
+  // Display the play score
 
   push();
   fill(255);
@@ -319,6 +359,9 @@ pop();
 
 
 function keyPressed() {
+
+  // Change between states based on keyPressed
+
   if (state === `title` && key === "Enter") {
     state = `animation`;
   }
@@ -333,9 +376,11 @@ function keyPressed() {
 
   if (state === `animation`){
     player.keypressed();
+
   }
 
   if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
+    // Reset some elements at end states
     setupLevel();
     state = `title`;
     // Set score to 0
@@ -345,7 +390,7 @@ function keyPressed() {
     currentLevel = 0;
   }
 
-}
+} // End of keyPressed function
 
 function title() {
 
@@ -369,6 +414,7 @@ pop();
   image(exitDoor, 20, width, 100, 100);
 
 // Blinking starting text
+// Code contribution from Sabine. I adjusted some of the values.
 
 if (titleAlpha >= 256 || titleAlpha <= 0) {
   fadeOut = !fadeOut;
@@ -382,19 +428,17 @@ if (state === `title`) {
 }
 }
 
+// Function for instructions section of game
 function instructions() {
   image(instructionsImage, width / 9, 20, width / 1.8, height);
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
   fill(255, 255, 255, titleAlpha);
-  // text(`Welcome to Manic Maze!`, width / 2, height / 2.7);
-  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   text(`Press Enter to go Back`, width / 2, height / 1.1);
-  // text(`Use the Arrow Keys to Move`, width / 2, height / 2.4);
   pop();
 
-  // Blinking text
+  // Blinking text. Reused Sabines code for blinking text in this section
   if (titleAlpha >= 256 || titleAlpha <= 0) {
     fadeOut = !fadeOut;
   }
@@ -404,6 +448,7 @@ function instructions() {
   }
 }
 
+// Function for end winning state of the game
 function endWin() {
   push();
   // End text
@@ -420,18 +465,20 @@ function endWin() {
   text(`Press Enter to Play Again`, width / 2, height / 1.5);
   pop();
 
-
+// Code contribute from Sabine on how to make falling cheese at end of game. I edited some of the values
   for (let i = 0; i < 30; i++){
-    if(cheeseArray[i].y<height){
-      cheeseArray[i].y = cheeseArray[i].y+cheeseArray[i].vy;
+    if(cheeseArray[i].y < height){
+      cheeseArray[i].y = cheeseArray[i].y + cheeseArray[i].vy;
     image(pickupCheese, i * 30, cheeseArray[i].y);
   }
+
+
+}
 }
 
-// Function for end state
-}
-
+// Function for end lose state of the game
 function endLose() {
+
   push();
   // End image
   imageMode(CENTER)
@@ -449,12 +496,16 @@ function endLose() {
   let currentLevel = 0;
 }
 
+// On Pippin's advice, took setup code and turned it into a function.
 function setupLevel() {
-  // console.log(`set up level ${currentLevel}`)
+
+  // Setup an empty grid array
   grid = [];
+  // Don't want radiation active for new setup.
   buildRadiation = false;
   //Set radiation array
   radiationCircles = [];
+  // In order to track radiation status correctly this needs to be false also
   radiationIsActive = false;
   // Set levels array to change levels
   level = levels[currentLevel];
@@ -477,15 +528,15 @@ function setupLevel() {
   healthBar = new HealthBar();
 
   // Initialize sounds class
-
   sounds = new Sounds();
 
 
   // Initialize tutorial class
-
   tutorial = new Tutorial();
 
   // Section to introduce new checkpoint elements
+  // This code structure for the checkpoints was initially built in collaboration with Sabine and
+  // restructured with Pippin.
 
   // For loop for the grid
   for (let c = 0; c < cols; c++) {
@@ -515,6 +566,10 @@ function setupLevel() {
         grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `wackyKeys`));
       } else if (item === `CH` && (c !== startCol || r !== startRow)) {
         grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `cheese`));
+      } else if (item === `MT` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `mazeTrail`));
+      } else if (item === `StpMT` && (c !== startCol || r !== startRow)) {
+        grid[c].push(new Checkpoint(20, 20, unit * c, unit * r, `stopMazeTrail`));
       } else {
         grid[c].push(new PathCell(20, 20, unit * c, unit * r));
       }
@@ -528,14 +583,37 @@ function squeakAudio() {
   if (!squeak.isPlaying()) {
     squeak.play();
   }
-} // End of squakAudio function
 
-// Function to play title music audio
-function damageAudio() {
+}
+
+// Function to play low health audio
+function lowHealthAudio() {
   if (!damageAlert.isPlaying()) {
     damageAlert.play();
   }
-} // End of damageAudio function
+}
+
+// Function to play intro music audio
+function introAudio() {
+  if (!introMusic.isPlaying()) {
+    introMusic.play();
+  }
+}
+
+// Function to play ending win music audio
+function endingWinAudio() {
+  if (!endWinMusic.isPlaying()) {
+    endWinMusic.play();
+  }
+}
+
+// Function to play levels music audio
+function levelsAudioMusic() {
+  if (!levelsMusic.isPlaying()) {
+    levelsMusic.play();
+  }
+}
+
 
 // Display fog around player when it is active
 function displayFog(player) {
@@ -549,4 +627,6 @@ function displayFog(player) {
       height * 2
     );
   }
-} // End of displayFog function
+}
+
+// You found the end of the script. Congratulations!

@@ -19,7 +19,7 @@ class Radiation {
   }
 
 
-
+    // To display radiation
   display() {
     push();
     noStroke();
@@ -27,6 +27,6 @@ class Radiation {
     ellipseMode(CENTER);
     ellipse(this.x,this.y, this.u);
     pop();
-  
+
   }
 }

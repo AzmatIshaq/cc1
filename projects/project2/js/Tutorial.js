@@ -116,20 +116,6 @@ class Tutorial {
       text(`Radiation!`, this.tutorialTextX, this.tutorialTextY);
       text(`You deactivated Radiation!`, this.tutorialTextX2, this.tutorialTextY2);
 
-    // if (radiationIsActive === true) {
-    //   push();
-    //   fill(255);
-    //   textSize(16);
-    //   textAlign(CENTER, CENTER);
-    //   text(`Radiation!`, width / 2, height / 1.07);
-    //   text(`You deactivated Radiation!`, width / 2, height / 1.03);
-    // } else {
-    //   fill(255);
-    //   textSize(16);
-    //   textAlign(CENTER, CENTER);
-    //   text(`Radiation is already disabled!!`, width / 2, height / 1.07);
-    //   // text(`Radiation is Already disabled!`, width / 2, height / 1.03);
-    // }
       imageMode(CORNER);
       image(
         pickupRadiation,
@@ -190,15 +176,41 @@ class Tutorial {
         this.pickupHeight
       );
       pop();
+    } else if (this.currentName === `mazeTrail`) {
+      push();
+      fill(255);
+      textSize(16);
+      textAlign(CENTER, CENTER);
+      text(`Maze Trail!`, this.tutorialTextX, this.tutorialTextY);
+      text(`A trail of Maze Walls will now follow you!`, this.tutorialTextX2, this.tutorialTextY2);
+
+      imageMode(CORNER);
+      image(
+        pickupWacky,
+        this.pickupPositionX,
+        this.pickupPositionY,
+        this.pickupWidth,
+        this.pickupHeight
+      );
+      pop();
+    } else if (this.currentName === `stopMazeTrail`) {
+      push();
+      fill(255);
+      textSize(16);
+      textAlign(CENTER, CENTER);
+      text(`Deactivated Maze Trail!`, this.tutorialTextX, this.tutorialTextY);
+
+
+      imageMode(CORNER);
+      image(
+        pickupMazeTrail,
+        this.pickupPositionX,
+        this.pickupPositionY,
+        this.pickupWidth,
+        this.pickupHeight
+      );
+      pop();
     }
-
-
-    // This timer is based on p.5 code found here https://editor.p5js.org/marynotari/sketches/S1T2ZTMp-
-    // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
- //    if (frameCount % 60 == 0 &&   this.tutorialTime > 0) {
- //      this.tutorialTime --;
- // }
-
 
   } // End of display function
 } // End of Tutorial class

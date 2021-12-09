@@ -2,27 +2,58 @@
 
 class HealthBar {
   constructor() {
+    // Position and dimensions and fill colour of health bar
     this.width = 99;
     this.height = 19;
-    this.outlineWidth = 2;
-    this.outlineHeight = 2;
-    this.x = 0;
-    this.y = 0;
-    this.outlineX = 1;
-    this.outlineY = 1;
-    this.name = "healthBar";
+    this.x = width / 23;
+    this.y = height / 1.059;
+    // Colour of healthbar
     this.healthBarFill = {
       r: 25,
       g: 161,
       b: 0,
       a: 255,
     };
-  }
-  
-  // Notification when health low
+    // Health bar name
+    this.name = "healthBar";
+
+    // Width of box outline of health bar
+    this.outlineWidth = 100;
+    this.outlineHeight = 20;
+    // Position of box outline of health bar
+    this.outlineX = width / 10;
+    this.outlineY = height / 1.04;
+    // Health box outline Color
+    this.outlineStroke = 255;
+
+
+    // Position for "Health" text above healtbar
+    this.healthTextX = width / 10;
+    this.healthTextY = height / 1.08;
+    this.healthTextSize = 18;
+    this.healthTextFill = 255;
+
+    // Maximum health value
+    this.healthMax = 99;
+
+    // Minimum health value
+    this.healthMin = 0;
+
+    // Health warning activation limit
+    this.healthWarningLimit = 25;
+
+    // Damage rate for when map spin is active
+    this.spinDamage = 0.1;
+
+    // Spin speed limit before it affects health
+    this.spinLimit = 0.003;
+
+  } // End of class HealthBar class construction
+
+  // Notification when health low function
   healthNotification() {
-    if (this.width < 25) {
-      damageAudio();
+    if (this.width < this.healthWarningLimit) {
+      lowHealthAudio();
       this.healthBarFill.r = random(180, 255);
       this.healthBarFill.g = random(180, 255);
       this.healthBarFill.b = random(180, 255);
@@ -40,19 +71,19 @@ class HealthBar {
     // Player Health text
 
     push();
-    fill(255);
+    fill(this.healthTextFill);
     textAlign(CENTER, CENTER);
-    textSize(18);
-    text('Health', width / 10, height / 1.08);
+    textSize(this.healthTextSize);
+    text('Health', this.healthTextX, this.healthTextY);
     pop();
 
     // Outline for health bar
 
     push();
-    stroke(255);
+    stroke(this.outlineStroke);
     noFill();
     rectMode(CENTER);
-    rect(width / 10, height / 1.04, 100, 20);
+    rect(this.outlineX, this.outlineY, this.outlineWidth, this.outlineHeight );
     pop();
 
     // Health bar retangle
@@ -61,12 +92,12 @@ class HealthBar {
     noStroke();
     fill(this.healthBarFill.r, this.healthBarFill.g, this.healthBarFill.b, this.healthBarFill.a);
     rectMode();
-    rect(width / 23, height / 1.059, this.width, this.height);
+    rect(this.x, this.y, this.width, this.height);
     pop();
 
     // Prevent health from increasing more than max
-    if (this.width > 99) {
-      this.width = 99;
+    if (this.width > this.healthMax) {
+      this.width = this.healthMax;
     }
 
     // Notification when health low
@@ -74,15 +105,20 @@ class HealthBar {
 
 
     // Health bar affected by spin
-    if (mapAngleChange > 0.003) {
-        this.width = this.width - 0.1
+    if (mapAngleChange > this.spinLimit) {
+        this.width = this.width - this.spinDamage;
+        squeakAudio();
     }
 
-    // Health bar reset depending on state
-    if (this.width < 0) {
+    // If health falls bellow 0 trigger end lose state
+    if (this.width < this.healthMin) {
       state = `endLose`;
+      // Sound effect for when your health empties completely
+      endingLoseChime.play();
     }
   }
+
+
 
 
 }

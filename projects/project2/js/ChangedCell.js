@@ -9,14 +9,15 @@ class ChangedCell {
     this.currentCol = startColCc;
     this.currentRow = startRowCc;
     this.name = "changedCell";
+    this.fill = 0;
   }
 
-// Display changed cell 
+// Display changed cell
 
   display() {
     push();
     noStroke();
-    fill(0);
+    fill(this.fill);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();

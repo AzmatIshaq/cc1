@@ -17,6 +17,7 @@ class Player {
     console.log(this.x);
     console.log(this.y);
     this.createDoor = false;
+    this.createTrail = false;
     // Pippin Barr's code for wacky keys
     this.left = "ArrowLeft";
     this.right = "ArrowRight";
@@ -50,7 +51,8 @@ class Player {
       this.height * 2
     );
     pop();
-  }
+
+  } // end of Display function
 
 doorNewLevel() {
   // console.log("on a door");
@@ -84,18 +86,17 @@ revealDoor() {
       );
 }
 
-  transformCell () {
+// Function for when a checkpoint is collected and the cell becomes ChangedCell
+transformCell () {
 
-
-
-grid[this.currentCol][this.currentRow] = new ChangedCell(
-  20,
-  20,
-  unit * this.currentCol,
-  unit * this.currentRow,
-  this.currentCol,
-  this.currentRow
-);
+  grid[this.currentCol][this.currentRow] = new ChangedCell(
+    20,
+    20,
+    unit * this.currentCol,
+    unit * this.currentRow,
+    this.currentCol,
+    this.currentRow
+  );
   }
 
   // Player keypress movement and grid checking
@@ -132,7 +133,18 @@ moveLeft () {
     } else {
       console.log("go ahead");
       this.x = this.x - this.speed;
-
+    }
+    // Create a maze trail if it is active
+    if (this.createTrail === true) {
+    // Have trail appear next to player
+        grid[this.currentCol + 1][this.currentRow] = new Maze (
+              20,
+              20,
+            (this.currentCol + 1) * unit,
+            this.currentRow * unit,
+            (this.currentCol + 1),
+            this.currentRow
+        );
     }
   }
 }
@@ -153,6 +165,18 @@ moveRight () {
       console.log("go ahead");
       this.x = this.x + this.speed;
     }
+    // Create a maze trail if it is active
+    if (this.createTrail === true) {
+    // Have trail appear next to player
+        grid[this.currentCol - 1][this.currentRow] = new Maze (
+              20,
+              20,
+            (this.currentCol - 1) * unit,
+            this.currentRow * unit,
+            (this.currentCol - 1),
+            this.currentRow
+        );
+    }
   }
 }
 
@@ -172,6 +196,18 @@ if (this.currentRow - 1 >= 0) {
     console.log("go ahead");
     this.y = this.y - this.speed;
   }
+  // Create a maze trail if it is active
+  if (this.createTrail === true) {
+  // Have trail appear next to player
+      grid[this.currentCol][this.currentRow + 1] = new Maze (
+            20,
+            20,
+          (this.currentCol) * unit,
+          (this.currentRow + 1) * unit,
+          (this.currentCol),
+          (this.currentRow + 1)
+      );
+  }
 }
 }
 
@@ -190,6 +226,18 @@ moveDown () {
     } else {
       console.log("go ahead");
       this.y = this.y + this.speed;
+    }
+    // Create a maze trail if it is active
+    if (this.createTrail === true) {
+    // Have trail appear next to player
+        grid[this.currentCol][this.currentRow - 1] = new Maze (
+              20,
+              20,
+            (this.currentCol) * unit,
+            (this.currentRow - 1) * unit,
+            (this.currentCol),
+            (this.currentRow - 1)
+        );
     }
   }
 }
@@ -217,9 +265,6 @@ moveDown () {
     // Checkpoint collection and interaction
     // Convert a checkpoint into a changed cell aka pathCell.
 
-
-
-
         // Stop radiationCircles moving if stop radiation checkpoint is collected
 
         if (currentCellName === `stopRadiation`) {
@@ -230,7 +275,7 @@ moveDown () {
 
 
         // Change a checkpoint cell to a changed cell.
-    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys`) {
+    if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys` || currentCellName === `mazeTrail` || currentCellName === `stopMazeTrail`) {
       // Scorekeeper goes up whenever checkpoint is collected
       // but only if there is no door available to get to next level
         if(this.createDoor === false) { scoreKeeper++; }
@@ -250,12 +295,14 @@ if (currentCellName === `cheese`) {
   this.transformCell();
 }
 
+
 // Active wacky keys
 
-if (currentCellName === `wackyKeys`) {
-  this.wackyMode = !this.wackyMode;
-}
-this.wackyKeys();
+    if (currentCellName === `wackyKeys`) {
+      this.wackyMode = !this.wackyMode;
+      this.createTrail = false;
+    }
+    this.wackyKeys();
 
   /** This section is for triggering gameplay elements based on pickup item */
 
@@ -279,14 +326,26 @@ this.wackyKeys();
       mapAngleChange = 0;
       }
 
-    // Activate radiationCircles
+      // Start a maze trail when maze trail checkpoint is collected
+      // Start mazeTrail
+    if (currentCellName === `mazeTrail`) {
+        this.createTrail = true;
+        }
+
+    // Stop mazeTrail
+    if (currentCellName === `stopMazeTrail`) {
+        this.createTrail = false;
+      }
+
+    // Tracking if radiation is active
     if(currentCellName ==='startRadiation'){
         radiationIsActive =true;
     }
+
     if (currentCellName === `startRadiation` && buildRadiation === false) {
       buildRadiation = true;
 
-
+    // Code contribution from Sabine
     // Adding radiation to the grid
         for (let c = 0; c < cols; c++) {
           // For each row add an empty array to represent the row
@@ -307,6 +366,7 @@ this.wackyKeys();
 
     if(currentCellName === "door"){
       this.createDoor = false;
+      this.createTrail = false;
       this.doorNewLevel();
   }
 
