@@ -1,22 +1,31 @@
 README
 
-Project 2 - Morry's Maze
+***Project 2 - Morry's Maze***
 
-This is a project made by Azmat Ishaq for CART253 with Pippin Barr and Concordia University
+This is a project made by Azmat Ishaq for CART253 with Pippin Barr and Concordia University.
+
+Thank you to Sabine Rosenberg, Pipping Barr, and Madeline Zaytsoff for their contributions to the project.
 
 
 **Artist Statement**
 
 As part of my computation arts practice I made this maze game for the CART253 class. The game began with a modest maze structure based on Pippin Barr's maze example found here: https://editor.p5js.org/pippinbarr/sketches/Xq3qsbQWA
 
-There were several significant accomplishments. Though it was helpful having a starting maze structure, the structure itself had to be built on and rearranged in order to use it in a more versatile fashion.
-
-I think it is also worth noting that there could be significantly more levels. I decided to keep the levels at 5 in order to allow for a reasonable assessment of the game and code.
+There were several significant accomplishments throughout the process.
 
 Making the maze trail effect by studying my existing code and using the lessons I learned was a big achievement for me. It is evidence that my skill as a computation artist is growing.
 
-Significant contributions to the code were made Sabine Rosenberg, Pipping Barr, and Madeline Zaytsoff.
+Getting the health bar to blink when low and using my own recorded audio for the alert was also particularly satisfying. With that element I was really able to combine different disciplines and make them work together functionally.
 
+Finally, just styling, tweaking, designing, writing, organizing, and combining the code together in a workable format successfully was a significant accomplishment for me.
+
+I think it is also worth noting that there could be significantly more levels. I decided to keep the levels at 5 in order to allow for a reasonable assessment of the game dynamics and code.
+
+**Code Contributions**
+
+Though it was helpful having a starting maze structure, the structure itself had to be built on and rearranged in order to use it in a more versatile fashion. To do this required help from the teaching team. Other sections involving for loops and arrays working together were at times beyond my current competency as a programmer and code contributions and help were given by the teaching staff.
+
+Significant contributions to the code were made by Sabine Rosenberg, Pipping Barr, and Madeline Zaytsoff. See inline code comment for more details.
 
 **Sources**
 
@@ -32,7 +41,7 @@ The sound of the mouse squeaking when it takes damage was made by myself by step
 
 The pickup sound for the cheese, it was entitled "Retro Game Notification".
 
-The end losing sound it was entitled "Arcade Space Shoot Dead Notification"
+The end losing sound it was entitled "Arcade Space Shooter Dead Notification"
 
 The level music it was entitled "Classic Arcade Video Game"
 
@@ -42,3 +51,6 @@ The ending music it was entitled "Game Level Music 689"
 
 
 I used the website https://audiomass.co/ to edit some of my sounds.
+
+
+-END-

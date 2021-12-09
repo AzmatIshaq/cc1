@@ -7,6 +7,7 @@ class Sounds {
     this.name = "sounds";
   }
 
+// Made in collaboration with Sabine. I adjusted the final values as well.
 // Sound for checkpoint interaction
   playOscillator() {
     this.osc.start();
@@ -18,8 +19,5 @@ class Sounds {
 // Ramps to 60Hz over 0.7 seconds
     this.osc.freq(60, 0.7);
     this.osc.amp(0, 0.1, 0.7);
-
   }
-
-
 }

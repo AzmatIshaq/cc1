@@ -24,6 +24,13 @@ class Player {
     this.down = "ArrowDown";
     this.up = "ArrowUp";
     this.wackyMode = false;
+    this.cheeseHealthIncrease = 10;
+    //Track if spin is active
+    this.spinIsActive = false;
+    this.mapAngleIncrease = 0.004;
+    this.mapAnglePlayerIncrease = 0.001;
+    // Maxmimum speed for spin
+    this.mapAngleChangeMax = 0.02;
   }
 
 // Display player square
@@ -54,6 +61,7 @@ class Player {
 
   } // end of Display function
 
+// Made in collaboration with Sabine and I adjusted the values and game dynamics as needed.
 doorNewLevel() {
   // console.log("on a door");
   // Activate fog
@@ -62,14 +70,13 @@ doorNewLevel() {
   if(currentLevel < 4){
         currentLevel++;
         // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
-        scoreKeeper++;
+        scoreKeeper = 0;
         // Stop spinning effect if it is active
         mapAngle = 0;
         mapAngleChange = 0;
         setupLevel();
         sounds.playOscillator();
-  // reset door to false
-} else if (currentLevel === 4) {
+} else if (currentLevel === 4) { // Trigger end state based on level
   state = `endWin`;
 }
 }
@@ -77,8 +84,8 @@ doorNewLevel() {
 revealDoor() {
   // Have door appear next to player
       grid[this.currentCol + 1][this.currentRow] = new Door (
-            20,
-            20,
+            this.width * 2,
+            this.height * 2,
           (this.currentCol + 1) * unit,
           this.currentRow * unit,
           (this.currentCol + 1),
@@ -242,6 +249,7 @@ moveDown () {
   }
 }
 
+// Collaborated with Sabine to organize code
   keypressed() {
 
     if (key === this.left) {
@@ -289,8 +297,8 @@ if (currentCellName === `cheese`) {
     // Trigger sound when checkpoint is collected
     cheesePickupChime.play();
     // Health gain
-    if (healthBar.width < 99) {
-      healthBar.width += 10
+    if (healthBar.width < healthBar.healthMax) {
+      healthBar.width += this.cheeseHealthIncrease
     }
   this.transformCell();
 }
@@ -300,7 +308,7 @@ if (currentCellName === `cheese`) {
 
     if (currentCellName === `wackyKeys`) {
       this.wackyMode = !this.wackyMode;
-      this.createTrail = false;
+      // this.createTrail = false;
     }
     this.wackyKeys();
 
@@ -314,16 +322,29 @@ if (currentCellName === `cheese`) {
     // Rotating map when collecting checkpoint
     // Start Spin
     if (currentCellName === `spin`) {
-      mapAngleChange = mapAngleChange + 0.004;
-        if (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown") {
-          mapAngleChange = mapAngleChange + 0.001;
-          }
+      mapAngleChange = mapAngleChange + this.mapAngleIncrease;
+      this.spinIsActive = true;
+        // Don't increase spinning to beyond max
+        if (mapAngleChange > this.mapAngleChangeMax) {
+          mapAngleChange = this.mapAngleChangeMax;
         }
+      }
+    // Make spin faster as player moves
+    if (this.spinIsActive === true && (key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowUp"|| key === "ArrowDown")) {
+      mapAngleChange += this.mapAnglePlayerIncrease;
+        // Don't increase spinning to beyond max
+        if (mapAngleChange > this.mapAngleChangeMax) {
+          mapAngleChange = this.mapAngleChangeMax;
+        }
+
+      }
+
 
     // Stop spin
     if (currentCellName === `stopSpin`) {
       mapAngle = 0;
       mapAngleChange = 0;
+      this.spinIsActive = false;
       }
 
       // Start a maze trail when maze trail checkpoint is collected
@@ -373,7 +394,7 @@ if (currentCellName === `cheese`) {
 
 // Reveal door based on scorecount
 // Change the scorekeeper amount to adjust when a door should appear
-    if ((scoreKeeper === 10 || scoreKeeper === 21 || scoreKeeper === 32 || scoreKeeper === 43|| scoreKeeper === 54) && this.createDoor === false) {
+    if (scoreKeeper === 3 && this.createDoor === false) {
       this.createDoor = true;
       this.revealDoor();
       }

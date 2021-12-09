@@ -25,16 +25,16 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 
 // Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
 let levels = [
-  [``, `MT`, `StpMT`, ``, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
+  [``, `MT`, `StpMT`, `S`, `SR`, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
   [``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
   [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`, `StpR`],
-  [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `SR`, `WK`, `CH`, `StpS`, `F`, `S`, `StpR`],
+  [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
 // Code contribution from Pippin on how to setup levels.
-let currentLevel = 3;
+let currentLevel = 0;
 // Setting a starting level variable
 let level = undefined;
 
@@ -57,6 +57,11 @@ let cols = 35;
 // The unit size (how big a square for each tile)
 let unit = 25;
 
+// Size for objects inside the cell
+
+let cellObjectsWidth = 10;
+let cellObjectsHeight = 10;
+
 // Array to load radiation circles
 let radiationCircles = [];
 
@@ -70,7 +75,12 @@ let startCol = 8;
 let state = `title`;
 
 // Start radiation to be off
+
 let radiationIsActive = false;
+
+// Radiation damage amount
+
+let radDamage = 0.2;
 
 // Starting values for maze size
 let maze = {
@@ -82,7 +92,15 @@ let maze = {
 let door;
 
 // Image variables
-let titleImage = undefined;
+let titleImage;
+// Title image values
+let titleImg = {
+  width: 4,
+  height: 50,
+  x: 2,
+  y: 1.2
+};
+
 let spritePlayer = undefined;
 let pickupFog = undefined;
 let pickupWacky = undefined;
@@ -111,6 +129,10 @@ let checkpoint;
 
 // This is the scoreKeeper variable that we see at the top left of the canvas
 let scoreKeeper = 0;
+let scorePosition = {
+  width: 1.05,
+  height: 1.02,
+}
 
 // Variable to initiate health bar
 let healthBar;
@@ -128,6 +150,10 @@ let introMusic;
 let endWinMusic;
 let levelsMusic;
 
+// Toggling music variable
+
+let musicActive = true;
+
 // Variables to load tutorial class
 
 let tutorial;
@@ -140,6 +166,10 @@ let wackyKeysActive = false;
 
 let titleAlpha = 255;
 let fadeOut = true;
+
+//
+
+let fallingCheeseAmount = 200;
 
 /**
 Description of preload
@@ -211,7 +241,7 @@ function preload() {
   introMusic = loadSound(`assets/sounds/intro_music_final2.wav`);
 
   // End win music
-  endWinMusic = loadSound(`assets/sounds/ending_audio_win4.wav`);
+  endWinMusic = loadSound(`assets/sounds/ending_audio_win5.wav`);
 
   // Music during levels
   levelsMusic = loadSound(`assets/sounds/levels_music.wav`);
@@ -240,8 +270,8 @@ function setup() {
 
   // Set up array for end animation
   // Code contribute from Sabine for falling cheese at end of game. I edited some of the values.
-  for (let i = 0; i < 30; i++) {
-      cheeseArray.push({y:0, vy:random(1, 7)});
+  for (let i = 0; i < fallingCheeseAmount; i++) {
+      cheeseArray.push({x:random(1,width - 10), y:random(-50,0), vy:random(1, 7)});
   }
 
 
@@ -254,9 +284,12 @@ Display states
 function draw() {
   background(0);
 
+
 // If statements to alternate between game states
   if (state === `title`) {
     title();
+    //Play title music
+      // introAudio();
   }
 
   if (state === `instructions`) {
@@ -265,6 +298,8 @@ function draw() {
 
   if (state === `animation`) {
     animation();
+    // Play level music
+    levelsAudioMusic()
 
   }
 
@@ -274,12 +309,16 @@ function draw() {
 
   if (state === `endWin`) {
     endWin()
+    // Play ending winning audio
     endingWinAudio()
   }
 }
 
 // Animation function to hold all of the animation for the project
 function animation() {
+  // Stop intro music
+  introMusic.stop();
+
 
   // Collision detection and healthbar decrease
   // Code contribution from Sabine and Pippin. I also adjusted some values and added sound
@@ -290,7 +329,7 @@ function animation() {
         let radCircle = radiationCircles[r][c];
         let d = dist(player.x, player.y, radCircle.x, radCircle.y);
         if (d < player.width + radCircle.u / 2) {
-          healthBar.width -= 0.2;
+          healthBar.width -= radDamage;
           squeakAudio();
         }
       }
@@ -299,7 +338,7 @@ function animation() {
 
 
   // Map spin effect
-  // Code Contribution from Pippin. I adjusted some of the values
+  // Code Contribution from Pippin. I adjusted some of the values.
 push();
   translate(width / 2, height / 2);
   rotate(mapAngle);
@@ -348,10 +387,18 @@ push();
   push();
   fill(255);
   textSize(44);
-  text(scoreKeeper, width / 1.2, height / 1.02);
+  text(scoreKeeper, width / scorePosition.width, height / scorePosition.height);
   textAlign(CENTER, CENTER);
   pop();
 
+// Display `Checkpoints collected text`
+
+push();
+fill(255);
+textSize(20);
+text(`Score`, width / 1.2, height / 1.02);
+textAlign(CENTER, CENTER);
+pop();
 
 pop();
 } // End of animation function
@@ -379,39 +426,67 @@ function keyPressed() {
 
   }
 
+// Restart from beginning if you end up in end winning or losing state
   if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
+    // Reset level to 0
+    currentLevel = 0;
     // Reset some elements at end states
     setupLevel();
     state = `title`;
     // Set score to 0
     scoreKeeper = 0;
     // doorState = false;
-    // Reset level to 0
-    currentLevel = 0;
+
+  }
+
+  // Disable music
+
+  if (state === (`title` || `animation`) && musicActive === true && (key === "m" || key === "M")) {
+    musicActive = false;
+    introMusic.stop();
+    levelsMusic.stop();
   }
 
 } // End of keyPressed function
 
 function title() {
 
-  // Title background
+// Stop end winning music
+endWinMusic.stop();
+
+// Title background
 background(0);
 
 // Title screen image
 push();
 
-image(titleImage, width / 4, height / 50, width / 2, height / 1.2);
+image(titleImage, width / titleImg.width, height / titleImg.height, width / titleImg.x, height / titleImg.y);
   // Opening text and instructions
 pop();
+
+let endText = {
+  fill {
+    r: 255,
+    g: 255,
+    b: 255,
+  };
+
+  width: 2,
+  height: 1.13,
+
+  width2: 2,
+  width3: 1.06,
+};
+
 
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
-  fill(255, 255, 255, titleAlpha);
+  fill(endText.r, endText.g, endText.b, titleAlpha);
   text(`Press i for Instructions`, width / 2, height / 1.13);
   text(`Press Enter to Start`, width / 2, height / 1.06);
   pop();
-  image(exitDoor, 20, width, 100, 100);
+
 
 // Blinking starting text
 // Code contribution from Sabine. I adjusted some of the values.
@@ -450,6 +525,9 @@ function instructions() {
 
 // Function for end winning state of the game
 function endWin() {
+  // Stop level music
+  levelsMusic.stop()
+
   push();
   // End text
   imageMode(CENTER)
@@ -466,19 +544,18 @@ function endWin() {
   pop();
 
 // Code contribute from Sabine on how to make falling cheese at end of game. I edited some of the values
-  for (let i = 0; i < 30; i++){
+  for (let i = 0; i < fallingCheeseAmount; i++) {
     if(cheeseArray[i].y < height){
       cheeseArray[i].y = cheeseArray[i].y + cheeseArray[i].vy;
-    image(pickupCheese, i * 30, cheeseArray[i].y);
+    image(pickupCheese, cheeseArray[i].x, cheeseArray[i].y);
+  } else {cheeseArray[i].y = random(-50,0);}
   }
-
-
-}
 }
 
 // Function for end lose state of the game
 function endLose() {
-
+  // Stop level music
+  levelsMusic.stop()
   push();
   // End image
   imageMode(CENTER)
@@ -522,7 +599,7 @@ function setupLevel() {
   let fogActive = true;
 
   // Initialize player class
-  player = new Player(10, 10, unit, startCol, startRow);
+  player = new Player(cellObjectsWidth, cellObjectsHeight, unit, startCol, startRow);
 
   // Initialize health bar class
   healthBar = new HealthBar();
@@ -595,7 +672,7 @@ function lowHealthAudio() {
 
 // Function to play intro music audio
 function introAudio() {
-  if (!introMusic.isPlaying()) {
+  if (!introMusic.isPlaying() && musicActive === true) {
     introMusic.play();
   }
 }
@@ -609,7 +686,7 @@ function endingWinAudio() {
 
 // Function to play levels music audio
 function levelsAudioMusic() {
-  if (!levelsMusic.isPlaying()) {
+  if (!levelsMusic.isPlaying() && musicActive === true) {
     levelsMusic.play();
   }
 }
@@ -628,5 +705,7 @@ function displayFog(player) {
     );
   }
 }
+
+
 
 // You found the end of the script. Congratulations!

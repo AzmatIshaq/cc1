@@ -34,35 +34,14 @@ class Tutorial {
   display() {
 
     // Display which level next to player health bar
-    if (currentLevel === 0) {
+
       push();
       fill(255);
       textSize(20);
       textAlign(CENTER, CENTER);
-      text(`Level 1`,this.currentLevelTextX, this.currentLevelTextY);
+      text(`Level ${currentLevel + 1}`,this.currentLevelTextX, this.currentLevelTextY);
       pop();
-    } else if (currentLevel === 1) {
-      push();
-      fill(255);
-      textSize(20);
-      textAlign(CENTER, CENTER);
-      text(`Level 2`, this.currentLevelTextX, this.currentLevelTextY);
-      pop();
-    } else if (currentLevel === 2) {
-      push();
-      fill(255);
-      textSize(20);
-      textAlign(CENTER, CENTER);
-      text(`Level 3`, this.currentLevelTextX, this.currentLevelTextY);
-      pop();
-    } else if (currentLevel === 3) {
-      push();
-      fill(255);
-      textSize(20);
-      textAlign(CENTER, CENTER);
-      text(`Level 4`, this.currentLevelTextX, this.currentLevelTextY);
-      pop();
-    }
+
 
     // Tutorial information on how to play the game
 
@@ -186,7 +165,7 @@ class Tutorial {
 
       imageMode(CORNER);
       image(
-        pickupWacky,
+        pickupMazeTrail,
         this.pickupPositionX,
         this.pickupPositionY,
         this.pickupWidth,
@@ -198,7 +177,7 @@ class Tutorial {
       fill(255);
       textSize(16);
       textAlign(CENTER, CENTER);
-      text(`Deactivated Maze Trail!`, this.tutorialTextX, this.tutorialTextY);
+      text(`You deactivated Maze Trail!`, this.tutorialTextX, this.tutorialTextY);
 
 
       imageMode(CORNER);

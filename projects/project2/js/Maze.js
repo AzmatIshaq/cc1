@@ -6,6 +6,7 @@ class Maze {
     this.height = h;
     this.x = x;
     this.y = y;
+    this.alphaWall = 0;
     this.mazeWallFill = {
       r: 140,
       g: 140,
@@ -34,6 +35,13 @@ class Maze {
     }
     healthBar.width -= this.wallDamageRate
     squeakAudio();
+// Code contribution from Sabine.
+    // Minus out from this.alphaWall's 255 the amount you are adding to alphaWall
+    // so if you change it to alphaWall +=60 you would change the if to
+    // if (this.alphaWall < 165)
+    if (this.alphaWall < 225) {
+    this.alphaWall += 30;
+    }
   }
 
 // Some code contribution from Pippin in display in order to make walls disapear on collision.
@@ -52,14 +60,17 @@ class Maze {
     push();
     if (this.health > this.minHealth) {
     imageMode(CORNER);
-    // tint(255, 0, 0, 255);
-    image(
+      image(
       mazeWalls,
       this.x,
       this.y,
       this.wallsImageWidth,
       this.wallsImageHeight,
     );
+    rectMode(CORNER);
+    noStroke();
+    fill(0,this.alphaWall);
+    rect(this.x, this.y,this.wallsImageWidth,this.wallsImageHeight);
   }
     pop();
 

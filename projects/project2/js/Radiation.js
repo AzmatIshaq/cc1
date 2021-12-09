@@ -10,12 +10,21 @@ class Radiation {
     this.u = u;
     this.angle = 20;
     this.angleIncrease = 0.02;
+    this.radiationSize = 70;
+    this.fill = {
+      r: 255,
+      g: 0,
+      b: 0,
+      a: 120,
+    };
   }
 
   move() {
-    // Movement for radiation
+    // Movement for radiation made in collaboration with Sabine
+    // Pippin suggested wrapping the sin with abs to prevent negative numbers from breaking the
+    // collision detection
     this.angle = this.angle + this.angleIncrease;
-    this.u = abs(sin(this.angle))*70;
+    this.u = abs(sin(this.angle)) * this.radiationSize;
   }
 
 
@@ -23,7 +32,7 @@ class Radiation {
   display() {
     push();
     noStroke();
-    fill(255, 0, 0, 120);
+    fill(this.fill.r, this.fill.g, this.fill.b, this.fill.a);
     ellipseMode(CENTER);
     ellipse(this.x,this.y, this.u);
     pop();

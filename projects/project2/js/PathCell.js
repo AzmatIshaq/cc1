@@ -9,8 +9,7 @@ class PathCell {
     this.name = "pathCell";
   }
 
-  // move() {}
-
+// Display values for the pathcell aka the black trail the player moves on
   display() {
     push();
     noStroke();
