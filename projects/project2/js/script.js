@@ -464,19 +464,19 @@ image(titleImage, width / titleImg.width, height / titleImg.height, width / titl
   // Opening text and instructions
 pop();
 
-let endText = {
-  fill {
-    r: 255,
-    g: 255,
-    b: 255,
-  };
-
-  width: 2,
-  height: 1.13,
-
-  width2: 2,
-  width3: 1.06,
-};
+// let endText = {
+//   fill: {
+//     r: 255,
+//     g: 255,
+//     b: 255,
+//   }
+//
+//   width: 2,
+//   height: 1.13,
+//
+//   width2: 2,
+//   width3: 1.06,
+// };
 
 
   push();
