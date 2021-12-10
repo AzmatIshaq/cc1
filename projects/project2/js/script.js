@@ -32,15 +32,13 @@ let levels = [
   [``, ``, ``, ``, `M`, `M`, ``, ``, ``, ``, `M`, `M`, ``, ``, `F`, ``, `M`, `M`, ``, `M`, `M`, `M`, `S`, `StpS`, `CH`],
   [``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `CH`, `F`, `SR`, `SR`, `StpR`],
   [``, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
-  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, ``, `CH`, `M`, `F`, `S`, `StpR`],
-  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `CH`, `M`, `F`, `SR`, `StpR`],
-  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `M`, `S`, `StpS`, `WK`, ``, `CH`, `M`, `M`, `M`],
-  [`M`, `M`, `M`, `CH`, `CH`, `F`, `SR`, ``, `StpR`]
+  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `M`, `M`, `WK`, ``, `CH`, `M`, `F`, `S`,`StpS`,``,``],
+  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, `M`, ``, ``, `M`, `M`, `CH`, `M`, `F`, `SR`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
 // Code contribution from Pippin on how to setup levels.
-let currentLevel = 0;
+let currentLevel = 6;
 // Setting a starting level variable
 let level = undefined;
 

@@ -73,7 +73,7 @@ class Player {
     // Activate fog
     fogActive = true;
     // Change level
-    if (currentLevel < 8) {
+    if (currentLevel < 6) {
       currentLevel++;
       // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
       scoreKeeper = 0;
@@ -82,7 +82,7 @@ class Player {
       mapAngleChange = 0;
       setupLevel();
       sounds.playOscillator();
-    } else if (currentLevel === 8) { // Trigger end state based on level
+    } else if (currentLevel === 6) { // Trigger end state based on level
       state = `endWin`;
     }
   }
