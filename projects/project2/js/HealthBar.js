@@ -63,8 +63,8 @@ class HealthBar {
       this.healthBarFill.g = 161;
       this.healthBarFill.b = 0;
       this.healthBarFill.a = 255;
-      }
     }
+  }
 
   display() {
 
@@ -83,7 +83,7 @@ class HealthBar {
     stroke(this.outlineStroke);
     noFill();
     rectMode(CENTER);
-    rect(this.outlineX, this.outlineY, this.outlineWidth, this.outlineHeight );
+    rect(this.outlineX, this.outlineY, this.outlineWidth, this.outlineHeight);
     pop();
 
     // Health bar retangle
@@ -106,8 +106,8 @@ class HealthBar {
 
     // Health bar affected by spin
     if (mapAngleChange > this.spinLimit) {
-        this.width = this.width - this.spinDamage;
-        squeakAudio();
+      this.width = this.width - this.spinDamage;
+      squeakAudio();
     }
 
     // If health falls bellow 0 trigger end lose state

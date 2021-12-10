@@ -10,12 +10,10 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // Levels array to alternate variety of pickups
 
 // M is for Maze
-// C is for Checkpoints
-// F is for Fog
+// F is to toggle Fog
 // SR is for Start Radiation
 // StpR is for Stoping Radiation
-// WK is for Wacky Keys
-// StpWK is to stop Wacky Keys
+// WK is to toggle Wacky Keys
 // S is for Spinning Maze
 // StpS is for Stoping Spinning Maze
 // MT is for Maze Trail
@@ -23,18 +21,21 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // CH is for Cheese
 
 // Can use to potentially make random levels in future:
-// let itemGrid = [`MT`,`StpMt`,`M`,``,`CH`,`F`,`S`,`StpS`,`SR`,`StpSR`,`WK`,`StpWK`]
-// let itemGrid = [MT,StpMt,M,,`CH`,`F`, , S,StpS,SR,StpSR,WK,StpWK];
+// let itemGrid = [`MT`,`StpMt`,`M`,``,`CH`,`F`,`S`,`StpS`,`SR`,`StpSR`,`WK`,]
+// let itemGrid = [MT,StpMt,M,,`CH`,`F`, , S,StpS,SR,StpSR,WK];
 // let randomGame = random(itemGrid);
 
 // Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
 let levels = [
-  [``, `MT`, `StpMT`, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`,`M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
+  [``, `MT`, `StpMT`, ``, ``, ``, ``, ``, ``, ``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
-  [``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
-  [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`,`SR`, `StpR`],
-  [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
-  [`M`,`CH`,`F`]
+  [``, ``, ``, ``, `M`, `M`, ``, ``, ``, ``, `M`, `M`, ``, ``, `F`, ``, `M`, `M`, ``, `M`, `M`, `M`, `S`, `StpS`, `CH`],
+  [``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `CH`, `F`, `SR`, `SR`, `StpR`],
+  [``, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
+  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, ``, `CH`, `M`, `F`, `S`, `StpR`],
+  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `CH`, `M`, `F`, `SR`, `StpR`],
+  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `M`, `S`, `StpS`, `WK`, ``, `CH`, `M`, `M`, `M`],
+  [`M`, `M`, `M`, `CH`, `CH`, `F`, `SR`, ``, `StpR`]
 ];
 
 // Variables to alternate between specific levels
@@ -142,10 +143,10 @@ let instructText = {
 // Values for end losing rat image
 
 let endRatImg = {
-    x: 2,
-    y: 2,
-    width: 100,
-    height: 100,
+  x: 2,
+  y: 2,
+  width: 100,
+  height: 100,
 }
 
 // Values for end losing text
@@ -160,22 +161,22 @@ let endLoseText = {
 }
 
 // Values for end rat winning image
-  let endRatWinImg = {
-    x: 2,
-    y: 2,
-    width: 100,
-    height: 100
-  }
+let endRatWinImg = {
+  x: 2,
+  y: 2,
+  width: 100,
+  height: 100
+}
 
 // Ending win text values
-  let endingWinText = {
-      x: 2,
-      y: 4,
-      x2: 2,
-      y2: 1.5,
-      size: 16,
-      fill: 255,
-  }
+let endingWinText = {
+  x: 2,
+  y: 4,
+  x2: 2,
+  y2: 1.5,
+  size: 16,
+  fill: 255,
+}
 
 let spritePlayer = undefined;
 let pickupFog = undefined;
@@ -212,7 +213,7 @@ let checkpoint;
 let scoreKeeper = 0;
 // Variable to position the score
 let scorePosition = {
-  width: 1.05,
+  width: 1.09,
   height: 1.02,
 }
 
@@ -310,7 +311,7 @@ function preload() {
   // Door image
   exitDoor = loadImage(`assets/images/door1.png`);
 
-/** Sounds */
+  /** Sounds */
 
   //Preloading sounds to call them when needed
 
@@ -363,7 +364,11 @@ function setup() {
   // Set up array for end animation
   // Code contribution from Sabine for falling cheese at end of game. I adjusted cheese amount and speed.
   for (let i = 0; i < fallingCheeseAmount; i++) {
-      cheeseArray.push({x:random(1,width - 10), y:random(-50,0), vy:random(1, 10)});
+    cheeseArray.push({
+      x: random(1, width - 10),
+      y: random(-50, 0),
+      vy: random(1, 10)
+    });
   }
 
 
@@ -377,11 +382,11 @@ function draw() {
   background(0);
 
 
-// If statements to alternate between game states
+  // If statements to alternate between game states
   if (state === `title`) {
     title();
     //Play title music
-      introAudio();
+    introAudio();
   }
 
   if (state === `instructions`) {
@@ -431,7 +436,7 @@ function animation() {
 
   // Map spin effect
   // Code Contribution from Pippin. I adjusted some of the values.
-push();
+  push();
   translate(width / 2, height / 2);
   rotate(mapAngle);
   translate(-width / 2, -height / 2);
@@ -474,7 +479,7 @@ push();
   // Tutorial animation
   tutorial.display();
 
-  // Display the play score
+  // Display the score for a level
 
   push();
   fill(255);
@@ -483,16 +488,16 @@ push();
   textAlign(CENTER, CENTER);
   pop();
 
-// Display `Score` text
+  // Display `Score` text
 
-push();
-fill(scoreText.fill);
-textSize(scoreText.size);
-text(`Score`, width / scoreText.width, height / scoreText.height);
-textAlign(CENTER, CENTER);
-pop();
+  push();
+  fill(scoreText.fill);
+  textSize(scoreText.size);
+  text(`Score`, width / scoreText.width, height / scoreText.height);
+  textAlign(CENTER, CENTER);
+  pop();
 
-pop();
+  pop();
 } // End of animation function
 
 function keyPressed() {
@@ -511,13 +516,13 @@ function keyPressed() {
     state = `title`;
   }
 
-  if (state === `animation`){
+  if (state === `animation`) {
     player.keypressed();
 
   }
 
-// Restart from beginning if you end up in end winning or losing state
-  if((state ==='endWin'|| state ==='endLose')  && key === "Enter") {
+  // Restart from beginning if you end up in end winning or losing state
+  if ((state === 'endWin' || state === 'endLose') && key === "Enter") {
     // Reset level to 0
     currentLevel = 0;
     // Reset some elements at end states
@@ -534,54 +539,55 @@ function keyPressed() {
   if (state === `animation` && (key === "m" || key === "M")) {
     if (musicActive === true) {
 
-    levelsMusic.stop();
-    musicActive = false;
-  }else {
+      levelsMusic.stop();
+      musicActive = false;
+    } else {
       levelsMusic.play();
       musicActive = true;
+    }
   }
-}
 
 
 } // End of keyPressed function
 
 function title() {
 
-// Stop end winning music
-endWinMusic.stop();
+  // Stop end winning music
+  endWinMusic.stop();
 
-// Title background
-background(0);
+  // Title background
+  background(0);
 
-// Title screen image
-push();
+  // Title screen image
+  push();
 
-image(titleImage, width / titleImg.x, height / titleImg.y, width / titleImg.width, height / titleImg.height);
+  image(titleImage, width / titleImg.x, height / titleImg.y, width / titleImg.width, height / titleImg.height);
   // Opening text and instructions
-pop();
+  pop();
 
 
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
-  fill(titleText.fillR,titleText.fillG,titleText.fillB, titleAlpha);
+  fill(titleText.fillR, titleText.fillG, titleText.fillB, titleAlpha);
   text(`Press i for Instructions`, width / titleText.width, height / titleText.height);
   text(`Press Enter to Start`, width / titleText.width2, height / titleText.height2);
   pop();
 
-// Blinking starting text
-// Code contribution from Sabine. I adjusted some of the values.
+  // Blinking starting text
+  // Code contribution from Sabine. I adjusted some of the values.
 
-if (titleAlpha >= 256 || titleAlpha <= 0) {
-  fadeOut = !fadeOut;
-}
-if (fadeOut) {
-  titleAlpha -= 5
-} else {titleAlpha +=5
-}
-// if (state === `title`) {
-//
-// }
+  if (titleAlpha >= 256 || titleAlpha <= 0) {
+    fadeOut = !fadeOut;
+  }
+  if (fadeOut) {
+    titleAlpha -= 5
+  } else {
+    titleAlpha += 5
+  }
+  // if (state === `title`) {
+  //
+  // }
 }
 
 // Function for instructions section of game
@@ -600,7 +606,8 @@ function instructions() {
   }
   if (fadeOut) {
     titleAlpha -= 5
-  } else {titleAlpha += 5
+  } else {
+    titleAlpha += 5
   }
 }
 
@@ -614,7 +621,7 @@ function endWin() {
   imageMode(CENTER)
   image(endRatWin, width / endRatWinImg.x, height / endRatWinImg.y, endRatWinImg.width, endRatWinImg.height);
 
-// Display end winning text
+  // Display end winning text
 
   fill(endingWinText.fill);
   textSize(endingWinText.size);
@@ -623,12 +630,14 @@ function endWin() {
   text(`Press Enter to Play Again`, width / endingWinText.x2, height / endingWinText.y2);
   pop();
 
-// Code contribute from Sabine on how to make falling cheese at end of game.
+  // Code contribute from Sabine on how to make falling cheese at end of game.
   for (let i = 0; i < fallingCheeseAmount; i++) {
-    if(cheeseArray[i].y < height){
+    if (cheeseArray[i].y < height) {
       cheeseArray[i].y = cheeseArray[i].y + cheeseArray[i].vy;
-    image(pickupCheese, cheeseArray[i].x, cheeseArray[i].y);
-  } else {cheeseArray[i].y = random(-50,0);}
+      image(pickupCheese, cheeseArray[i].x, cheeseArray[i].y);
+    } else {
+      cheeseArray[i].y = random(-50, 0);
+    }
   }
 }
 
@@ -752,7 +761,7 @@ function lowHealthAudio() {
 
 // Function to play intro music audio
 function introAudio() {
-  if (!introMusic.isPlaying() && state ===`title` && musicActive === true) {
+  if (!introMusic.isPlaying() && state === `title` && musicActive === true) {
     introMusic.play();
   }
 }
@@ -766,7 +775,7 @@ function endingWinAudio() {
 
 // Function to play levels music audio
 function levelsAudioMusic() {
-  if (!levelsMusic.isPlaying() && state ===`animation` && musicActive === true) {
+  if (!levelsMusic.isPlaying() && state === `animation` && musicActive === true) {
     levelsMusic.play();
   }
 }
@@ -785,7 +794,5 @@ function displayFog(player) {
     );
   }
 }
-
-
 
 // You found the end of the script. Congratulations!

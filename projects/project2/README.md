@@ -1,6 +1,6 @@
 README
 
-***Project 2 - Morry's Maze***
+****Project 2 - Morry's Maze****
 
 This is a project made by Azmat Ishaq for CART253 with Pippin Barr and Concordia University.
 
@@ -23,7 +23,9 @@ Adding mute functionality was also a pretty big success.
 
 Finally, just styling, tweaking, designing, writing, organizing, and combining the code together in a workable format successfully was a significant accomplishment for me.
 
-I think it is also worth noting that there could be significantly more levels. I decided to keep a modest amount of level to allow for a reasonable assessment of the game dynamics and code.
+For the levels I decided to start by showcasing each pickup, with a fog or cheese pickup, and then I combined them for the final levels. I am particularly glad that the setup of the code allows for multiple different combinations. In the future eventually incorporating a random level option is definitely possible because of that.
+
+** Please note you only need 25 points to move between levels. If the exit door does not appear after that it will not show up again. This will occurs if you pickup your 25th item all the way at the right side of the map. The door will appear outside of the map and out of reach for the player. Unfortunately this was a late spotted bug that did not get patched. 
 
 **Code Contributions**
 

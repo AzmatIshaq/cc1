@@ -13,7 +13,7 @@ class ChangedCell {
     this.fill = 0;
   }
 
-// Display changed cell
+  // Display changed cell
 
   display() {
     push();

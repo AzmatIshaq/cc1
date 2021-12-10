@@ -31,48 +31,48 @@ class Maze {
   hit() {
     this.health--;
 
-    if(this.health === this.minHealth) {
+    if (this.health === this.minHealth) {
       this.name = `pathCell`
     }
     healthBar.width -= this.wallDamageRate
     squeakAudio();
-// Code contribution from Sabine.
+    // Code contribution from Sabine.
     // Minus out from this.alphaWall's 255 the amount you are adding to alphaWall
     // so if you change it to alphaWall +=60 you would change the if to
     // if (this.alphaWall < 195)
     if (this.alphaWall < 215) {
-    this.alphaWall += 40;
+      this.alphaWall += 40;
     }
   }
 
-// Some code contribution from Pippin in order to make walls disapear on collision.
-// To display maze walls.
+  // Some code contribution from Pippin in order to make walls disapear on collision.
+  // To display maze walls.
   display() {
     push();
     noStroke();
     // If you increase maze health adjust the map to match the new health amount
     let healthAlpha = map(this.health, 0, 5, 0, 255)
-    fill(this.mazeWallFill.r,this.mazeWallFill.g,this.mazeWallFill.b, healthAlpha);
+    fill(this.mazeWallFill.r, this.mazeWallFill.g, this.mazeWallFill.b, healthAlpha);
     rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     pop();
 
-// Image overlay on maze walls.
+    // Image overlay on maze walls.
     push();
     if (this.health > this.minHealth) {
-    imageMode(CORNER);
+      imageMode(CORNER);
       image(
-      mazeWalls,
-      this.x,
-      this.y,
-      this.wallsImageWidth,
-      this.wallsImageHeight,
-    );
-    rectMode(CORNER);
-    noStroke();
-    fill(0,this.alphaWall);
-    rect(this.x, this.y,this.wallsImageWidth,this.wallsImageHeight);
-  }
+        mazeWalls,
+        this.x,
+        this.y,
+        this.wallsImageWidth,
+        this.wallsImageHeight,
+      );
+      rectMode(CORNER);
+      noStroke();
+      fill(0, this.alphaWall);
+      rect(this.x, this.y, this.wallsImageWidth, this.wallsImageHeight);
+    }
     pop();
 
 
