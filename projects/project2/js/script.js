@@ -22,7 +22,6 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 
 // Can use to potentially make random levels in future:
 // let itemGrid = [`MT`,`StpMt`,`M`,``,`CH`,`F`,`S`,`StpS`,`SR`,`StpSR`,`WK`,]
-// let itemGrid = [MT,StpMt,M,,`CH`,`F`, , S,StpS,SR,StpSR,WK];
 // let randomGame = random(itemGrid);
 
 // Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
@@ -33,12 +32,12 @@ let levels = [
   [``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `CH`, `F`, `SR`, `SR`, `StpR`],
   [``, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
   [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `M`, `M`, `WK`, ``, `CH`, `M`, `F`, `S`,`StpS`,``,``],
-  [`M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, `M`, ``, ``, `M`, `M`, `CH`, `M`, `F`, `SR`, `StpR`],
+  [`M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, ``, ``, ``, ``, ``, `MT`, `StpMT`, `M`, `CH`, `M`, `F`, `SR`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
 // Code contribution from Pippin on how to setup levels.
-let currentLevel = 6;
+let currentLevel = 0;
 // Setting a starting level variable
 let level = undefined;
 
