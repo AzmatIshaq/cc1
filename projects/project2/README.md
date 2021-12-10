@@ -11,15 +11,19 @@ Thank you to Sabine Rosenberg, Pipping Barr, and Madeline Zaytsoff for their con
 
 As part of my computation arts practice I made this maze game for the CART253 class. The game began with a modest maze structure based on Pippin Barr's maze example found here: https://editor.p5js.org/pippinbarr/sketches/Xq3qsbQWA
 
-There were several significant accomplishments throughout the process.
+The idea was to create a retro style arcade game with levels. The user should experience something similar to playing a Pacman game. I believed I accomplished this by utilizing a grid style pattern in order to track the player movements and by labelling and tracking the pickups and items. I also used the keypressed function to do a lot of triggering.
+
+There were several significant personal accomplishments throughout the process.
 
 Making the maze trail effect by studying my existing code and using the lessons I learned was a big achievement for me. It is evidence that my skill as a computation artist is growing.
 
 Getting the health bar to blink when low and using my own recorded audio for the alert was also particularly satisfying. With that element I was really able to combine different disciplines and make them work together functionally.
 
+Adding mute functionality was also a pretty big success.
+
 Finally, just styling, tweaking, designing, writing, organizing, and combining the code together in a workable format successfully was a significant accomplishment for me.
 
-I think it is also worth noting that there could be significantly more levels. I decided to keep the levels at 5 in order to allow for a reasonable assessment of the game dynamics and code.
+I think it is also worth noting that there could be significantly more levels. I decided to keep a modest amount of level to allow for a reasonable assessment of the game dynamics and code.
 
 **Code Contributions**
 
@@ -46,6 +50,8 @@ The end losing sound, it was entitled "Arcade Space Shooter Dead Notification"
 The level music, it was entitled "Classic Arcade Video Game"
 
 The ending music, it was entitled "Game Level Music 689"
+
+The intro music, it was entitled "Shopping List"
 
 
 

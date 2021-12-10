@@ -214,8 +214,6 @@ if (this.currentRow - 1 >= 0) {
   }
   // Create a maze trail if it is active
   if (this.createTrail === true) {
-    //prevent maze trail appearing on door
-    if (this.createDoor === false){
   // Have trail appear next to player
       grid[this.currentCol][this.currentRow + 1] = new Maze (
             20,
@@ -225,9 +223,9 @@ if (this.currentRow - 1 >= 0) {
           (this.currentCol),
           (this.currentRow + 1)
       );
-      }
+
+    }
   }
-}
 }
 
 moveDown () {
@@ -408,7 +406,7 @@ if (currentCellName === `cheese`) {
 
 // Reveal door based on scorecount
 // Change the scorekeeper amount to adjust when a door should appear
-    if (scoreKeeper === 3 && this.createDoor === false) {
+    if (scoreKeeper === 2 && this.createDoor === false) {
       this.createDoor = true;
       this.revealDoor();
       }

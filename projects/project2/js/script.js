@@ -22,19 +22,23 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 // StpMT is to stop Maze Trail
 // CH is for Cheese
 
+// Can use to potentially make random levels in future:
+// let itemGrid = [`MT`,`StpMt`,`M`,``,`CH`,`F`,`S`,`StpS`,`SR`,`StpSR`,`WK`,`StpWK`]
+// let itemGrid = [MT,StpMt,M,,`CH`,`F`, , S,StpS,SR,StpSR,WK,StpWK];
+// let randomGame = random(itemGrid);
 
 // Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
 let levels = [
-  [``, `MT`, `StpMT`, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
+  [``, `MT`, `StpMT`, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`,`M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
   [``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
-  [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`, `StpR`],
+  [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`,`SR`, `StpR`],
   [``, `M`, `M`, `M`, ``, ``, ``, ``, ``, ``, `MT`, `StpMT`, `WK`, `SR`, `CH`, `StpS`, `F`, `S`, `StpR`],
 ];
 
 // Variables to alternate between specific levels
 // Code contribution from Pippin on how to setup levels.
-let currentLevel = 0;
+let currentLevel = 3;
 // Setting a starting level variable
 let level = undefined;
 
@@ -117,9 +121,10 @@ let titleText = {
 
 // Variable to change instructions image values
 let instructImg = {
-  x: 9,
-  y: 20,
-  width: 1.7,
+  x: 20,
+  y: 145,
+  width: 1.3,
+  height: 0.9,
 }
 
 // Instruction text values
@@ -296,7 +301,7 @@ function preload() {
   titleImage = loadImage(`assets/images/title_image_morry_4.png`);
 
   // Image for instructions screen
-  instructionsImage = loadImage(`assets/images/instructions_image3.png`);
+  instructionsImage = loadImage(`assets/images/instructions_image7.png`);
 
   // Fog of war image
   fog = loadImage(`assets/images/fog_war1.png`);
@@ -304,7 +309,7 @@ function preload() {
   // Door image
   exitDoor = loadImage(`assets/images/door1.png`);
 
-  /** Sounds */
+/** Sounds */
 
   //Preloading sounds to call them when needed
 
@@ -322,7 +327,7 @@ function preload() {
 
   // Title screen music produced by yours truly
 
-  introMusic = loadSound(`assets/sounds/intro_music_final2.wav`);
+  introMusic = loadSound(`assets/sounds/intro_music_new_1.wav`);
 
   // End win music
   endWinMusic = loadSound(`assets/sounds/ending_audio_win5.wav`);
@@ -340,6 +345,8 @@ Player class is initiated
 
 function setup() {
 
+
+
   // Set up canvas size based on colums and rows
   createCanvas(cols * unit, rows * unit + width / 2);
 
@@ -353,9 +360,9 @@ function setup() {
   userStartAudio();
 
   // Set up array for end animation
-  // Code contribution from Sabine for falling cheese at end of game.
+  // Code contribution from Sabine for falling cheese at end of game. I adjusted cheese amount and speed.
   for (let i = 0; i < fallingCheeseAmount; i++) {
-      cheeseArray.push({x:random(1,width - 10), y:random(-50,0), vy:random(1, 7)});
+      cheeseArray.push({x:random(1,width - 10), y:random(-50,0), vy:random(1, 10)});
   }
 
 
@@ -373,7 +380,7 @@ function draw() {
   if (state === `title`) {
     title();
     //Play title music
-      // introAudio();
+      introAudio();
   }
 
   if (state === `instructions`) {
@@ -523,11 +530,17 @@ function keyPressed() {
 
   // Disable music
 
-  if (state === (`title` || `animation`) && musicActive === true && (key === "m" || key === "M")) {
-    musicActive = false;
-    introMusic.stop();
+  if (state === `animation` && (key === "m" || key === "M")) {
+    if (musicActive === true) {
+
     levelsMusic.stop();
+    musicActive = false;
+  }else {
+      levelsMusic.play();
+      musicActive = true;
   }
+}
+
 
 } // End of keyPressed function
 
@@ -555,7 +568,6 @@ pop();
   text(`Press Enter to Start`, width / titleText.width2, height / titleText.height2);
   pop();
 
-
 // Blinking starting text
 // Code contribution from Sabine. I adjusted some of the values.
 
@@ -571,10 +583,9 @@ if (fadeOut) {
 // }
 }
 
-
 // Function for instructions section of game
 function instructions() {
-  image(instructionsImage, width / instructImg.x, instructImg.y, width / instructImg.width, height);
+  image(instructionsImage, width / instructImg.x, width / instructImg.y, width / instructImg.width, height / instructImg.height);
   push();
   textSize(instructText.size);
   textAlign(CENTER, CENTER);
@@ -740,7 +751,7 @@ function lowHealthAudio() {
 
 // Function to play intro music audio
 function introAudio() {
-  if (!introMusic.isPlaying() && musicActive === true) {
+  if (!introMusic.isPlaying() && state ===`title` && musicActive === true) {
     introMusic.play();
   }
 }
@@ -754,7 +765,7 @@ function endingWinAudio() {
 
 // Function to play levels music audio
 function levelsAudioMusic() {
-  if (!levelsMusic.isPlaying() && musicActive === true) {
+  if (!levelsMusic.isPlaying() && state ===`animation` && musicActive === true) {
     levelsMusic.play();
   }
 }
