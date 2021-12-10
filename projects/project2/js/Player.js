@@ -73,7 +73,7 @@ doorNewLevel() {
   // Activate fog
   fogActive = true;
   // Change level
-  if(currentLevel < 4){
+  if(currentLevel < 5){
         currentLevel++;
         // Bonus point for getting to door (and avoiding headaches of door spawning at next level because your score didn't change)
         scoreKeeper = 0;
@@ -82,7 +82,7 @@ doorNewLevel() {
         mapAngleChange = 0;
         setupLevel();
         sounds.playOscillator();
-} else if (currentLevel === 4) { // Trigger end state based on level
+} else if (currentLevel === 5) { // Trigger end state based on level
   state = `endWin`;
 }
 }
@@ -149,7 +149,7 @@ moveLeft () {
     } else {
       console.log("go ahead");
       this.x = this.x - this.speed;
-    }
+
     // Create a maze trail if it is active
     if (this.createTrail === true) {
     // Have trail appear next to player
@@ -161,6 +161,7 @@ moveLeft () {
             (this.currentCol + 1),
             this.currentRow
         );
+        }
     }
   }
 }
@@ -180,7 +181,7 @@ moveRight () {
     } else {
       console.log("go ahead");
       this.x = this.x + this.speed;
-    }
+
     // Create a maze trail if it is active
     if (this.createTrail === true) {
     // Have trail appear next to player
@@ -192,6 +193,7 @@ moveRight () {
             (this.currentCol - 1),
             this.currentRow
         );
+        }
     }
   }
 }
@@ -211,7 +213,7 @@ if (this.currentRow - 1 >= 0) {
   } else {
     console.log("go ahead");
     this.y = this.y - this.speed;
-  }
+
   // Create a maze trail if it is active
   if (this.createTrail === true) {
   // Have trail appear next to player
@@ -223,7 +225,7 @@ if (this.currentRow - 1 >= 0) {
           (this.currentCol),
           (this.currentRow + 1)
       );
-
+      }
     }
   }
 }
@@ -243,7 +245,7 @@ moveDown () {
     } else {
       console.log("go ahead");
       this.y = this.y + this.speed;
-    }
+
     // Create a maze trail if it is active
     if (this.createTrail === true) {
     // Have trail appear next to player
@@ -255,6 +257,7 @@ moveDown () {
             (this.currentCol),
             (this.currentRow - 1)
         );
+        }
     }
   }
 }
