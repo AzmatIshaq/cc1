@@ -2,14 +2,6 @@
 
 class Tutorial {
   constructor() {
-    this.width = 99;
-    this.height = 19;
-    this.outlineWidth = 2;
-    this.outlineHeight = 2;
-    this.x = 0;
-    this.y = 0;
-    this.outlineX = 1;
-    this.outlineY = 1;
     this.name = "tutorial";
     this.currentName = "name";
     this.levelName = 0;
@@ -19,10 +11,12 @@ class Tutorial {
     this.pickupPositionY = height / 1.09;
     this.pickupWidth = 40;
     this.pickupHeight = 40;
+    // Values to position tutorial text
     this.tutorialTextX = width / 2
     this.tutorialTextY = height / 1.07
     this.tutorialTextX2 = width / 2
     this.tutorialTextY2 = height / 1.03
+    // Values to position current level text
     this.currentLevelTextX = width / 5;
     this.currentLevelTextY = height / 1.04
   }

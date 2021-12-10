@@ -6,6 +6,7 @@ class Maze {
     this.height = h;
     this.x = x;
     this.y = y;
+    // Variable to affect wall with alpha
     this.alphaWall = 0;
     this.mazeWallFill = {
       r: 140,
@@ -38,13 +39,13 @@ class Maze {
 // Code contribution from Sabine.
     // Minus out from this.alphaWall's 255 the amount you are adding to alphaWall
     // so if you change it to alphaWall +=60 you would change the if to
-    // if (this.alphaWall < 165)
-    if (this.alphaWall < 225) {
-    this.alphaWall += 30;
+    // if (this.alphaWall < 195)
+    if (this.alphaWall < 215) {
+    this.alphaWall += 40;
     }
   }
 
-// Some code contribution from Pippin in display in order to make walls disapear on collision.
+// Some code contribution from Pippin in order to make walls disapear on collision.
 // To display maze walls.
   display() {
     push();

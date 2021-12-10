@@ -4,12 +4,14 @@ class Player {
   constructor(w, h, unit, startColP, startRowP, createDoor) {
     this.x = 0;
     this.y = 250;
+    // unit movement for player
     this.speed = unit;
     this.active = true;
     this.width = w;
     this.height = h;
     this.r = 0;
     this.c = 0;
+    // Starting column and row for player
     this.currentCol = startColP;
     this.currentRow = startRowP;
     this.x = this.currentCol * unit + w;
@@ -23,10 +25,13 @@ class Player {
     this.right = "ArrowRight";
     this.down = "ArrowDown";
     this.up = "ArrowUp";
+    // Starting wacky keys mode is false
     this.wackyMode = false;
+    // Amount of health from cheese pickup
     this.cheeseHealthIncrease = 10;
-    //Track if spin is active
+    // Track if spin is active
     this.spinIsActive = false;
+    // Adjust spin values
     this.mapAngleIncrease = 0.004;
     this.mapAnglePlayerIncrease = 0.001;
     // Maxmimum speed for spin
@@ -61,6 +66,7 @@ class Player {
 
   } // end of Display function
 
+// Setup new level whe interacting with door
 // Made in collaboration with Sabine and I adjusted the values and game dynamics as needed.
 doorNewLevel() {
   // console.log("on a door");
@@ -84,6 +90,7 @@ doorNewLevel() {
 revealDoor() {
   // Have door appear next to player
       grid[this.currentCol + 1][this.currentRow] = new Door (
+        //Position and size for door
             this.width * 2,
             this.height * 2,
           (this.currentCol + 1) * unit,
@@ -97,6 +104,7 @@ revealDoor() {
 transformCell () {
 
   grid[this.currentCol][this.currentRow] = new ChangedCell(
+    // Position and size for changed cell
     20,
     20,
     unit * this.currentCol,
@@ -106,8 +114,7 @@ transformCell () {
   );
   }
 
-  // Player keypress movement and grid checking
-  // Also effects triggering based on keypresses
+  // This structure for wacky mode code provided by Pippin
 
   wackyKeys() {
     if (this.wackyMode === true) {
@@ -124,6 +131,8 @@ transformCell () {
 
     }
   }
+
+  /** Move function to put in keypress function */
 
 moveLeft () {
   // if we are not on left boundary, adjust to remain in grid.
@@ -205,6 +214,8 @@ if (this.currentRow - 1 >= 0) {
   }
   // Create a maze trail if it is active
   if (this.createTrail === true) {
+    //prevent maze trail appearing on door
+    if (this.createDoor === false){
   // Have trail appear next to player
       grid[this.currentCol][this.currentRow + 1] = new Maze (
             20,
@@ -214,6 +225,7 @@ if (this.currentRow - 1 >= 0) {
           (this.currentCol),
           (this.currentRow + 1)
       );
+      }
   }
 }
 }
@@ -249,7 +261,7 @@ moveDown () {
   }
 }
 
-// Collaborated with Sabine to organize code
+// Collaborated with Sabine to organize some of the keypressed code in this way
   keypressed() {
 
     if (key === this.left) {
@@ -269,9 +281,8 @@ moveDown () {
     }
 
     let currentCellName = grid[this.currentCol][this.currentRow].name;
+    // Code contribution from Sabine on display cell name
     tutorial.setName(currentCellName);
-    // Checkpoint collection and interaction
-    // Convert a checkpoint into a changed cell aka pathCell.
 
         // Stop radiationCircles moving if stop radiation checkpoint is collected
 
@@ -282,7 +293,8 @@ moveDown () {
         }
 
 
-        // Change a checkpoint cell to a changed cell.
+  // Change a checkpoint cell to a changed cell. Some collaboration with teaching staff to develop this
+  // section.
     if (currentCellName === `checkPoint` || currentCellName === `fog` || currentCellName === `spin` || currentCellName === `stopSpin` || currentCellName === `startRadiation` || currentCellName === `stopRadiation` || currentCellName === `wackyKeys` || currentCellName === `mazeTrail` || currentCellName === `stopMazeTrail`) {
       // Scorekeeper goes up whenever checkpoint is collected
       // but only if there is no door available to get to next level
@@ -304,23 +316,24 @@ if (currentCellName === `cheese`) {
 }
 
 
-// Active wacky keys
+/** This section is for triggering gameplay elements based on pickup item */
+
+    // Active wacky keys
 
     if (currentCellName === `wackyKeys`) {
       this.wackyMode = !this.wackyMode;
-      // this.createTrail = false;
     }
     this.wackyKeys();
 
-  /** This section is for triggering gameplay elements based on pickup item */
-
     // Turn fog on and off based on touching fog checkpoint
+
     if (currentCellName === `fog`) {
           fogActive = !fogActive;
     }
 
     // Rotating map when collecting checkpoint
     // Start Spin
+
     if (currentCellName === `spin`) {
       mapAngleChange = mapAngleChange + this.mapAngleIncrease;
       this.spinIsActive = true;
@@ -363,6 +376,7 @@ if (currentCellName === `cheese`) {
         radiationIsActive =true;
     }
 
+    // Triggering the display for radiation
     if (currentCellName === `startRadiation` && buildRadiation === false) {
       buildRadiation = true;
 

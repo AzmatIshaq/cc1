@@ -25,7 +25,7 @@ This is Project 2 for the CART 253 Class with Professor Pippin Barr at Concordia
 
 // Code contribution from Pippin on how to setup levels. I adjusted the contents of the array.
 let levels = [
-  [``, `MT`, `StpMT`, `S`, `SR`, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
+  [``, `MT`, `StpMT`, ``, ``, ``,``, ``, ``,``, ``, ``, `CH`, `M`, `M`, `M`, `M`, `M`, `M`, `M`, `F`, ``, ``],
   [``, ``, ``, ``, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, ``, ``, ``, ``, `M`, `M`, `M`, `WK`, `F`],
   [``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`,``, ``, ``, ``, `M`, `M`, ``, `M`, `M`, `M`,  `S`, `StpS`, `CH`],
   [``, ``, ``, ``, ``, ``, ``, ``, ``,``, ``,``, ``, `M`, `M`, `M`, `M`, `M`, `M`, `M`,  `CH`, `F`, `SR`, `StpR`],
@@ -95,11 +95,81 @@ let door;
 let titleImage;
 // Title image values
 let titleImg = {
-  width: 4,
-  height: 50,
-  x: 2,
-  y: 1.2
+  width: 2,
+  height: 1.2,
+  x: 4,
+  y: 50,
 };
+
+// Title text object values
+
+let titleText = {
+  fillR: 255,
+  fillG: 255,
+  fillB: 255,
+
+  width: 2,
+  height: 1.13,
+
+  width2: 2,
+  height2: 1.06,
+};
+
+// Variable to change instructions image values
+let instructImg = {
+  x: 9,
+  y: 20,
+  width: 1.7,
+}
+
+// Instruction text values
+
+let instructText = {
+  size: 20,
+  fillR: 255,
+  fillG: 255,
+  fillB: 255,
+  x: 2,
+  y: 1.1,
+}
+
+// Values for end losing rat image
+
+let endRatImg = {
+    x: 2,
+    y: 2,
+    width: 100,
+    height: 100,
+}
+
+// Values for end losing text
+
+let endLoseText = {
+  x: 2,
+  y: 2.7,
+  x2: 2,
+  y2: 1.2,
+  size: 16,
+  fill: 255,
+}
+
+// Values for end rat winning image
+  let endRatWinImg = {
+    x: 2,
+    y: 2,
+    width: 100,
+    height: 100
+  }
+
+// Ending win text values
+  let endingWinText = {
+      x: 2,
+      y: 4,
+      x2: 2,
+      y2: 1.5,
+      size: 16,
+      fill: 255,
+  }
 
 let spritePlayer = undefined;
 let pickupFog = undefined;
@@ -116,6 +186,11 @@ let pickupMazeTrail = undefined;
 
 // Fog variable to load fog of war image
 let fog;
+// Fog image position
+let fogImg = {
+  x: 1.5,
+  y: 1.5,
+}
 
 // Variable to set fog to true for fog effect at the start
 let fogActive = true;
@@ -129,10 +204,20 @@ let checkpoint;
 
 // This is the scoreKeeper variable that we see at the top left of the canvas
 let scoreKeeper = 0;
+// Variable to position the score
 let scorePosition = {
   width: 1.05,
   height: 1.02,
 }
+
+// Variable for `Score` text values
+let scoreText = {
+  fill: 255,
+  size: 20,
+  width: 1.2,
+  height: 1.02,
+}
+
 
 // Variable to initiate health bar
 let healthBar;
@@ -167,8 +252,7 @@ let wackyKeysActive = false;
 let titleAlpha = 255;
 let fadeOut = true;
 
-//
-
+// Amount of cheese instances that fallduring win state
 let fallingCheeseAmount = 200;
 
 /**
@@ -244,7 +328,7 @@ function preload() {
   endWinMusic = loadSound(`assets/sounds/ending_audio_win5.wav`);
 
   // Music during levels
-  levelsMusic = loadSound(`assets/sounds/levels_music.wav`);
+  levelsMusic = loadSound(`assets/sounds/levels_music3.wav`);
 }
 
 /**
@@ -269,7 +353,7 @@ function setup() {
   userStartAudio();
 
   // Set up array for end animation
-  // Code contribute from Sabine for falling cheese at end of game. I edited some of the values.
+  // Code contribution from Sabine for falling cheese at end of game.
   for (let i = 0; i < fallingCheeseAmount; i++) {
       cheeseArray.push({x:random(1,width - 10), y:random(-50,0), vy:random(1, 7)});
   }
@@ -391,19 +475,17 @@ push();
   textAlign(CENTER, CENTER);
   pop();
 
-// Display `Checkpoints collected text`
+// Display `Score` text
 
 push();
-fill(255);
-textSize(20);
-text(`Score`, width / 1.2, height / 1.02);
+fill(scoreText.fill);
+textSize(scoreText.size);
+text(`Score`, width / scoreText.width, height / scoreText.height);
 textAlign(CENTER, CENTER);
 pop();
 
 pop();
 } // End of animation function
-
-
 
 function keyPressed() {
 
@@ -460,31 +542,17 @@ background(0);
 // Title screen image
 push();
 
-image(titleImage, width / titleImg.width, height / titleImg.height, width / titleImg.x, height / titleImg.y);
+image(titleImage, width / titleImg.x, height / titleImg.y, width / titleImg.width, height / titleImg.height);
   // Opening text and instructions
 pop();
-
-// let endText = {
-//   fill: {
-//     r: 255,
-//     g: 255,
-//     b: 255,
-//   }
-//
-//   width: 2,
-//   height: 1.13,
-//
-//   width2: 2,
-//   width3: 1.06,
-// };
 
 
   push();
   textSize(20);
   textAlign(CENTER, CENTER);
-  fill(255, 255, 255, titleAlpha);
-  text(`Press i for Instructions`, width / 2, height / 1.13);
-  text(`Press Enter to Start`, width / 2, height / 1.06);
+  fill(titleText.fillR,titleText.fillG,titleText.fillB, titleAlpha);
+  text(`Press i for Instructions`, width / titleText.width, height / titleText.height);
+  text(`Press Enter to Start`, width / titleText.width2, height / titleText.height2);
   pop();
 
 
@@ -498,19 +566,20 @@ if (fadeOut) {
   titleAlpha -= 5
 } else {titleAlpha +=5
 }
-if (state === `title`) {
+// if (state === `title`) {
+//
+// }
+}
 
-}
-}
 
 // Function for instructions section of game
 function instructions() {
-  image(instructionsImage, width / 9, 20, width / 1.8, height);
+  image(instructionsImage, width / instructImg.x, instructImg.y, width / instructImg.width, height);
   push();
-  textSize(20);
+  textSize(instructText.size);
   textAlign(CENTER, CENTER);
-  fill(255, 255, 255, titleAlpha);
-  text(`Press Enter to go Back`, width / 2, height / 1.1);
+  fill(instructText.fillR, instructText.fillG, instructText.fillB, titleAlpha);
+  text(`Press Enter to go Back`, width / instructText.x, height / instructText.y);
   pop();
 
   // Blinking text. Reused Sabines code for blinking text in this section
@@ -519,7 +588,7 @@ function instructions() {
   }
   if (fadeOut) {
     titleAlpha -= 5
-  } else {titleAlpha +=5
+  } else {titleAlpha += 5
   }
 }
 
@@ -529,21 +598,20 @@ function endWin() {
   levelsMusic.stop()
 
   push();
-  // End text
+  // Display ynd win image
   imageMode(CENTER)
-  image(endRatWin, width / 2, height / 2, 100, 100);
+  image(endRatWin, width / endRatWinImg.x, height / endRatWinImg.y, endRatWinImg.width, endRatWinImg.height);
 
-  //Ending text
+// Display end winning text
 
-  fill(255);
-  textSize(16);
+  fill(endingWinText.fill);
+  textSize(endingWinText.size);
   textAlign(CENTER, CENTER);
-  text(`You Win!`, width / 2, height / 4);
-  // text(`Click your Mouse to make more balloons!!`, width / 2, height / 3);
-  text(`Press Enter to Play Again`, width / 2, height / 1.5);
+  text(`You Win!`, width / endingWinText.x, height / endingWinText.y);
+  text(`Press Enter to Play Again`, width / endingWinText.x2, height / endingWinText.y2);
   pop();
 
-// Code contribute from Sabine on how to make falling cheese at end of game. I edited some of the values
+// Code contribute from Sabine on how to make falling cheese at end of game.
   for (let i = 0; i < fallingCheeseAmount; i++) {
     if(cheeseArray[i].y < height){
       cheeseArray[i].y = cheeseArray[i].y + cheeseArray[i].vy;
@@ -559,14 +627,15 @@ function endLose() {
   push();
   // End image
   imageMode(CENTER)
-  image(endRat, width / 2, height / 2, 100, 100);
+  image(endRat, width / endRatImg.x, height / endRatImg.y, endRatImg.width, endRatImg.height);
+
 
   // End text
-  textSize(16);
+  textSize(endLoseText.size);
   textAlign(CENTER, CENTER);
-  fill(255);
-  text(`GAME OVER`, width / 2, height / 2.7);
-  text(`Don't worry, he's just tuckered out. Press Enter to try again!`, width / 2, height / 1.2);
+  fill(endLoseText.fill);
+  text(`GAME OVER`, width / endLoseText.x, height / endLoseText.y);
+  text(`Don't worry, he's just tuckered out. Press Enter to try again!`, width / endLoseText.x2, height / endLoseText.y2);
   pop();
 
   // Reset levels at end state
@@ -606,7 +675,6 @@ function setupLevel() {
 
   // Initialize sounds class
   sounds = new Sounds();
-
 
   // Initialize tutorial class
   tutorial = new Tutorial();
@@ -698,8 +766,8 @@ function displayFog(player) {
     imageMode(CENTER);
     image(
       fog,
-      player.x + player.width / 1.5,
-      player.y + player.height / 1.5,
+      player.x + player.width / fogImg.x,
+      player.y + player.height / fogImg.y,
       width * 2,
       height * 2
     );

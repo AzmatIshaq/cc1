@@ -2,6 +2,7 @@
 
 class ChangedCell {
   constructor(w, h, x, y, startColCc, startRowCc) {
+    // Position and size and changed cell
     this.width = w;
     this.height = h;
     this.x = x;

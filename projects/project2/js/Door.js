@@ -2,13 +2,16 @@
 
 class Door {
   constructor(w,h,x,y,cc,cr) {
+    // Door size and position
     this.width = w;
     this.height = h;
     this.x = x;
     this.y = y;
     this.name = `door`;
-    this.cr  = cr;
+    // Current column and row to position door
     this.cc = cc;
+    this.cr  = cr;
+
     }
 
   move() {}

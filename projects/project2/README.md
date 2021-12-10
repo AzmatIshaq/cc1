@@ -41,11 +41,11 @@ The sound of the mouse squeaking when it takes damage was made by myself by step
 
 The pickup sound for the cheese, it was entitled "Retro Game Notification".
 
-The end losing sound it was entitled "Arcade Space Shooter Dead Notification"
+The end losing sound, it was entitled "Arcade Space Shooter Dead Notification"
 
-The level music it was entitled "Classic Arcade Video Game"
+The level music, it was entitled "Classic Arcade Video Game"
 
-The ending music it was entitled "Game Level Music 689"
+The ending music, it was entitled "Game Level Music 689"
 
 
 
